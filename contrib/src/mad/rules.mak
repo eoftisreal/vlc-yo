@@ -42,6 +42,9 @@ endif
 	$(APPLY) $(SRC)/mad/mad-mips-h-constraint-removal.patch
 	$(APPLY) $(SRC)/mad/mad-foreign.patch
 	$(APPLY) $(SRC)/mad/check-bitstream-length.patch
+	# remove conflicting declarations
+	sed -i.orig -e 's/^extern int getopt ();/#include <unistd.h>/' $(UNPACK_DIR)/getopt.h
+	sed -i.orig -e 's/^extern char \*getenv ();/#include <stdlib.h>/' $(UNPACK_DIR)/getopt.c
 	$(MOVE)
 
 .mad: libmad
