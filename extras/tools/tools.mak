@@ -181,12 +181,16 @@ CLEAN_FILE += .buildxz
 
 # config.guess
 
+$(TOOLS)/config.guess-$(CONFIGGUESS_VERSION):
+	$(call download,$(CONFIGGUESS_URL))
+
 config.guess: $(TOOLS)/config.guess-$(CONFIGGUESS_VERSION)
-	# CONFIGGUESS_URL=https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=$(CONFIGGUESS_VERSION)
 	cp -f $< $@
 
+$(TOOLS)/config.sub-$(CONFIGSUB_VERSION):
+	$(call download,$(CONFIGSUB_URL))
+
 config.sub: $(TOOLS)/config.sub-$(CONFIGSUB_VERSION)
-	# CONFIGSUB_URL=https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=$(CONFIGSUB_VERSION)
 	cp -f $< $@
 
 .buildconfigguess: config.guess config.sub

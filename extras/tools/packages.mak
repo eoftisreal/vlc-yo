@@ -60,4 +60,6 @@ GPERF_VERSION=3.1
 GPERF_URL=$(GNU)/gperf/gperf-$(GPERF_VERSION).tar.gz
 
 CONFIGGUESS_VERSION=a2287c3041a3f2a204eb942e09c015eab00dc7dd
+CONFIGGUESS_URL=https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=$(CONFIGGUESS_VERSION)
 CONFIGSUB_VERSION=a2287c3041a3f2a204eb942e09c015eab00dc7dd
+CONFIGSUB_URL=https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=$(CONFIGSUB_VERSION)
