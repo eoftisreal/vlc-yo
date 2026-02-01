@@ -1,6 +1,6 @@
 # NFS
 NFS_VERSION := 6.0.2
-NFS_URL := $(GITHUB)/sahlberg/libnfs/archive/libnfs-$(NFS_VERSION).tar.gz
+NFS_URL := $(GITHUB)/sahlberg/libnfs/archive/refs/tags/libnfs-$(NFS_VERSION).tar.gz
 
 ifdef BUILD_NETWORK
 PKGS += nfs
