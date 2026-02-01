@@ -144,7 +144,13 @@ esac
 SCRIPT_PATH="$( cd "$(dirname "$0")" ; pwd -P )"
 VLC_ROOT_PATH="$( cd "${SCRIPT_PATH}/../../.." ; pwd -P )"
 
-: ${JOBS:=$(getconf _NPROCESSORS_ONLN 2>&1)}
+if [ -z "$JOBS" ]; then
+    JOBS=$(getconf _NPROCESSORS_ONLN 2>/dev/null)
+    if [ -z "$JOBS" ]; then
+        JOBS=1
+    fi
+fi
+
 TRIPLET=$ARCH-w64-mingw32
 
 # Check if compiling with clang
@@ -198,7 +204,9 @@ fi
 HOST="$(cc -dumpmachine)"
 HOST_ARCH="${HOST%%-*}"
 if [ "$HOST_ARCH" = "$ARCH" ]; then
-    VLC_EXE_WRAPPER="wine"
+    if [ -n "$(command -v wine)" ]; then
+        VLC_EXE_WRAPPER="wine"
+    fi
 fi
 
 cd ../../
