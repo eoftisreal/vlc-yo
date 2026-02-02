@@ -1,13 +1,14 @@
 --- a/src/libbluray/bdj/meson.build
 +++ b/src/libbluray/bdj/meson.build
-@@ -32,8 +32,8 @@
-     java_args = [
-         '-d', join_paths(meson.current_build_dir(), 'build'),
-         '-sourcepath', meson.current_source_dir(),
--        '-source', '1.6',
--        '-target', '1.6',
-+        '-source', '1.8',
-+        '-target', '1.8',
-         '-encoding', 'UTF-8',
-         '-bootclasspath', join_paths(bootclasspath),
-         '-classpath', join_paths(classpath),
+@@ -10,9 +10,7 @@
+     if get_option('java9') and bdj_type == 'j2se'
+         if javac_version.version_compare('>= 18.0')
+             java_src_version = '1.8'
+-        elif javac_version.version_compare('>=12.0')
+-            java_src_version = '1.7'
+         elif javac_version.version_compare('>=9.0')
+-            java_src_version = '1.6'
++            java_src_version = '1.8'
+         else
+             java_src_version = '1.5' #maybe java_version_bdj=1.4 in that case?
+         endif
