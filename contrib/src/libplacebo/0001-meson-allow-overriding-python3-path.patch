@@ -1,14 +1,3 @@
-From 62dc67bd043a9982dafd7e1a4c708ce427489712 Mon Sep 17 00:00:00 2001
-From: Niklas Haas <git@haasn.dev>
-Date: Sat, 22 Oct 2022 13:59:37 +0200
-Subject: [PATCH] meson: allow overriding python3 path
-
-We need this to support building inside a virtualenv.
----
- meson.build       | 2 +-
- meson_options.txt | 2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
-
 diff --git a/meson.build b/meson.build
 index 2ea819b2..c1404ee9 100644
 --- a/meson.build
@@ -32,6 +21,3 @@ index ce88b3bf..853d1347 100644
         description: 'abort() on most runtime errors (only for debugging purposes)')
 +
 +option('python-path', type: 'string', description: 'Path to python3 executable')
--- 
-2.38.0
-

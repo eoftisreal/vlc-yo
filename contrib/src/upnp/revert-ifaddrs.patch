@@ -1,13 +1,3 @@
-From 1a6b54b37ac16d91d3d75ef1017a6ee5971a855f Mon Sep 17 00:00:00 2001
-From: Alaric Senat <dev.asenat@posteo.net>
-Date: Tue, 15 Jun 2021 16:29:07 +0200
-Subject: [PATCH] Revert "upnpapi.c: assume that getifaddrs is available"
-
-This reverts commit aa0166c9a87a6f02632a0c55fb6174b6a1bf8289.
----
- upnp/src/api/upnpapi.c | 227 ++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 225 insertions(+), 2 deletions(-)
-
 diff --git a/upnp/src/api/upnpapi.c b/upnp/src/api/upnpapi.c
 index 2e95bbfc..3d524941 100644
 --- a/upnp/src/api/upnpapi.c
@@ -267,6 +257,3 @@ index 2e95bbfc..3d524941 100644
  	UpnpPrintf(UPNP_INFO,
  		API,
  		__FILE__,
--- 
-2.31.1
-

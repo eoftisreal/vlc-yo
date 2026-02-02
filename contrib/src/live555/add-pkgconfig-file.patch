@@ -1,6 +1,3 @@
-Description: Add a pkg-config file for the shared libraries.
-Author: Benjamin Drung <bdrung@debian.org>
-
 diff --git a/Makefile.tail b/Makefile.tail
 --- a/Makefile.tail
 +++ b/Makefile.tail

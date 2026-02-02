@@ -1,4 +1,3 @@
-diff -ruN sidplay-2.1.1/builders/resid-builder/src/resid-builder.cpp sidplay-2.1.1.new/builders/resid-builder/src/resid-builder.cpp
 --- sidplay-2.1.1/builders/resid-builder/src/resid-builder.cpp	2004-06-14 22:07:58.000000000 +0200
 +++ sidplay-2.1.1.new/builders/resid-builder/src/resid-builder.cpp	2011-01-15 16:49:24.909660710 +0100
 @@ -46,6 +46,8 @@

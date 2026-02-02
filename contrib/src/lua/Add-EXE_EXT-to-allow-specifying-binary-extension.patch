@@ -1,14 +1,3 @@
-From f0f0afd2b0df3574a36e14f2ec71524f4c28eab5 Mon Sep 17 00:00:00 2001
-From: Marvin Scholz <epirat07@gmail.com>
-Date: Thu, 4 Nov 2021 16:15:53 +0100
-Subject: [PATCH] Add EXE_EXT to allow specifying binary extension
-
-This is needed to make the install step aware that the lua/luac
-binaries have a .exe suffix for Windows.
----
- Makefile | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
 diff --git a/Makefile b/Makefile
 index 3e327ee..80cc1d6 100644
 --- a/Makefile
@@ -31,6 +20,3 @@ index 3e327ee..80cc1d6 100644
  TO_INC= lua.h luaconf.h lualib.h lauxlib.h lua.hpp
  TO_LIB= liblua5.4.a
  TO_MAN= lua.1 luac.1
--- 
-2.32.0 (Apple Git-132)
-

@@ -1,12 +1,3 @@
-From 347cf74983357ade0b7e768769713913015e9d0b Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
-Date: Sun, 17 Mar 2024 16:03:53 +0100
-Subject: [PATCH 10/10] fix compilation for xrOS
-
----
- libavcodec/videotoolbox.c | 2 ++
- 1 file changed, 2 insertions(+)
-
 diff --git a/libavcodec/videotoolbox.c b/libavcodec/videotoolbox.c
 index ccba249140..b2f38905a7 100644
 --- a/libavcodec/videotoolbox.c
@@ -21,6 +12,3 @@ index ccba249140..b2f38905a7 100644
  #else
      CFDictionarySetValue(buffer_attributes, kCVPixelBufferIOSurfaceOpenGLTextureCompatibilityKey, kCFBooleanTrue);
  #endif
--- 
-2.45.1.windows.1
-

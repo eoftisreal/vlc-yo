@@ -1,13 +1,3 @@
-From a67413a37f55c55ee5d18bc5ab2cf9acd0206b6a Mon Sep 17 00:00:00 2001
-From: Marvin Scholz <epirat07@gmail.com>
-Date: Thu, 4 Nov 2021 06:42:04 +0100
-Subject: [PATCH] Disable system and popen for windows store builds
-
----
- src/loslib.c  |  4 ++++
- src/luaconf.h | 13 +++++++++++++
- 2 files changed, 17 insertions(+)
-
 diff --git a/src/loslib.c b/src/loslib.c
 index 3e20d62..d7fdb40 100644
 --- a/src/loslib.c
@@ -62,6 +52,3 @@ index 12befbc..bbd9591 100644
  #endif
  
  
--- 
-2.32.0 (Apple Git-132)
-

@@ -1,4 +1,3 @@
-diff -Naur goom-origin/src/convolve_fx.c goom/src/convolve_fx.c
 --- goom-origin/src/convolve_fx.c	2005-02-07 14:46:42.000000000 +0100
 +++ goom/src/convolve_fx.c	2009-03-23 11:16:13.000000000 +0100
 @@ -107,7 +107,9 @@

@@ -1,13 +1,3 @@
-From 64157b23fd0359fdbe706a17154be3733fc0deb2 Mon Sep 17 00:00:00 2001
-From: Steve Lhomme <robux4@ycbcr.xyz>
-Date: Fri, 10 Jan 2025 13:04:59 +0100
-Subject: [PATCH] [build] fix implicit libraries set using -Wl,-l:libname.a
-
-We need to turn it to a more generic name in the pkg-config file.
----
- CMakeLists.txt | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
-
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 1492306..49d4869 100644
 --- a/CMakeLists.txt
@@ -28,6 +18,3 @@ index 1492306..49d4869 100644
  			set(SRT_LIBS_PRIVATE ${SRT_LIBS_PRIVATE} ${LIB})
  		else()
  			set(SRT_LIBS_PRIVATE ${SRT_LIBS_PRIVATE} "-l${LIB}")
--- 
-2.45.0.windows.1
-

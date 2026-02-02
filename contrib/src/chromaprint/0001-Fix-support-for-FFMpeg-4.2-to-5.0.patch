@@ -1,14 +1,3 @@
-From 6f7e4e846f17543c6a9234fa2c4e9bc0cc419dd1 Mon Sep 17 00:00:00 2001
-From: Steve Lhomme <robux4@ycbcr.xyz>
-Date: Tue, 13 Jan 2026 11:36:36 +0100
-Subject: [PATCH] Fix support for FFMpeg 4.2 to 5.0
-
-In these versions tx.h exists but not AV_TX_FLOAT_RDFT which was added in FFMpeg 5.1.
----
- CMakeLists.txt                 |  4 ++--
- cmake/modules/FindFFmpeg.cmake | 11 +++++++++++
- 2 files changed, 13 insertions(+), 2 deletions(-)
-
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 01b7df7..c519bef 100644
 --- a/CMakeLists.txt
@@ -53,6 +42,3 @@ index 3653a96..5012cbb 100644
  ELSE ()
  
     MESSAGE(STATUS "Could not find FFMPEG")
--- 
-2.52.0.windows.1
-

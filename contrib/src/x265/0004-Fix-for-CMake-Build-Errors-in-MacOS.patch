@@ -1,12 +1,3 @@
-From 2bb9b9f83ac7d0daa919bbe73159d57a7d5a1a52 Mon Sep 17 00:00:00 2001
-From: yaswanthsastry <yaswanth.sastry@multicorewareinc.com>
-Date: Mon, 7 Apr 2025 11:27:36 +0530
-Subject: [PATCH 4/4] Fix for CMake Build Errors in MacOS
-
----
- source/CMakeLists.txt | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
-
 diff --git a/source/CMakeLists.txt b/source/CMakeLists.txt
 index 00528245d..a8e6b143b 100755
 --- a/source/CMakeLists.txt
@@ -52,6 +43,3 @@ index 00528245d..a8e6b143b 100755
          foreach(ASM ${ARM_ASMS})
  			set(ASM_SRC ${CMAKE_CURRENT_SOURCE_DIR}/common/arm/${ASM})
              list(APPEND ASM_SRCS ${ASM_SRC})
--- 
-2.50.1 (Apple Git-155)
-

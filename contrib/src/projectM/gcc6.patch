@@ -1,4 +1,3 @@
-diff -ruN projectM-2.0.1-Source.old/Common.hpp projectM-2.0.1-Source/Common.hpp
 --- projectM-2.0.1-Source.old/Common.hpp	2016-08-06 10:57:57.678183788 +0200
 +++ projectM-2.0.1-Source/Common.hpp	2016-08-06 11:01:06.714192806 +0200
 @@ -55,7 +55,7 @@

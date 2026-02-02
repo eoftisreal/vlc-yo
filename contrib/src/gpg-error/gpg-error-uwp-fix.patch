@@ -1,13 +1,3 @@
-From 803dc7c5daecc9044483a9b0ad848b52f95e4189 Mon Sep 17 00:00:00 2001
-From: Steve Lhomme <robux4@ycbcr.xyz>
-Date: Mon, 15 May 2023 08:20:15 +0200
-Subject: [PATCH 03/15] fix UWP build
-
----
- src/init.c     | 8 +++++++-
- src/mkheader.c | 2 +-
- 2 files changed, 8 insertions(+), 2 deletions(-)
-
 diff --git a/src/init.c b/src/init.c
 index 7f970d9..4fe6b90 100644
 --- a/src/init.c
@@ -56,6 +46,3 @@ index 7c772e6..779e0ab 100644
          {
            include_file (fname, lnr, "w32-add.h", write_line);
          }
--- 
-2.45.1.windows.1
-

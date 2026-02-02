@@ -1,17 +1,3 @@
-From 934dafd8f16e8c4b2b8421ceace74c5ea364f781 Mon Sep 17 00:00:00 2001
-From: Steve Lhomme <robux4@ycbcr.xyz>
-Date: Wed, 26 Apr 2023 11:55:59 +0200
-Subject: [PATCH] meson: allow forcing the path to look for libraries
-
-compiler.find_library() doesn't use c/cpp_lib_args when looking for libraries.
-
-The way to pass customized path to look for libraries not found in the system
-is to give the path(es) manually to compiler.find_library().
----
- meson_options.txt    |  2 ++
- src/glsl/meson.build | 14 +++++++-------
- 2 files changed, 9 insertions(+), 7 deletions(-)
-
 diff --git a/meson_options.txt b/meson_options.txt
 index 5b8113ae..6c38ceea 100644
 --- a/meson_options.txt
@@ -55,6 +41,3 @@ index 5cebfb89..5e3ef2d5 100644
        ]
      endif
  
--- 
-2.37.3.windows.1
-

@@ -1,6 +1,3 @@
-Linear memory extents over SSIZE_MAX are undefined, so there is no
-point in protecting against them.
-diff -ru zvbi.orig/src/export.c zvbi/src/export.c
 --- zvbi.orig/src/export.c	2011-11-06 11:22:47.000000000 +0200
 +++ zvbi/src/export.c	2011-11-06 11:27:39.000000000 +0200
 @@ -1076,8 +1076,6 @@

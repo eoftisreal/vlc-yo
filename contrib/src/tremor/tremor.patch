@@ -1,5 +1,3 @@
-Index: tremor-svn/os.h
-===================================================================
 --- tremor-svn.orig/os.h	(révision 17483)
 +++ tremor-svn/os.h	(copie de travail)
 @@ -20,6 +20,14 @@

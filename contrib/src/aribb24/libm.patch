@@ -1,6 +1,3 @@
-Add missing maths library.
-
-diff -ru aribb24-1.0.3.orig/configure.ac aribb24-1.0.3/configure.ac
 --- aribb24-1.0.3.orig/configure.ac	2016-08-06 12:04:51.260806518 +0300
 +++ aribb24-1.0.3/configure.ac	2016-08-06 13:45:56.424867068 +0300
 @@ -21,6 +21,12 @@

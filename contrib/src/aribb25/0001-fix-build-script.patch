@@ -1,15 +1,3 @@
-From 1fb7ec239b4ef7bf05f824af9b3ddef7f5601685 Mon Sep 17 00:00:00 2001
-From: midchildan <midchildan+git@gmail.com>
-Date: Sun, 4 Feb 2018 23:00:27 +0900
-Subject: [PATCH 1/2] fix build script
-
-Signed-off-by: Yuudai Yamashigi <yyamashigi@videolan.org>
----
- Makefile.am  | 7 ++++++-
- configure.ac | 1 +
- src/td.c     | 3 ++-
- 4 files changed, 13 insertions(+), 2 deletions(-)
-
 diff --git a/Makefile.am b/Makefile.am
 index b95a569..ee4d508 100644
 --- a/Makefile.am
@@ -65,6 +53,3 @@ index c27201f..288aa5a 100644
  	fprintf(stderr, "usage: b25 [options] src.m2t dst.m2t [more pair ..]\n");
  	fprintf(stderr, "options:\n");
  	fprintf(stderr, "  -r round (integer, default=4)\n");
---
-2.26.0.windows.1
-

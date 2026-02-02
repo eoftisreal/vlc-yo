@@ -1,15 +1,3 @@
-From 2b5fff174b5b9ebaff32e653f3accea0ac782acb Mon Sep 17 00:00:00 2001
-From: Steve Lhomme <robux4@ycbcr.xyz>
-Date: Tue, 23 May 2023 14:31:16 +0200
-Subject: [PATCH 05/14] use CreateFile2 in Win8 as CreateFileW is forbidden in
- UWP
-
----
- src/estream.c     | 24 ++++++++++++++++++++++++
- src/spawn-w32.c   | 13 +++++++++++++
- src/w32-gettext.c | 10 ++++++++++
- 3 files changed, 47 insertions(+)
-
 diff --git a/src/estream.c b/src/estream.c
 index 6062001..f7ab037 100644
 --- a/src/estream.c
@@ -117,6 +105,3 @@ index 5b15a77..42aa01c 100644
      xfree (wfilename);
    }
    if (fh == INVALID_HANDLE_VALUE)
--- 
-2.45.1.windows.1
-

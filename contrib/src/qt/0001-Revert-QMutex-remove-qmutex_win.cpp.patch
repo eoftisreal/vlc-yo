@@ -1,22 +1,3 @@
-From a566b1d5192a99b41ae13706668b7c8bf786e204 Mon Sep 17 00:00:00 2001
-From: Fatih Uzunoglu <fuzun54@outlook.com>
-Date: Sun, 14 Jan 2024 23:34:29 +0200
-Subject: [PATCH] Revert "QMutex: remove qmutex_win.cpp"
-
-qmutex_win.cpp is useful for Windows 7 where futex is not
-available.
-
-This reverts commit b6e30e9fee98f9cdfec4c54c980864f65632519c.
----
- src/corelib/CMakeLists.txt            |  2 ++
- src/corelib/thread/qlocking_p.h       |  7 ++++---
- src/corelib/thread/qmutex.cpp         |  4 +++-
- src/corelib/thread/qmutex_p.h         |  9 +++++---
- src/corelib/thread/qmutex_win.cpp     | 30 +++++++++++++++++++++++++++
- src/corelib/thread/qwaitcondition_p.h |  7 ++++---
- 6 files changed, 49 insertions(+), 10 deletions(-)
- create mode 100644 src/corelib/thread/qmutex_win.cpp
-
 diff --git a/src/corelib/CMakeLists.txt b/src/corelib/CMakeLists.txt
 index bf24eec2cf..4809e32766 100644
 --- a/src/corelib/CMakeLists.txt
@@ -154,6 +135,3 @@ index 14833d56ef..7b1becb3db 100644
  //
  // We mean it.
  //
--- 
-2.44.0
-

@@ -1,18 +1,3 @@
-From 93b6064273ea4add336936698dfdb84d93f72c58 Mon Sep 17 00:00:00 2001
-From: Steve Lhomme <robux4@ycbcr.xyz>
-Date: Wed, 14 Jan 2026 14:16:08 +0100
-Subject: [PATCH 5/5] CMake: check _mm256_setr_m128i is supported
-
-Some older AVX2 compilers don't have it, but it's possible to use a macro instead [^1].
-
-[^1]: https://stackoverflow.com/a/32630658/1266123
-
-Signed-off-by: Steve Lhomme <robux4@ycbcr.xyz>
----
- src/CMakeLists.txt    | 19 +++++++++++++++++++
- src/avx/oapv_tq_avx.c |  6 ++++++
- 2 files changed, 25 insertions(+)
-
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
 index e442e7f..35dfb89 100644
 --- a/src/CMakeLists.txt
@@ -60,6 +45,3 @@ index 5939986..4332783 100644
  #if X86_SSE
  #ifndef _mm256_set_m128i
  #define _mm256_set_m128i(/* __m128i */ hi, /* __m128i */ lo) \
--- 
-2.52.0.windows.1
-

@@ -1,4 +1,3 @@
-diff -ru upnp/upnp/src/ssdp/ssdp_server.c upnp/upnp/src/ssdp/ssdp_server.c
 --- upnp/upnp/src/ssdp/ssdp_server.c	2022-08-03 16:05:12
 +++ upnp/upnp/src/ssdp/ssdp_server.c	2023-05-11 12:13:42
 @@ -928,6 +928,7 @@

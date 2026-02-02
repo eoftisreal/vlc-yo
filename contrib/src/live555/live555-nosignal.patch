@@ -1,8 +1,3 @@
-Copyright (C) 2015 Rémi Denis-Courmont
-
-Licensed under the terms of the GNU LGPL version 2.1 or later.
-
-diff -ru live555.orig/groupsock/GroupsockHelper.cpp live555/groupsock/GroupsockHelper.cpp
 --- live555.orig/groupsock/GroupsockHelper.cpp	2022-06-16 11:14:03.000000000 +0000
 +++ live555/groupsock/GroupsockHelper.cpp	2022-07-16 11:04:10.334840299 +0000
 @@ -47,6 +47,9 @@

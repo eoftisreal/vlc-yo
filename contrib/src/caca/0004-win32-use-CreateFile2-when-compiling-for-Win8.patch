@@ -1,16 +1,3 @@
-From 43a0870bbb4cfba5d3c9472f04ea9a31dc39a527 Mon Sep 17 00:00:00 2001
-From: Steve Lhomme <robux4@ycbcr.xyz>
-Date: Thu, 8 Jun 2023 09:13:36 +0200
-Subject: [PATCH 4/5] win32: use CreateFile2 when compiling for Win8+
-
-The API is always available in Win8+ even in UWP builds, unlike CreateFileW.
-The API is pretty much the same. CONOUT is also supported [1].
-
-[1] https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfile2#consoles
----
- caca/driver/win32.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
-
 diff --git a/caca/driver/win32.c b/caca/driver/win32.c
 index 40aeeed..0c84470 100644
 --- a/caca/driver/win32.c
@@ -44,6 +31,3 @@ index 40aeeed..0c84470 100644
      if(dp->drv.p->hout == INVALID_HANDLE_VALUE)
          return -1;
  
--- 
-2.37.3.windows.1
-

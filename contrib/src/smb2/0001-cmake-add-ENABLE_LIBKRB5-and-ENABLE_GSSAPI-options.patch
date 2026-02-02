@@ -1,17 +1,3 @@
-From 3e0f7949c7db82ef427007d8de978fab02703a2f Mon Sep 17 00:00:00 2001
-From: Thomas Guillem <thomas@gllm.fr>
-Date: Tue, 17 Dec 2024 08:18:03 +0100
-Subject: [PATCH] cmake: add ENABLE_LIBKRB5 and ENABLE_GSSAPI options
-
-ON by default, but the user can now disable these components (like
-configure.ac).
-
-Fixes #384
----
- CMakeLists.txt              | 19 ++++++++++++++-----
- cmake/ConfigureChecks.cmake |  4 ++++
- 2 files changed, 18 insertions(+), 5 deletions(-)
-
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 0252451..562b8e2 100644
 --- a/CMakeLists.txt
@@ -72,6 +58,3 @@ index a28846a..d59d890 100644
  check_include_file("inttypes.h" HAVE_INTTYPES_H)
  check_include_file("netdb.h" HAVE_NETDB_H)
  check_include_file("netinet/in.h" HAVE_NETINET_IN_H)
--- 
-2.45.2
-

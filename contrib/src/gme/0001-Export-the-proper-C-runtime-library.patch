@@ -1,14 +1,3 @@
-From cdfdcb4d120a2c898684bc4e972b01dd462ed5a1 Mon Sep 17 00:00:00 2001
-From: Steve Lhomme <robux4@ycbcr.xyz>
-Date: Mon, 5 Sep 2022 13:34:41 +0200
-Subject: [PATCH] Export the proper C++ runtime library
-
-With gcc it's libstdc++, with clang it's libc++. So let CMake give it to use
-and use all the libraries it needs, except some noise from clang toolchains.
----
- gme/CMakeLists.txt | 25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
-
 diff --git a/gme/CMakeLists.txt b/gme/CMakeLists.txt
 index fc2db68..301f8c6 100644
 --- a/gme/CMakeLists.txt
@@ -45,6 +34,3 @@ index fc2db68..301f8c6 100644
  
  if(GME_ZLIB)
      if(ZLIB_FOUND)
--- 
-2.50.1 (Apple Git-155)
-

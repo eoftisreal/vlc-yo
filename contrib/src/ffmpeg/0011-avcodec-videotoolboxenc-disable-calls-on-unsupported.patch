@@ -1,18 +1,3 @@
-From d803c704a4427c0d8825e45874ac1e1732e2d382 Mon Sep 17 00:00:00 2001
-From: Steve Lhomme <robux4@ycbcr.xyz>
-Date: Tue, 20 Feb 2024 13:21:36 +0100
-Subject: [PATCH 09/10] avcodec/videotoolboxenc: disable calls on unsupported
- iOS/tvOS version
-
-VTCopySupportedPropertyDictionaryForEncoder and kVTCompressionPropertyKey_EncoderID are not
-available.
-
-"supported_props" seems to be read but never used.
-We don't need to dump encoder data for debugging in those cases.
----
- libavcodec/videotoolboxenc.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
 diff --git a/libavcodec/videotoolboxenc.c b/libavcodec/videotoolboxenc.c
 index b748ecda61..7879e6c1ff 100644
 --- a/libavcodec/videotoolboxenc.c
@@ -45,5 +30,3 @@ index b748ecda61..7879e6c1ff 100644
 
      if (avctx->flags & AV_CODEC_FLAG_QSCALE && !vtenc_qscale_enabled()) {
          av_log(avctx, AV_LOG_ERROR, "Error: -q:v qscale not available for encoder. Use -b:v bitrate instead.\n");
---
-2.45.1.windows.1

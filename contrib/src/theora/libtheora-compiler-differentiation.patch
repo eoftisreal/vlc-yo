@@ -1,4 +1,3 @@
-diff -ru libtheora/configure.ac libtheora-fixed/configure.ac
 --- libtheora/configure.ac	2009-10-01 20:00:33.000000000 +0200
 +++ libtheora-fixed/configure.ac	2014-06-13 20:21:16.000000000 +0200
 @@ -155,8 +155,20 @@

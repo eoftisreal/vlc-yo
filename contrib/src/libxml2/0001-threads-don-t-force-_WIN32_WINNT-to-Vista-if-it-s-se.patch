@@ -1,20 +1,3 @@
-From be2080f7a3166ad2ad4a56a5bcd155d3d93fcb56 Mon Sep 17 00:00:00 2001
-From: Steve Lhomme <robux4@ycbcr.xyz>
-Date: Fri, 16 Jan 2026 09:19:01 +0100
-Subject: [PATCH] threads: don't force _WIN32_WINNT to Vista if it's set to a
- higher value
-
-This will prevent Universal Windows Platform (UWP) targeting Windows 10+ to fail.
-Some UWP API's that are XP/Vista/7 API's are not available in Windows 8 but available in Windows 10.
-So if Windows 10 is targetting we should not pretend to build for Windows Vista (0x0600).
-
-If the user didn't set a _WIN32_WINNT value, the Windows SDK/mingw-w64 have a
-default value that will be used. We can use sdkddkver.h to get that value.
-If the default value is Windows 10 we should not lower it either.
----
- include/private/threads.h | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
-
 diff --git a/include/private/threads.h b/include/private/threads.h
 index bb187869..823e325e 100644
 --- a/include/private/threads.h
@@ -38,6 +21,3 @@ index bb187869..823e325e 100644
      #include <windows.h>
      #define HAVE_WIN32_THREADS
    #else
--- 
-2.52.0.windows.1
-

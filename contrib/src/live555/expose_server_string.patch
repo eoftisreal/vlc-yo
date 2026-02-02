@@ -1,4 +1,3 @@
-diff -Naur live555/liveMedia/include/RTSPClient.hh live555.modified/liveMedia/include/RTSPClient.hh
 --- live555/liveMedia/include/RTSPClient.hh	2022-06-16 11:14:03.000000000 +0000
 +++ live555.modified/liveMedia/include/RTSPClient.hh	2022-07-16 11:36:23.642103174 +0000
 @@ -39,6 +39,8 @@

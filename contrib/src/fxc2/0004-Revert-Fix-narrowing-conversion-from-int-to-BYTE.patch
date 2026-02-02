@@ -1,13 +1,3 @@
-From cff056e74403c99b8d672cce5b289615a4d7338f Mon Sep 17 00:00:00 2001
-From: Pierre Lamot <pierre.lamot@yahoo.fr>
-Date: Mon, 14 Jan 2019 15:37:02 +0100
-Subject: [PATCH 4/4] Revert "Fix: narrowing conversion from 'int' to 'BYTE'"
-
-This reverts commit 82527b81104e5e21390d3ddcd328700c67ce73d4.
----
- fxc2.cpp | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
 diff --git a/fxc2.cpp b/fxc2.cpp
 index 5b8c86c..205fa16 100755
 --- a/fxc2.cpp
@@ -30,6 +20,3 @@ index 5b8c86c..205fa16 100755
      fclose(f);
  
      if(verbose) {
--- 
-2.37.3.windows.1
-

@@ -1,39 +1,3 @@
-From 5ceab2c7433f7c9aff207b1e7d2f1a4fc9680a0d Mon Sep 17 00:00:00 2001
-From: Fatih Uzunoglu <fuzun54@outlook.com>
-Date: Mon, 22 Jan 2024 21:37:39 +0200
-Subject: [PATCH] Satisfy Windows 7 compatibility
-
----
- cmake/QtBaseConfigureTests.cmake              |  10 +-
- src/corelib/CMakeLists.txt                    |  20 +--
- src/corelib/global/qt_windows.h               |   6 +-
- src/corelib/io/qfilesystemengine_win.cpp      |   5 +
- src/corelib/kernel/qeventdispatcher_win.cpp   |  10 +-
- src/corelib/kernel/qfunctions_win.cpp         |  13 +-
- src/corelib/thread/qfutex_win_p.h             |  42 +++++-
- src/corelib/thread/qmutex_win.cpp             |   4 +-
- src/corelib/thread/qthread_win.cpp            |  25 ++--
- src/gui/CMakeLists.txt                        |   1 -
- src/gui/rhi/qrhid3d11.cpp                     |   5 +-
- src/gui/rhi/qrhid3d12.cpp                     |  87 ++++++++++---
- .../text/windows/qwindowsfontdatabasebase.cpp |  14 +-
- .../networklistmanager/CMakeLists.txt         |   1 -
- src/plugins/platforms/direct2d/CMakeLists.txt |   2 -
- .../direct2d/qwindowsdirect2dcontext.cpp      |   1 +
- src/plugins/platforms/windows/CMakeLists.txt  |   2 -
- .../platforms/windows/qtwindowsglobal.h       |   4 +
- .../platforms/windows/qwin10helpers.cpp       |  24 +++-
- .../platforms/windows/qwindowscontext.cpp     | 120 +++++++++++++++---
- .../platforms/windows/qwindowscontext.h       |  95 ++++++++++++++
- .../platforms/windows/qwindowsdrag.cpp        |  10 +-
- .../platforms/windows/qwindowskeymapper.cpp   |  17 ++-
- .../windows/qwindowspointerhandler.cpp        |  33 +++--
- .../platforms/windows/qwindowsscreen.cpp      |  18 ++-
- .../platforms/windows/qwindowstheme.cpp       |   6 +-
- .../platforms/windows/qwindowswindow.cpp      |  48 +++++--
- src/widgets/styles/qwindowsstyle.cpp          |  26 +++-
- 28 files changed, 535 insertions(+), 114 deletions(-)
-
 diff --git a/cmake/QtBaseConfigureTests.cmake b/cmake/QtBaseConfigureTests.cmake
 index d41fac2e18e..9490de8fa12 100644
 --- a/cmake/QtBaseConfigureTests.cmake
@@ -1382,6 +1346,3 @@ index bae182b4676..ab4793007c8 100644
  
      default:
          break;
--- 
-2.47.1
-

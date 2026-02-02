@@ -1,16 +1,3 @@
-From ab6edca6a93be813f52108489a4a690e44bb8dab Mon Sep 17 00:00:00 2001
-From: Steve Lhomme <robux4@ycbcr.xyz>
-Date: Thu, 17 Oct 2024 11:56:18 +0200
-Subject: [PATCH 2/2] fix libunwind usage when static linking
-
-It ends up with
-- set(CMAKE_C_IMPLICIT_LINK_LIBRARIES "atomic;m;-l:libunwind.a;dl;c;-l:libunwind.a;dl")
-- set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "windowsapp;windowsapp;ucrt;windowsapp;ucrtapp;c++;mingw32;-l:libunwind.a;moldname;mingwex;mingw32;-l:libunwind.a;moldname;mingwex")
----
- loader/CMakeLists.txt | 14 ++++++++++++++
- loader/vulkan.pc.in   |  1 +
- 2 files changed, 15 insertions(+)
-
 diff --git a/loader/CMakeLists.txt b/loader/CMakeLists.txt
 index 3d8aa6c62..14ddcf326 100644
 --- a/loader/CMakeLists.txt
@@ -46,6 +33,3 @@ index 6a285f267..ab35414ba 100644
  Libs: -L${libdir} -lvulkan@VULKAN_LIB_SUFFIX@
 +Libs.private: @PRIVATE_LIBS@
  Cflags: -I${includedir}
--- 
-2.45.0.windows.1
-

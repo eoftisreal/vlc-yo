@@ -1,15 +1,3 @@
-From 42e0694555f80ed93ff2013580d805fa1d928ff7 Mon Sep 17 00:00:00 2001
-From: Steve Lhomme <robux4@ycbcr.xyz>
-Date: Mon, 16 Dec 2024 10:01:27 +0100
-Subject: [PATCH 3/5] win32: define struct timezone for non-mingw-w32
-
-The compiler complains if the structure used in the .c file is defined after an
-anonymous version was used in the header.
----
- include/win32/win32_compat.h | 8 +++++++-
- win32/win32_compat.c         | 6 ------
- 2 files changed, 7 insertions(+), 7 deletions(-)
-
 diff --git a/include/win32/win32_compat.h b/include/win32/win32_compat.h
 index 70214b7..e11bf70 100755
 --- a/include/win32/win32_compat.h
@@ -48,6 +36,3 @@ index 3654788..fb5f0aa 100644
  int win32_gettimeofday(struct timeval *tv, struct timezone *tz)
  {
    FILETIME ft;
--- 
-2.45.0.windows.1
-

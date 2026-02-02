@@ -1,12 +1,3 @@
-From b9f2b29e18c8b28fd97aecef4ceb74d070a067d1 Mon Sep 17 00:00:00 2001
-From: laxy <laxy@funkore.com>
-Date: Tue, 17 Dec 2024 10:02:21 +0800
-Subject: [PATCH] fix: Fixed undeclared identifier 'ENXIO' in android
-
----
- lib/compat.c | 1 +
- 1 file changed, 1 insertion(+)
-
 diff --git a/lib/compat.c b/lib/compat.c
 index 438e179..b99606b 100644
 --- a/lib/compat.c
@@ -19,6 +10,3 @@ index 438e179..b99606b 100644
  #define NEED_GETLOGIN_R
  #define login_num ENXIO
  #endif
--- 
-2.45.2
-

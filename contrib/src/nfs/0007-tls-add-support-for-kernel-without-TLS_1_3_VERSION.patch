@@ -1,13 +1,3 @@
-From 10a4fe89df7d2780a2e8711d908568f34b5e7d50 Mon Sep 17 00:00:00 2001
-From: Steve Lhomme <robux4@ycbcr.xyz>
-Date: Fri, 16 Jan 2026 11:55:17 +0100
-Subject: [PATCH 7/8] tls: add support for kernel without TLS_1_3_VERSION
-
-810ef615eac7b5e8c8da9619016e0d8cc18c81ea assumed Kernel 5.10+ would be used.
----
- tls/ktls.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
-
 diff --git a/tls/ktls.c b/tls/ktls.c
 index ae277d7..eeba9d0 100644
 --- a/tls/ktls.c
@@ -45,6 +35,3 @@ index ae277d7..eeba9d0 100644
  	unsigned char seq_number[12]; 					\
  	gnutls_datum_t cipher_key; 					\
  	gnutls_datum_t mac_key; 					\
--- 
-2.52.0.windows.1
-

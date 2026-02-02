@@ -1,14 +1,3 @@
-From 5d98c6e04973d1608307d6f230b79ff9219ba480 Mon Sep 17 00:00:00 2001
-From: Thomas Guillem <thomas@gllm.fr>
-Date: Fri, 23 Mar 2018 15:48:10 +0100
-Subject: [PATCH 3/3] add aarch64 support
-
----
- cmake/Modules/SetSystemProcessor.cmake | 1 +
- src/pffft-wrap.c                       | 2 +-
- src/pffft.c                            | 2 +-
- 3 files changed, 3 insertions(+), 2 deletions(-)
-
 diff --git a/cmake/Modules/SetSystemProcessor.cmake b/cmake/Modules/SetSystemProcessor.cmake
 index 8e2c292..55ac842 100644
 --- a/cmake/Modules/SetSystemProcessor.cmake
@@ -47,6 +36,3 @@ index 46c841e..060f299 100644
  #  include <arm_neon.h>
  typedef float32x4_t v4sf;
  #  define SIMD_SZ 4
--- 
-2.11.0
-

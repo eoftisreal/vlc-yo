@@ -1,12 +1,3 @@
-From 8e1e760bef6aa94e6e71000ead2bc21716a06d19 Mon Sep 17 00:00:00 2001
-From: Steve Lhomme <robux4@ycbcr.xyz>
-Date: Thu, 23 Oct 2025 12:18:54 +0200
-Subject: [PATCH 06/14] don't use GetFileSize on UWP
-
----
- src/w32-gettext.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
 diff --git a/src/w32-gettext.c b/src/w32-gettext.c
 index 42aa01c..bf085cd 100644
 --- a/src/w32-gettext.c
@@ -27,6 +18,3 @@ index 42aa01c..bf085cd 100644
    if (size == INVALID_FILE_SIZE)
      {
        CloseHandle (fh);
--- 
-2.45.1.windows.1
-

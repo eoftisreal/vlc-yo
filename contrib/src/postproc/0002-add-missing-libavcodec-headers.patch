@@ -1,25 +1,3 @@
-From 6af2145488805dd565dcc28f94de78415258412f Mon Sep 17 00:00:00 2001
-From: Steve Lhomme <robux4@ycbcr.xyz>
-Date: Fri, 7 Nov 2025 11:32:58 +0100
-Subject: [PATCH 2/2] add missing libavcodec headers
-
-Otherwise the code won't compile on its own.
-
-Taken from libavcodec 62.11.100
----
- libavcodec/arm/mathops.h  | 108 ++++++++++++++++
- libavcodec/mathops.h      | 254 ++++++++++++++++++++++++++++++++++++++
- libavcodec/mips/mathops.h |  67 ++++++++++
- libavcodec/ppc/mathops.h  |  79 ++++++++++++
- libavcodec/x86/mathops.h  | 153 +++++++++++++++++++++++
- libavutil/fixed_dsp.h     |   2 +-
- 6 files changed, 662 insertions(+), 1 deletion(-)
- create mode 100644 libavcodec/arm/mathops.h
- create mode 100644 libavcodec/mathops.h
- create mode 100644 libavcodec/mips/mathops.h
- create mode 100644 libavcodec/ppc/mathops.h
- create mode 100644 libavcodec/x86/mathops.h
-
 diff --git a/libavcodec/arm/mathops.h b/libavcodec/arm/mathops.h
 new file mode 100644
 index 0000000000..dc57c5571c
@@ -724,6 +702,3 @@ index 71df874263..699ecce79f 100644
  
  typedef struct AVFixedDSPContext {
      /* Assume len is a multiple of 16, and arrays are 32-byte aligned */
--- 
-2.45.1.windows.1
-

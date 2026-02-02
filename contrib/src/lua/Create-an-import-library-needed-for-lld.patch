@@ -1,16 +1,3 @@
-From 0b7a8a682ec59c049ccf8fd252364709a843f622 Mon Sep 17 00:00:00 2001
-From: Marvin Scholz <epirat07@gmail.com>
-Date: Thu, 4 Nov 2021 05:40:43 +0100
-Subject: [PATCH] Create an import library needed for lld
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-Based on the previous patch by Martin Storsjö
----
- src/Makefile | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
-
 diff --git a/src/Makefile b/src/Makefile
 index 9e32d53..db3418d 100644
 --- a/src/Makefile
@@ -43,6 +30,3 @@ index 9e32d53..db3418d 100644
  	"SYSCFLAGS=-DLUA_BUILD_AS_DLL" "SYSLIBS=" "SYSLDFLAGS=-s" lua.exe
  	$(MAKE) "LUAC_T=luac.exe" luac.exe
  
--- 
-2.32.0 (Apple Git-132)
-

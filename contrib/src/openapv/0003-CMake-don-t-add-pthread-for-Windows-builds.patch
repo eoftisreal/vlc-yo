@@ -1,20 +1,3 @@
-From 08f8cb25a6029220f4dda8b7e8761c7962c0ae17 Mon Sep 17 00:00:00 2001
-From: Steve Lhomme <robux4@ycbcr.xyz>
-Date: Wed, 14 Jan 2026 13:45:01 +0100
-Subject: [PATCH 3/5] CMake: don't add -pthread for Windows builds
-
-It can generate some warnings or compilations errors.
-
-The official CMake way of picking the thread library [^1] should probably be used for non-Windows targets.
-
-[^1]: https://cmake.org/cmake/help/latest/module/FindThreads.html
-
-Signed-off-by: Steve Lhomme <robux4@ycbcr.xyz>
----
- CMakeLists.txt     | 5 ++++-
- src/CMakeLists.txt | 3 +++
- 2 files changed, 7 insertions(+), 1 deletion(-)
-
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 14035ce..52bf365 100644
 --- a/CMakeLists.txt
@@ -46,6 +29,3 @@ index d690068..29143cf 100644
      configure_file(
        "${CMAKE_SOURCE_DIR}/pkgconfig/${LIB_NAME_BASE}.pc.in"
        "${CMAKE_BINARY_DIR}/${LIB_NAME_BASE}.pc" @ONLY)
--- 
-2.52.0.windows.1
-

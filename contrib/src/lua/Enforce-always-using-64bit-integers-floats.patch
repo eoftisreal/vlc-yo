@@ -1,12 +1,3 @@
-From 938ab15dd00a042263c8cf787c739305afdb63af Mon Sep 17 00:00:00 2001
-From: Marvin Scholz <epirat07@gmail.com>
-Date: Fri, 29 Jul 2022 14:28:40 +0200
-Subject: [PATCH] Enforce always using 64bit integers/floats
-
----
- src/luaconf.h | 42 ------------------------------------------
- 1 file changed, 42 deletions(-)
-
 diff --git a/src/luaconf.h b/src/luaconf.h
 index bbd9591..d76d2ff 100644
 --- a/src/luaconf.h
@@ -63,6 +54,3 @@ index bbd9591..d76d2ff 100644
  
  /* }================================================================== */
  
--- 
-2.32.0 (Apple Git-132)
-

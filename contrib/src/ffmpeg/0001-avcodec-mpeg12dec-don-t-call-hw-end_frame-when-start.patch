@@ -1,16 +1,3 @@
-From de7c10a54b8beb95882273a1c4b391e82d00bc98 Mon Sep 17 00:00:00 2001
-From: Steve Lhomme <robux4@ycbcr.xyz>
-Date: Fri, 12 Feb 2021 08:20:56 +0100
-Subject: [PATCH 06/10] avcodec/mpeg12dec: don't call hw->end_frame when
- starting second field decoding
-
-This call is unbalanced with a hwaccel->start_frame. It fixes some crashes
-because this call ends up using uninitialized memory. Decoding works as
-expected after this patch.
----
- libavcodec/mpeg12dec.c | 8 --------
- 1 file changed, 8 deletions(-)
-
 diff --git a/libavcodec/mpeg12dec.c b/libavcodec/mpeg12dec.c
 index 3ea8d02e1b..f22396f66e 100644
 --- a/libavcodec/mpeg12dec.c
@@ -30,6 +17,3 @@ index 3ea8d02e1b..f22396f66e 100644
          ret = ff_mpv_alloc_dummy_frames(s);
          if (ret < 0)
              return ret;
--- 
-2.45.1.windows.1
-
