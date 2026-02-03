@@ -24,6 +24,7 @@ goom: goom-$(GOOM_VERSION)-src.tar.gz .sum-goom
 	$(APPLY) $(SRC)/goom/goom2k4-mmx-only.patch
 	$(APPLY) $(SRC)/goom/goom2k4-xmmslibdir.patch
 ifdef HAVE_WIN32
+	dos2unix $(UNPACK_DIR)/configure.in
 	(cd $(UNPACK_DIR) && patch -l -fp1) < $(SRC)/goom/goom2k4-0-win32.patch
 endif
 ifdef HAVE_MACOSX
