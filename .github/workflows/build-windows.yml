@@ -22,7 +22,7 @@ jobs:
         sudo apt-get install -y \
           git wget bzip2 file libwine-dev unzip libtool libtool-bin libltdl-dev pkg-config ant \
           build-essential automake texinfo yasm p7zip-full autopoint gettext cmake zip wine nsis \
-          g++-mingw-w64-x86-64 curl gperf flex bison libcurl4-gnutls-dev python3 python3-setuptools \
+          g++-mingw-w64-x86-64 gcc-mingw-w64-i686 g++-mingw-w64-i686 curl gperf flex bison libcurl4-gnutls-dev python3 python3-setuptools \
           python3-mako python3-requests gcc make procps ca-certificates openjdk-11-jdk-headless \
           nasm jq gnupg meson autoconf dos2unix
 
