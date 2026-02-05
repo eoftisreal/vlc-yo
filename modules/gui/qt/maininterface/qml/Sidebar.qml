@@ -18,7 +18,7 @@ Rectangle {
     signal itemClicked(int index)
 
     implicitWidth: VLCStyle.dp(240, VLCStyle.scale)
-    color: theme.bg.primary
+    color: "#0F0F0F" // Deep dark background
 
     ColorContext {
         id: theme
@@ -41,7 +41,7 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
                 height: VLCStyle.dp(32, VLCStyle.scale)
                 width: height
-                color: theme.accent
+                color: VLCStyle.accentColor
             }
 
             Widgets.LabelExt {
@@ -51,7 +51,7 @@ Rectangle {
                 text: "APOI"
                 font.pixelSize: VLCStyle.fontSize_xlarge
                 font.weight: Font.Bold
-                color: theme.text.primary
+                color: theme.fg.primary
             }
         }
 
@@ -67,9 +67,9 @@ Rectangle {
                 delegate: Rectangle {
                     id: delegateItem
                     width: parent.width
-                    height: VLCStyle.dp(48, VLCStyle.scale)
-                    color: (mouseArea.containsMouse || isSelected) ? (isSelected ? "#2A2A2A" : theme.bg.secondary) : "transparent"
-                    radius: VLCStyle.dp(8, VLCStyle.scale)
+                    height: VLCStyle.dp(40, VLCStyle.scale)
+                    color: (mouseArea.containsMouse || isSelected) ? (isSelected ? "#2A2A2A" : "#1A1A1A") : "transparent"
+                    radius: VLCStyle.dp(6, VLCStyle.scale)
 
                     readonly property bool isSelected: root.selectedIndex === index
 
@@ -82,12 +82,12 @@ Rectangle {
                         Widgets.IconLabel {
                             text: model.icon
                             font.pixelSize: VLCStyle.icon_normal
-                            color: delegateItem.isSelected ? theme.accent : theme.text.primary
+                            color: delegateItem.isSelected ? theme.fg.primary : theme.fg.secondary
                         }
 
                         Widgets.LabelExt {
                             text: model.displayText
-                            color: delegateItem.isSelected ? theme.accent : theme.text.primary
+                            color: delegateItem.isSelected ? theme.fg.primary : theme.fg.secondary
                             font.pixelSize: VLCStyle.fontSize_normal
                             font.weight: delegateItem.isSelected ? Font.DemiBold : Font.Normal
                             Layout.fillWidth: true
@@ -107,36 +107,61 @@ Rectangle {
         }
 
         // Open Media Button
-        Widgets.RoundButtonExt {
+        Rectangle {
             Layout.fillWidth: true
-            Layout.preferredHeight: VLCStyle.dp(48, VLCStyle.scale)
-            text: qsTr("Open media")
-            icon.source: VLCIcons.eject
-            icon.color: theme.accent
+            Layout.preferredHeight: VLCStyle.dp(56, VLCStyle.scale)
+            color: openMediaHover.containsMouse ? "#2A2A2A" : "#1E1E1E"
+            radius: VLCStyle.dp(12, VLCStyle.scale)
 
-            // Custom styling to match "Dark background with orange icon"
-            background: Rectangle {
-                color: "#1E1E1E" // Secondary dark
-                radius: VLCStyle.dp(8, VLCStyle.scale)
-                border.color: theme.bg.secondary
-            }
-            contentItem: RowLayout {
+            RowLayout {
                 anchors.centerIn: parent
                 spacing: VLCStyle.margin_small
                 Widgets.IconLabel {
                     text: VLCIcons.eject
-                    color: theme.accent
+                    color: VLCStyle.accentColor
                     font.pixelSize: VLCStyle.icon_normal
                 }
                 Widgets.LabelExt {
                     text: qsTr("Open media")
-                    color: theme.text.primary
-                    font.pixelSize: VLCStyle.fontSize_normal
+                    color: VLCStyle.accentColor
+                    font.pixelSize: VLCStyle.fontSize_large
                     font.weight: Font.Medium
                 }
             }
 
-            onClicked: DialogsProvider.openFileDialog()
+            MouseArea {
+                id: openMediaHover
+                anchors.fill: parent
+                hoverEnabled: true
+                onClicked: DialogsProvider.openFileDialog()
+            }
+        }
+
+        // Bottom Icons
+        RowLayout {
+            Layout.fillWidth: true
+            Layout.topMargin: VLCStyle.margin_small
+            spacing: VLCStyle.margin_large
+
+            Widgets.IconToolButton {
+                text: VLCIcons.back
+                font.pixelSize: VLCStyle.icon_small
+                color: theme.fg.secondary
+                onClicked: History.previous()
+            }
+             Widgets.IconToolButton {
+                text: VLCIcons.next
+                font.pixelSize: VLCStyle.icon_small
+                color: theme.fg.secondary
+                // Forward action?
+            }
+            Item { Layout.fillWidth: true }
+            Widgets.IconToolButton {
+                text: VLCIcons.menu
+                font.pixelSize: VLCStyle.icon_small
+                color: theme.fg.secondary
+                onClicked: MainCtx.intfMainWindow.toggleMenu() // Just an example
+            }
         }
     }
 
@@ -146,7 +171,6 @@ Rectangle {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         width: 1
-        color: theme.separator
-        opacity: 0.1
+        color: "#333333"
     }
 }

@@ -112,7 +112,8 @@ T.Pane {
     }
 
     background: Rectangle {
-        color: theme.bg.primary
+        color: "transparent" // theme.bg.primary
+        visible: false // Allow Player.qml gradient to show
     }
 
     contentItem: ColumnLayout {

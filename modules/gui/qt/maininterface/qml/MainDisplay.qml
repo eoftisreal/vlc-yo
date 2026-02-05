@@ -21,6 +21,8 @@ FocusScope {
 
     property bool hasMiniPlayer: miniPlayer.visible
 
+    property bool showEmbeddedPlayer: Player.hasVideoOutput && MainCtx.hasEmbededVideo
+
     // NOTE: The main view must be above the indexing bar and the mini player.
     property real displayMargin: (height - miniPlayer.y) + (loaderProgress.active ? loaderProgress.height : 0)
 
@@ -237,27 +239,12 @@ FocusScope {
                 Layout.fillHeight: true
                 z: 0
                 focus: true
+                visible: !showEmbeddedPlayer
 
                 Rectangle {
                     id: stackViewParent
                     anchors.fill: parent
                     color: theme.bg.primary
-
-                    // ... (Layer effects code preserved but simplified for this write to ensure correctness) ...
-                    // NOTE: Skipping full layer effect logic rewrite to avoid syntax errors, focusing on structure.
-                    // Assuming existing layer logic works if copied or simplified.
-                    // For the purpose of "Up Next", we need space at bottom? No, Up Next is part of Player view usually.
-                    // But if it's a global "Up Next" bar, it sits below content?
-                    // The design says "Bottom content section... Horizontal thumbnail carousel".
-                    // This implies it's visible in the Player View (video playback).
-                    // This file (MainDisplay) handles the main views (Home, Video, Music).
-                    // The Player view is separate (Player.qml).
-                    // Wait, MainDisplay behaves as a PageLoader.
-                    // If the "Up Next" queue is persistent, it should be here.
-                    // But typically "Up Next" is relevant when playing.
-                    // I will insert it at the bottom of contentColumn if playing?
-                    // Or keep it simple for now and rely on the Player view to show queue.
-                    // Given the complexity of MainDisplay syntax, I will stick to the Sidebar integration here.
 
                     Widgets.PageLoader {
                         id: stackView
@@ -346,31 +333,14 @@ FocusScope {
                 }
             } // FocusScope
 
-            // "Up Next" Queue (Placeholder / Simple Implementation)
-            // Visible only when miniplayer is visible (playing) and not in minimal mode
-            Rectangle {
-                id: upNextStrip
+            // Embedded Player View
+            Loader {
+                id: embeddedPlayerLoader
                 Layout.fillWidth: true
-                Layout.preferredHeight: VLCStyle.dp(120, VLCStyle.scale)
-                color: theme.bg.secondary
-                visible: miniPlayer.visible && !VLCStyle.isScreenSmall
-
-                Widgets.LabelExt {
-                    text: "Up Next"
-                    font.pixelSize: VLCStyle.fontSize_normal
-                    font.weight: Font.Bold
-                    color: theme.text.primary
-                    anchors.top: parent.top
-                    anchors.left: parent.left
-                    anchors.margins: VLCStyle.margin_small
-                }
-
-                // TODO: Implement actual horizontal list view binding to PlaylistModel
-                Widgets.LabelExt {
-                    text: "(Playlist Queue Placeholder)"
-                    anchors.centerIn: parent
-                    color: theme.text.secondary
-                }
+                Layout.fillHeight: true
+                visible: showEmbeddedPlayer
+                active: showEmbeddedPlayer
+                source: "qrc:///qt/qml/VLC/Player/Player.qml"
             }
 
         } // ColumnLayout
@@ -445,6 +415,7 @@ FocusScope {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         z: 3
+        visible: !showEmbeddedPlayer
         horizontalPadding: VLCStyle.applicationHorizontalMargin
         bottomPadding: VLCStyle.applicationVerticalMargin + VLCStyle.margin_xsmall
         background.visible: true // Simplified
@@ -461,7 +432,7 @@ FocusScope {
         target: Player
         function onHasVideoOutputChanged() {
             if (Player.hasVideoOutput && MainCtx.hasEmbededVideo) {
-                MainCtx.requestShowPlayerView()
+                // MainCtx.requestShowPlayerView() // Handled by showEmbeddedPlayer in MainDisplay
             } else {
                 _showMiniPlayer = false;
             }
