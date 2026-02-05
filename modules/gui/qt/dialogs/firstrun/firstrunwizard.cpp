@@ -48,17 +48,17 @@ FirstRunWizard::FirstRunWizard( qt_intf_t *_p_intf, QWidget *parent)
     ui.setupUi( this );
 
     /* Set the privacy and network policy */
-    ui.policy->setHtml( qtr( "<p>In order to protect your privacy, <i>VLC media player</i> "
+    ui.policy->setHtml( qtr( "<p>In order to protect your privacy, <i>APOI media player</i> "
         "does <b>not</b> collect personal data or transmit them, "
         "not even in anonymized form, to anyone."
         "</p>\n"
-        "<p>Nevertheless, <i>VLC</i> is able to automatically retrieve "
+        "<p>Nevertheless, <i>APOI</i> is able to automatically retrieve "
         "information about the media in your playlist from third party "
         "Internet-based services. This includes cover art, track names, "
         "artist names and other meta-data."
         "</p>\n"
         "<p>Consequently, this may entail identifying some of your media files to third party "
-        "entities. Therefore the <i>VLC</i> developers require your express "
+        "entities. Therefore the <i>APOI</i> developers require your express "
         "consent for the media player to access the Internet automatically."
         "</p>\n" ) );
     ui.policy->setReadOnly( true );

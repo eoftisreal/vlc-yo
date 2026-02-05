@@ -559,8 +559,8 @@ void SystemPalette::makeLightPalette()
     //Accent Buttons
     {
         C::ColorSet CS = C::ButtonAccent;
-        setColor(CS, C::Bg, C::Primary, C::Normal, orange800);
-        setColor(CS, C::Bg, C::Primary, C::Pressed, QColor("#e65609"));  //FIXME not a predef
+        setColor(CS, C::Bg, C::Primary, C::Normal, orange500); // Updated to match dark theme accent
+        setColor(CS, C::Bg, C::Primary, C::Pressed, QColor("#e67a30"));  // Updated
         setColor(CS, C::Bg, C::Primary, C::Disabled, setColorAlpha(Qt::black, 0.2));
 
         setColor(CS, C::Fg, C::Primary, C::Normal, Qt::white);
@@ -660,10 +660,11 @@ void SystemPalette::makeDarkPalette()
 
     {
         C::ColorSet CS = C::View;
-        setColor(CS, C::Bg, C::Primary, C::Normal, darkGrey300 );
-        setColor(CS, C::Bg, C::Secondary, C::Normal, Qt::black );
+        // Deepen the background for APOI dark mode
+        setColor(CS, C::Bg, C::Primary, C::Normal, QColor("#121212") ); // Darker background
+        setColor(CS, C::Bg, C::Secondary, C::Normal, QColor("#1E1E1E") ); // Slightly lighter secondary
 
-        setColor(CS, C::Fg, C::Primary, C::Normal, Qt::white );
+        setColor(CS, C::Fg, C::Primary, C::Normal, QColor("#E0E0E0") ); // Off-white text
         setColor(CS, C::Fg, C::Primary, C::Disabled, setColorAlpha(Qt::white, 0.3) );
 
         setColor(CS, C::Fg, C::Secondary, C::Normal, setColorAlpha(Qt::white, 0.6));
@@ -680,17 +681,17 @@ void SystemPalette::makeDarkPalette()
         setColor(CS, C::Decoration, C::VisualFocus, C::Normal, setColorAlpha(Qt::white, 0.0) );
         setColor(CS, C::Decoration, C::VisualFocus, C::Focused, Qt::white );
 
-        setColor(CS, C::Decoration, C::Border, C::Normal, setColorAlpha(Qt::white, 0.4) );
-        setColor(CS, C::Decoration, C::Border, C::Focused, setColorAlpha(Qt::white, 0.7) );
-        setColor(CS, C::Decoration, C::Border, C::Hovered, setColorAlpha(Qt::white, 0.7) );
+        setColor(CS, C::Decoration, C::Border, C::Normal, setColorAlpha(Qt::white, 0.1) );
+        setColor(CS, C::Decoration, C::Border, C::Focused, setColorAlpha(Qt::white, 0.3) );
+        setColor(CS, C::Decoration, C::Border, C::Hovered, setColorAlpha(Qt::white, 0.3) );
         setColor(CS, C::Decoration, C::Border, C::Disabled, setColorAlpha(Qt::white, 0.0) );
 
-        setColor(CS, C::Decoration, C::Shadow, C::Normal, setColorAlpha(Qt::black, 0.22));
+        setColor(CS, C::Decoration, C::Shadow, C::Normal, setColorAlpha(Qt::black, 0.5));
 
-        setColor(CS, C::Decoration, C::Separator, C::Normal, darkGrey800);
+        setColor(CS, C::Decoration, C::Separator, C::Normal, QColor("#2C2C2C"));
 
-        setColor(CS, C::Decoration, C::Accent, C::Normal, orange500);
-        setColor(CS, C::Fg, C::Link, C::Normal, orange500);
+        setColor(CS, C::Decoration, C::Accent, C::Normal, QColor("#FF9800")); // Gold/Orange accent
+        setColor(CS, C::Fg, C::Link, C::Normal, QColor("#FF9800"));
     }
 
     //window banner & miniplayer

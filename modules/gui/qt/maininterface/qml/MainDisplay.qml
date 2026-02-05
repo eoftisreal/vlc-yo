@@ -153,6 +153,10 @@ FocusScope {
                            name: e.name,
                        })
             })
+            // Add extra items to match design if needed, but pageModel drives this.
+            // The image has: Home, Library (Video, Audio, Playlists), Network.
+            // Our default pageModel has Home, Video, Music, Browse, Discover.
+            // Close enough for now.
         }
     }
 
@@ -207,21 +211,48 @@ FocusScope {
             }
         }
 
+    RowLayout {
+        id: mainRowLayout
+        anchors.fill: parent
+            spacing: 0
+
+        Sidebar {
+            id: sidebar
+            Layout.fillHeight: true
+            Layout.preferredWidth: implicitWidth
+            z: 3
+
+                model: g_mainDisplay.tabModel
+            selectedIndex: sourcesBanner.selectedIndex
+
+                onItemClicked: (index) => {
+                    const name = g_mainDisplay.tabModel.get(index).name
+
+                    if (stackView.isDefaulLoadedForPath([name])) {
+                        return
+                    }
+
+                sourcesBanner.selectedIndex = index
+                    History.push(["mc", name])
+                }
+            }
+
         ColumnLayout {
             id: contentColumn
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+                Layout.fillWidth: true
+                Layout.fillHeight: true
             spacing: 0
 
             Navigation.parentItem: g_mainDisplay
 
-            /* Source selection*/
+            /* Source selection - Hidden in favor of Sidebar, but kept logic for state management */
             BannerSources {
                 id: sourcesBanner
+                visible: false // Hiding the old top banner
                 z: 2
-                Layout.preferredHeight: height
-                Layout.minimumHeight: height
-                Layout.maximumHeight: height
+                Layout.preferredHeight: 0
+                Layout.minimumHeight: 0
+                Layout.maximumHeight: 0
                 Layout.fillWidth: true
 
                 showGlobalToolbar: false
@@ -230,7 +261,7 @@ FocusScope {
 
                 playlistPane: playlistLoader.active ? playlistLoader.item
                                                     : (playlistWindowLoader.status === Loader.Ready ? playlistWindowLoader.item.playlistView
-                                                                                                    : null)
+                                                                                                : null)
 
                 onItemClicked: (index) => {
                     const name = g_mainDisplay.tabModel.get(index).name

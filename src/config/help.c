@@ -207,19 +207,19 @@ static void Help (libvlc_int_t *p_this, char const *psz_help_name)
 
     if( psz_help_name && !strcmp( psz_help_name, "help" ) )
     {
-        printf(_(vlc_usage), "vlc");
+        printf(_(vlc_usage), "apoi");
         Usage( p_this, "=core" );
         print_help_on_full_help();
     }
     else if( psz_help_name && !strcmp( psz_help_name, "longhelp" ) )
     {
-        printf(_(vlc_usage), "vlc");
+        printf(_(vlc_usage), "apoi");
         Usage( p_this, NULL );
         print_help_on_full_help();
     }
     else if( psz_help_name && !strcmp( psz_help_name, "full-help" ) )
     {
-        printf(_(vlc_usage), "vlc");
+        printf(_(vlc_usage), "apoi");
         Usage( p_this, NULL );
     }
     else if( psz_help_name )
@@ -696,7 +696,7 @@ static void ListModules (libvlc_int_t *p_this, bool b_verbose)
 static void Version( void )
 {
     ShowConsole();
-    printf(_("VLC version %s (%s)\n"), VERSION_MESSAGE, psz_vlc_changeset);
+    printf(_("APOI version %s (%s)\n"), VERSION_MESSAGE, psz_vlc_changeset);
     printf(_("Compiled by %s on %s (%s)\n"), VLC_CompileBy(),
            VLC_CompileHost(), __DATE__" "__TIME__ );
     printf(_("Compiler: %s\n"), VLC_Compiler());
@@ -720,15 +720,15 @@ static void ShowConsole( void )
      * Unicode/locale subsystem. By default, we have the obsolecent OEM code
      * page (e.g. CP437 or CP850). */
     SetConsoleOutputCP (GetACP ());
-    SetConsoleTitle (TEXT("VLC media player version ") TEXT(PACKAGE_VERSION));
+    SetConsoleTitle (TEXT("APOI media player version ") TEXT(PACKAGE_VERSION));
 
     freopen( "CONOUT$", "w", stderr );
     freopen( "CONIN$", "r", stdin );
 
-    if( freopen( "vlc-help.txt", "wt", stdout ) != NULL )
+    if( freopen( "apoi-help.txt", "wt", stdout ) != NULL )
     {
         fputs( "\xEF\xBB\xBF", stdout );
-        fprintf( stderr, _("\nDumped content to vlc-help.txt file.\n") );
+        fprintf( stderr, _("\nDumped content to apoi-help.txt file.\n") );
     }
     else
         freopen( "CONOUT$", "w", stdout );
