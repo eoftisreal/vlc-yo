@@ -211,36 +211,10 @@ FocusScope {
             }
         }
 
-    RowLayout {
-        id: mainRowLayout
-        anchors.fill: parent
-            spacing: 0
-
-        Sidebar {
-            id: sidebar
-            Layout.fillHeight: true
-            Layout.preferredWidth: implicitWidth
-            z: 3
-
-                model: g_mainDisplay.tabModel
-            selectedIndex: sourcesBanner.selectedIndex
-
-                onItemClicked: (index) => {
-                    const name = g_mainDisplay.tabModel.get(index).name
-
-                    if (stackView.isDefaulLoadedForPath([name])) {
-                        return
-                    }
-
-                sourcesBanner.selectedIndex = index
-                    History.push(["mc", name])
-                }
-            }
-
         ColumnLayout {
             id: contentColumn
-                Layout.fillWidth: true
-                Layout.fillHeight: true
+            Layout.fillWidth: true
+            Layout.fillHeight: true
             spacing: 0
 
             Navigation.parentItem: g_mainDisplay
@@ -288,301 +262,301 @@ FocusScope {
 
                 focus: true
 
-            Rectangle {
-                id: stackViewParent
-
-                // This rectangle is used to display the effect in
-                // the area of miniplayer background.
-                // We can not directly apply the effect on the
-                // view because its size is limited and the effect
-                // should exceed the size. Also, it is beneficial
-                // to have a rectangle here because if the background
-                // is transparent we would lose subpixel font rendering
-                // support.
-
-                anchors.fill: parent
-
-                implicitWidth: stackView.implicitWidth
-                implicitHeight: stackView.implicitHeight
-
-                color: theme.bg.primary
-
-                layer.enabled: MainCtx.backdropBlurRequested() &&
-                               (GraphicsInfo.shaderType === GraphicsInfo.RhiShader) &&
-                               (miniPlayer.visible || (loaderProgress.active && loaderProgress.item.visible))
-
-                // Blurring requires to access neighbour pixels, thus the source texture should be bigger than
-                // the effect so that the effect have access to the neighbor pixels for the pixels near the
-                // border, where the extra size would depend on the blur configuration. When the source is
-                // static, this problem is harder to notice, but when the source is not static, such as
-                // during scrolling, not considering this causes glitches in the bottom side. `PartialEffect`,
-                // since 03b0de26, already provides the effect the whole source texture with a proper sub-rect,
-                // so the effect here can sample the top edge neighbour pixels, but for the bottom edge we
-                // need to configure the layer:
-                readonly property int bottomExtension: 16
-                layer.sourceRect: Qt.rect(0, 0, width, height + bottomExtension)
-
                 Rectangle {
-                    // Extension of parent rectangle for the bottom extension.
-                    anchors.top: parent.bottom
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    height: stackViewParent.bottomExtension
-                    visible: stackViewParent.layer.enabled && (height > 0)
-                    color: parent.color
-                }
+                    id: stackViewParent
 
-                layer.effect: Widgets.PartialEffect {
-                    id: stackViewParentLayerEffect
-
-                    // Setting `height` does not seem to work here. Anchoring the effect is not very nice, but it works:
-                    anchors.fill: stackViewParent // WARNING: layered item is not necessarily the visual parent of its layer effect.
-                    anchors.bottomMargin: -stackViewParent.bottomExtension
-
-                    blending: stackViewParent.color.a < (1.0 - Number.EPSILON)
-
-                    // Each pass of the blur effect also suffers from the border neighbour pixel issue mentioned
-                    // above, making all the borders problematic, to a less considerable extent. For that reason,
-                    // we extend both the top and the bottom edges and use viewport to prevent overdraw:
-                    effectRect: Qt.rect(0,
-                                        stackView.height - stackViewParent.bottomExtension,
-                                        width,
-                                        loaderProgress.height + miniPlayer.height + 2 * stackViewParent.bottomExtension)
-
-                    sourceVisualRect: blending ? Qt.rect(0, 0, width, effectRect.y) : Qt.rect(0, 0, 0, 0)
-
-                    effect: frostedGlassEffect
-
-                    Widgets.FrostedGlassEffect {
-                        id: frostedGlassEffect
-
-                        ColorContext {
-                            id: frostedTheme
-                            palette: VLCStyle.palette
-                            colorSet: ColorContext.Window
-                        }
-
-                        tint: frostedTheme.bg.secondary
-
-                        // Prevent overdraw (the extension margin should not be painted):
-                        viewportRect: Qt.rect(0,
-                                              stackViewParent.bottomExtension,
-                                              width,
-                                              height - (2 * stackViewParent.bottomExtension))
-                    }
-                }
-
-                Widgets.PageLoader {
-                    id: stackView
-
-                    focus: true
+                    // This rectangle is used to display the effect in
+                    // the area of miniplayer background.
+                    // We can not directly apply the effect on the
+                    // view because its size is limited and the effect
+                    // should exceed the size. Also, it is beneficial
+                    // to have a rectangle here because if the background
+                    // is transparent we would lose subpixel font rendering
+                    // support.
 
                     anchors.fill: parent
-                    anchors.rightMargin: (playlistLoader.shown && !VLCStyle.isScreenSmall)
-                                         ? playlistLoader.width
-                                         : 0
-                    anchors.bottomMargin: g_mainDisplay.displayMargin
 
-                    pageModel: g_mainDisplay.pageModel
+                    implicitWidth: stackView.implicitWidth
+                    implicitHeight: stackView.implicitHeight
 
-                    leftPadding: VLCStyle.applicationHorizontalMargin
+                    color: theme.bg.primary
 
-                    rightPadding: playlistLoader.shown
-                                  ? 0
-                                  : VLCStyle.applicationHorizontalMargin
+                    layer.enabled: MainCtx.backdropBlurRequested() &&
+                                   (GraphicsInfo.shaderType === GraphicsInfo.RhiShader) &&
+                                   (miniPlayer.visible || (loaderProgress.active && loaderProgress.item.visible))
 
-                    onCurrentItemChanged: {
-                        if (currentItem) {
-                            {
-                                // Main pages need to compensate for the mini player:
+                    // Blurring requires to access neighbour pixels, thus the source texture should be bigger than
+                    // the effect so that the effect have access to the neighbor pixels for the pixels near the
+                    // border, where the extra size would depend on the blur configuration. When the source is
+                    // static, this problem is harder to notice, but when the source is not static, such as
+                    // during scrolling, not considering this causes glitches in the bottom side. `PartialEffect`,
+                    // since 03b0de26, already provides the effect the whole source texture with a proper sub-rect,
+                    // so the effect here can sample the top edge neighbour pixels, but for the bottom edge we
+                    // need to configure the layer:
+                    readonly property int bottomExtension: 16
+                    layer.sourceRect: Qt.rect(0, 0, width, height + bottomExtension)
 
-                                if (currentItem.displayMarginEnd !== undefined)
-                                    currentItem.displayMarginEnd = Qt.binding(() => { return g_mainDisplay.displayMargin })
+                    Rectangle {
+                        // Extension of parent rectangle for the bottom extension.
+                        anchors.top: parent.bottom
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        height: stackViewParent.bottomExtension
+                        visible: stackViewParent.layer.enabled && (height > 0)
+                        color: parent.color
+                    }
 
-                                if (currentItem.enableEndFade !== undefined)
-                                    currentItem.enableEndFade = Qt.binding(() => { return (g_mainDisplay.hasMiniPlayer === false) })
+                    layer.effect: Widgets.PartialEffect {
+                        id: stackViewParentLayerEffect
+
+                        // Setting `height` does not seem to work here. Anchoring the effect is not very nice, but it works:
+                        anchors.fill: stackViewParent // WARNING: layered item is not necessarily the visual parent of its layer effect.
+                        anchors.bottomMargin: -stackViewParent.bottomExtension
+
+                        blending: stackViewParent.color.a < (1.0 - Number.EPSILON)
+
+                        // Each pass of the blur effect also suffers from the border neighbour pixel issue mentioned
+                        // above, making all the borders problematic, to a less considerable extent. For that reason,
+                        // we extend both the top and the bottom edges and use viewport to prevent overdraw:
+                        effectRect: Qt.rect(0,
+                                            stackView.height - stackViewParent.bottomExtension,
+                                            width,
+                                            loaderProgress.height + miniPlayer.height + 2 * stackViewParent.bottomExtension)
+
+                        sourceVisualRect: blending ? Qt.rect(0, 0, width, effectRect.y) : Qt.rect(0, 0, 0, 0)
+
+                        effect: frostedGlassEffect
+
+                        Widgets.FrostedGlassEffect {
+                            id: frostedGlassEffect
+
+                            ColorContext {
+                                id: frostedTheme
+                                palette: VLCStyle.palette
+                                colorSet: ColorContext.Window
+                            }
+
+                            tint: frostedTheme.bg.secondary
+
+                            // Prevent overdraw (the extension margin should not be painted):
+                            viewportRect: Qt.rect(0,
+                                                  stackViewParent.bottomExtension,
+                                                  width,
+                                                  height - (2 * stackViewParent.bottomExtension))
+                        }
+                    }
+
+                    Widgets.PageLoader {
+                        id: stackView
+
+                        focus: true
+
+                        anchors.fill: parent
+                        anchors.rightMargin: (playlistLoader.shown && !VLCStyle.isScreenSmall)
+                                             ? playlistLoader.width
+                                             : 0
+                        anchors.bottomMargin: g_mainDisplay.displayMargin
+
+                        pageModel: g_mainDisplay.pageModel
+
+                        leftPadding: VLCStyle.applicationHorizontalMargin
+
+                        rightPadding: playlistLoader.shown
+                                      ? 0
+                                      : VLCStyle.applicationHorizontalMargin
+
+                        onCurrentItemChanged: {
+                            if (currentItem) {
+                                {
+                                    // Main pages need to compensate for the mini player:
+
+                                    if (currentItem.displayMarginEnd !== undefined)
+                                        currentItem.displayMarginEnd = Qt.binding(() => { return g_mainDisplay.displayMargin })
+
+                                    if (currentItem.enableEndFade !== undefined)
+                                        currentItem.enableEndFade = Qt.binding(() => { return (g_mainDisplay.hasMiniPlayer === false) })
+                                }
                             }
                         }
-                    }
 
-                    Navigation.parentItem: contentColumn
-                    Navigation.upItem: sourcesBanner
-                    Navigation.rightItem: playlistLoader
-                    Navigation.downItem:  miniPlayer.visible ? miniPlayer : null
-                }
-
-                Rectangle {
-                    // overlay for smallscreens
-
-                    anchors.fill: parent
-                    visible: VLCStyle.isScreenSmall && playlistLoader.shown
-                    color: "black"
-                    opacity: 0.4
-
-                    MouseArea {
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        onClicked: {
-                            MainCtx.playlistVisible = false
-                        }
-
-                        // Capture WheelEvents before they reach stackView
-                        onWheel: (wheel) => {
-                            wheel.accepted = true
-                        }
-                    }
-                }
-            }
-
-            Loader {
-                id: playlistLoader
-
-                anchors {
-                    top: parent.top
-                    right: parent.right
-                }
-
-                width: 0
-                height: parent.height - g_mainDisplay.displayMargin
-
-                visible: false
-
-                active: MainCtx.playlistDocked
-
-                state: ((status === Loader.Ready) && MainCtx.playlistVisible) ? "expanded" : ""
-
-                readonly property bool shown: (status === Loader.Ready) && item.visible
-
-                onVisibleChanged: {
-                    if (!visible) {
-                        stackView.focus = true
-                    }
-                }
-
-                Component.onCompleted: {
-                    Qt.callLater(() => { playlistTransition.enabled = true; })
-                }
-
-                states: State {
-                    name: "expanded"
-                    PropertyChanges {
-                        target: playlistLoader
-                        width: playlistLoader.implicitWidth
-                        visible: true
-                    }
-                }
-
-                transitions: Transition {
-                    id: playlistTransition
-                    enabled: false
-
-                    from: ""; to: "expanded";
-                    reversible: true
-
-                    SequentialAnimation {
-                        PropertyAction { property: "visible" }
-
-                        NumberAnimation {
-                            property: "width"
-                            duration: VLCStyle.duration_short
-                            easing.type: Easing.InOutSine
-                        }
-                    }
-                }
-
-                sourceComponent: PlaylistPane {
-                    id: playlist
-
-                    implicitWidth: Math.round(VLCStyle.isScreenSmall
-                                   ? g_mainDisplay.width * 0.8
-                                   : Helpers.clamp(g_mainDisplay.width / resizeHandle.widthFactor,
-                                                   minimumWidth,
-                                                   g_mainDisplay.width / 2 + playlistLeftBorder.width / 2))
-
-                    focus: true
-
-                    leftPadding: playlistLeftBorder.width
-                    rightPadding: VLCStyle.applicationHorizontalMargin
-                    topPadding: VLCStyle.layoutTitle_top_padding
-                    bottomPadding: VLCStyle.margin_normal + Math.max(VLCStyle.applicationVerticalMargin - g_mainDisplay.displayMargin, 0)
-
-                    useAcrylic: !VLCStyle.isScreenSmall
-
-                    Navigation.parentItem: contentColumn
-                    Navigation.upItem: sourcesBanner
-                    Navigation.downItem: miniPlayer.visible ? miniPlayer : null
-
-                    Navigation.leftAction: function() {
-                        stackView.currentItem.setCurrentItemFocus(Qt.TabFocusReason);
-                    }
-
-                    Navigation.cancelAction: function() {
-                        MainCtx.playlistVisible = false
-                        stackView.forceActiveFocus()
+                        Navigation.parentItem: contentColumn
+                        Navigation.upItem: sourcesBanner
+                        Navigation.rightItem: playlistLoader
+                        Navigation.downItem:  miniPlayer.visible ? miniPlayer : null
                     }
 
                     Rectangle {
-                        id: playlistLeftBorder
+                        // overlay for smallscreens
 
-                        parent: playlist
+                        anchors.fill: parent
+                        visible: VLCStyle.isScreenSmall && playlistLoader.shown
+                        color: "black"
+                        opacity: 0.4
 
-                        anchors {
-                            top: parent.top
-                            bottom: parent.bottom
-                            left: parent.left
-                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onClicked: {
+                                MainCtx.playlistVisible = false
+                            }
 
-                        width: VLCStyle.border
-                        color: theme.separator
-
-                        visible: playlistLoader.shown
-                    }
-
-                    Widgets.HorizontalResizeHandle {
-                        id: resizeHandle
-
-                        property bool _inhibitMainInterfaceUpdate: false
-
-                        parent: playlist
-
-                        anchors {
-                            top: parent.top
-                            bottom: parent.bottom
-                            left: parent.left
-                        }
-
-                        atRight: false
-                        targetWidth: parent.width
-                        sourceWidth: g_mainDisplay.width
-
-                        visible: !VLCStyle.isScreenSmall
-
-                        onWidthFactorChanged: {
-                            if (!_inhibitMainInterfaceUpdate && visible)
-                                MainCtx.setPlaylistWidthFactor(widthFactor)
-                        }
-
-                        Component.onCompleted:  _updateFromMainInterface()
-
-                        function _updateFromMainInterface() {
-                            if (widthFactor == MainCtx.playlistWidthFactor)
-                                return
-
-                            _inhibitMainInterfaceUpdate = true
-                            widthFactor = MainCtx.playlistWidthFactor
-                            _inhibitMainInterfaceUpdate = false
-                        }
-
-                        Connections {
-                            target: MainCtx
-
-                            function onPlaylistWidthFactorChanged() {
-                                resizeHandle._updateFromMainInterface()
+                            // Capture WheelEvents before they reach stackView
+                            onWheel: (wheel) => {
+                                wheel.accepted = true
                             }
                         }
                     }
                 }
-            }
+
+                Loader {
+                    id: playlistLoader
+
+                    anchors {
+                        top: parent.top
+                        right: parent.right
+                    }
+
+                    width: 0
+                    height: parent.height - g_mainDisplay.displayMargin
+
+                    visible: false
+
+                    active: MainCtx.playlistDocked
+
+                    state: ((status === Loader.Ready) && MainCtx.playlistVisible) ? "expanded" : ""
+
+                    readonly property bool shown: (status === Loader.Ready) && item.visible
+
+                    onVisibleChanged: {
+                        if (!visible) {
+                            stackView.focus = true
+                        }
+                    }
+
+                    Component.onCompleted: {
+                        Qt.callLater(() => { playlistTransition.enabled = true; })
+                    }
+
+                    states: State {
+                        name: "expanded"
+                        PropertyChanges {
+                            target: playlistLoader
+                            width: playlistLoader.implicitWidth
+                            visible: true
+                        }
+                    }
+
+                    transitions: Transition {
+                        id: playlistTransition
+                        enabled: false
+
+                        from: ""; to: "expanded";
+                        reversible: true
+
+                        SequentialAnimation {
+                            PropertyAction { property: "visible" }
+
+                            NumberAnimation {
+                                property: "width"
+                                duration: VLCStyle.duration_short
+                                easing.type: Easing.InOutSine
+                            }
+                        }
+                    }
+
+                    sourceComponent: PlaylistPane {
+                        id: playlist
+
+                        implicitWidth: Math.round(VLCStyle.isScreenSmall
+                                       ? g_mainDisplay.width * 0.8
+                                       : Helpers.clamp(g_mainDisplay.width / resizeHandle.widthFactor,
+                                                       minimumWidth,
+                                                       g_mainDisplay.width / 2 + playlistLeftBorder.width / 2))
+
+                        focus: true
+
+                        leftPadding: playlistLeftBorder.width
+                        rightPadding: VLCStyle.applicationHorizontalMargin
+                        topPadding: VLCStyle.layoutTitle_top_padding
+                        bottomPadding: VLCStyle.margin_normal + Math.max(VLCStyle.applicationVerticalMargin - g_mainDisplay.displayMargin, 0)
+
+                        useAcrylic: !VLCStyle.isScreenSmall
+
+                        Navigation.parentItem: contentColumn
+                        Navigation.upItem: sourcesBanner
+                        Navigation.downItem: miniPlayer.visible ? miniPlayer : null
+
+                        Navigation.leftAction: function() {
+                            stackView.currentItem.setCurrentItemFocus(Qt.TabFocusReason);
+                        }
+
+                        Navigation.cancelAction: function() {
+                            MainCtx.playlistVisible = false
+                            stackView.forceActiveFocus()
+                        }
+
+                        Rectangle {
+                            id: playlistLeftBorder
+
+                            parent: playlist
+
+                            anchors {
+                                top: parent.top
+                                bottom: parent.bottom
+                                left: parent.left
+                            }
+
+                            width: VLCStyle.border
+                            color: theme.separator
+
+                            visible: playlistLoader.shown
+                        }
+
+                        Widgets.HorizontalResizeHandle {
+                            id: resizeHandle
+
+                            property bool _inhibitMainInterfaceUpdate: false
+
+                            parent: playlist
+
+                            anchors {
+                                top: parent.top
+                                bottom: parent.bottom
+                                left: parent.left
+                            }
+
+                            atRight: false
+                            targetWidth: parent.width
+                            sourceWidth: g_mainDisplay.width
+
+                            visible: !VLCStyle.isScreenSmall
+
+                            onWidthFactorChanged: {
+                                if (!_inhibitMainInterfaceUpdate && visible)
+                                    MainCtx.setPlaylistWidthFactor(widthFactor)
+                            }
+
+                            Component.onCompleted:  _updateFromMainInterface()
+
+                            function _updateFromMainInterface() {
+                                if (widthFactor == MainCtx.playlistWidthFactor)
+                                    return
+
+                                _inhibitMainInterfaceUpdate = true
+                                widthFactor = MainCtx.playlistWidthFactor
+                                _inhibitMainInterfaceUpdate = false
+                            }
+
+                            Connections {
+                                target: MainCtx
+
+                                function onPlaylistWidthFactorChanged() {
+                                    resizeHandle._updateFromMainInterface()
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
