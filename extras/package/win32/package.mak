@@ -1,6 +1,6 @@
 if HAVE_WIN32
 BUILT_SOURCES_distclean += \
-	extras/package/win32/NSIS/vlc.win32.nsi extras/package/win32/NSIS/spad.nsi
+	extras/package/win32/NSIS/apoi.win32.nsi extras/package/win32/NSIS/spad.nsi
 endif
 
 win32_destdir=@PACKAGE_DIR@
@@ -67,13 +67,13 @@ endif
 	cp "$(srcdir)/README.md" "$(win32_destdir)/README.txt"
 
 	cp $(srcdir)/share/icons/vlc.ico $(win32_destdir)
-	for plugindir in $(prefix)/lib/vlc/plugins/*/; do \
+	for plugindir in $(prefix)/lib/apoi/plugins/*/; do \
 		plugin_destdir="$(win32_destdir)/plugins/`basename $$plugindir`"; \
 		mkdir -p "$$plugin_destdir"; \
 		find "$$plugindir" -type f \( -not -name '*.la' -and -not -name '*.a' \) -exec cp -v "{}" "$$plugin_destdir" \; ;\
 	done
 if ENABLE_PDB
-	for plugindir in $(prefix)/lib/vlc/plugins/*/; do \
+	for plugindir in $(prefix)/lib/apoi/plugins/*/; do \
 		plugin_destdir="$(win32_destdir)/plugins/`basename $$plugindir`"; \
 		for plugin in $$(find "$$plugindir" -type f \( -not -name '*.la' -and -not -name '*.a' \)); do cp modules/.libs/$$(basename "$$plugin" | sed s/dll/pdb/) "$$plugin_destdir"; done; \
 	done
@@ -86,12 +86,12 @@ endif
 if BUILD_LUA
 	mkdir -p $(win32_destdir)/lua/
 	cp -r $(pkglibexecdir)/lua/* $(win32_destdir)/lua/
-	cp -r $(prefix)/share/vlc/lua/* $(win32_destdir)/lua/
+	cp -r $(prefix)/share/apoi/lua/* $(win32_destdir)/lua/
 endif
 
 if BUILD_SKINS
 	rm -fr $(win32_destdir)/skins
-	cp -r $(prefix)/share/vlc/skins2 $(win32_destdir)/skins
+	cp -r $(prefix)/share/apoi/skins2 $(win32_destdir)/skins
 endif
 
 # HRTF
@@ -136,7 +136,7 @@ package-win32-src: package-win-strip
 if HAVE_MAKENSIS
 # Script installer
 	mkdir -p "$(win32_destdir)/NSIS/"
-	cp    $(top_builddir)/extras/package/win32/NSIS/vlc.win32.nsi "$(win32_destdir)/"
+	cp    $(top_builddir)/extras/package/win32/NSIS/apoi.win32.nsi "$(win32_destdir)/"
 	cp    $(top_builddir)/extras/package/win32/NSIS/spad.nsi      "$(win32_destdir)/"
 	cp -r $(srcdir)/extras/package/win32/NSIS/languages           "$(win32_destdir)/"
 	cp -r $(srcdir)/extras/package/win32/NSIS/helpers             "$(win32_destdir)/"
@@ -145,10 +145,10 @@ if HAVE_MAKENSIS
 endif
 
 if HAVE_MAKENSIS
-package-win32-exe: package-win32-src $(win32_destdir)/NSIS/nsProcess.dll extras/package/win32/NSIS/vlc.win32.nsi
+package-win32-exe: package-win32-src $(win32_destdir)/NSIS/nsProcess.dll extras/package/win32/NSIS/apoi.win32.nsi
 # Create package
 	$(MAKENSIS) "$(win32_destdir)/spad.nsi"
-	$(MAKENSIS) "$(win32_destdir)/vlc.win32.nsi"
+	$(MAKENSIS) "$(win32_destdir)/apoi.win32.nsi"
 else
 package-win32-exe:
 	@echo "makensis require to build NSIS installer not found or too old"; exit 1;
@@ -195,11 +195,11 @@ package-wince: package-win-strip
 .PHONY: package-win-install package-win-common package-win-strip package-win32-src package-win32-exe package-win32-zip package-win32-debug-zip package-win32-7zip package-win32-debug-7zip package-win32-cleanup package-win32 package-win32-debug package-wince
 
 EXTRA_DIST += \
-	extras/package/win32/vlc.exe.manifest \
+	extras/package/win32/apoi.exe.manifest \
 	extras/package/win32/libvlc.dll.manifest \
 	extras/package/win32/libvlccore.dll.manifest \
 	extras/package/win32/configure.sh \
-	extras/package/win32/NSIS/vlc.win32.nsi.in \
+	extras/package/win32/NSIS/apoi.win32.nsi.in \
 	extras/package/win32/NSIS/spad.nsi.in \
 	extras/package/win32/NSIS/vlc_branding.bmp \
 	extras/package/win32/NSIS/languages/BengaliExtra.nsh \

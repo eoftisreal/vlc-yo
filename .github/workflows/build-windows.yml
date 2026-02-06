@@ -65,5 +65,5 @@ jobs:
       if: success()
       uses: actions/upload-artifact@v4
       with:
-        name: vlc-windows-build
+        name: apoi-windows-build
         path: build/**/*.exe

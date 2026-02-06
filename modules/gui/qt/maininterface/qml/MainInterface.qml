@@ -179,8 +179,9 @@ Item {
                 if (MainCtx.minimalView)
                     return
 
-                if (!History.match(History.viewPath, ["player"]))
-                    History.push(["player"])
+                // Modified for APOI design: Keep MainDisplay active to show Sidebar + Player
+                // if (!History.match(History.viewPath, ["player"]))
+                //    History.push(["player"])
             }
 
             function onMinimalViewChanged() {

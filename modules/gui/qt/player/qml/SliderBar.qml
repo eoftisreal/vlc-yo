@@ -42,7 +42,7 @@ T.ProgressBar {
     property bool _currentChapterHovered: false
     property real _tooltipPosition: timeTooltip.pos.x / width
 
-    property color backgroundColor: theme.bg.primary
+    property color backgroundColor: Qt.rgba(1, 1, 1, 0.2) // Semi-transparent track
 
     Keys.onRightPressed: Player.jumpFwd()
     Keys.onLeftPressed: Player.jumpBwd()
@@ -321,7 +321,7 @@ T.ProgressBar {
                     readonly property bool _hovered: hoverHandler.hovered &&
                                             (hoverHandler.point.position.x > x && hoverHandler.point.position.x < x+width)
 
-                    color: _currentChapter < 0 ? theme.fg.primary : control.backgroundColor
+                    color: _currentChapter < 0 ? VLCStyle.accentColor : control.backgroundColor
                     width: sliderRect.width * seekpointsRect.endPosition - x - control._seekPointsDistance
                     x: sliderRect.width * seekpointsRect.startPosition
 
@@ -334,7 +334,7 @@ T.ProgressBar {
 
                         width: sliderRect.width * control.visualPosition - parent.x - control._seekPointsDistance
                         visible: parent._currentChapter === 0
-                        color: theme.fg.primary
+                        color: VLCStyle.accentColor
                     }
                 }
 
@@ -384,7 +384,7 @@ T.ProgressBar {
             id: progressRect
             width: control.visualPosition * parent.width
             visible: !Player.hasChapters
-            color: theme.fg.primary
+            color: VLCStyle.accentColor
             height: control.barHeight
             radius: control._seekPointsRadius
         }
@@ -509,7 +509,7 @@ T.ProgressBar {
         implicitWidth: sliderHandle._size
         implicitHeight: sliderHandle._size
         radius: VLCStyle.margin_small
-        color: theme.fg.primary
+        color: VLCStyle.accentColor
 
         transitions: [
             Transition {

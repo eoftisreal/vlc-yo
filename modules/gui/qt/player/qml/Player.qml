@@ -171,7 +171,7 @@ FocusScope {
             left: parent.left
             right: parent.right
             top: (MainCtx.hasEmbededVideo && rootPlayer._controlsUnderVideo) ? topBar.bottom : parent.top
-            bottom: (MainCtx.hasEmbededVideo && rootPlayer._controlsUnderVideo) ? controlBar.top : parent.bottom
+            bottom: upNextArea.top
         }
 
         sourceComponent: MainCtx.hasEmbededVideo ? videoComponent : audioComponent
@@ -180,7 +180,7 @@ FocusScope {
 
         // Have padding here, so that the content (unlike background) does not go behind the top bar or the control bar:
         property real topPadding: (anchors.top === parent.top) ? topBar.height : 0
-        property real bottomPadding: (anchors.bottom === parent.bottom) ? controlBar.height : 0
+        property real bottomPadding: 0 // Control bar is overlay
 
         Component {
             id: videoComponent
@@ -892,11 +892,92 @@ FocusScope {
         }
     }
 
+    Rectangle {
+        id: upNextArea
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: VLCStyle.dp(180, VLCStyle.scale)
+        color: "#0F0F0F" // Dark background matching sidebar
+
+        Widgets.LabelExt {
+            id: upNextHeader
+            text: "Up Next"
+            font.pixelSize: VLCStyle.fontSize_large
+            font.weight: Font.Bold
+            color: "white"
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.margins: VLCStyle.margin_normal
+        }
+
+        ListView {
+            id: upNextList
+            anchors.top: upNextHeader.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            anchors.leftMargin: VLCStyle.margin_normal
+            orientation: ListView.Horizontal
+            spacing: VLCStyle.margin_small
+            clip: true
+
+            model: MainPlaylistController.model
+
+            delegate: Rectangle {
+                width: VLCStyle.dp(200, VLCStyle.scale)
+                height: parent.height - VLCStyle.margin_normal
+                color: "transparent"
+
+                ColumnLayout {
+                    anchors.fill: parent
+                    spacing: VLCStyle.margin_xxsmall
+
+                    Rectangle {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: VLCStyle.dp(100, VLCStyle.scale)
+                        color: "#333333"
+                        radius: VLCStyle.dp(8, VLCStyle.scale)
+                        clip: true
+
+                        Image {
+                            anchors.fill: parent
+                            source: model.artwork || VLCStyle.noArtVideoCover
+                            fillMode: Image.PreserveAspectCrop
+                        }
+                    }
+
+                    Widgets.LabelExt {
+                        text: model.title
+                        Layout.fillWidth: true
+                        elide: Text.ElideRight
+                        color: "white"
+                        font.pixelSize: VLCStyle.fontSize_normal
+                        font.weight: Font.DemiBold
+                    }
+
+                    Widgets.LabelExt {
+                        text: model.artist
+                        Layout.fillWidth: true
+                        elide: Text.ElideRight
+                        color: "#AAAAAA"
+                        font.pixelSize: VLCStyle.fontSize_small
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: MainPlaylistController.goTo(index)
+                }
+            }
+        }
+    }
+
     ControlBar {
         id: controlBar
 
         anchors {
-            bottom: parent.bottom
+            bottom: upNextArea.top
             left: parent.left
             right: parent.right
         }

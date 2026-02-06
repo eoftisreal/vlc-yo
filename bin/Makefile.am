@@ -105,7 +105,7 @@ vlc_win32_rc.rc: $(top_builddir)/config.status vlc_win32_rc.rc.in
 	cd "$(top_builddir)" && \
 	$(SHELL) ./config.status --file="bin/$@"
 
-vlc_win32_rc.$(OBJEXT): vlc_win32_rc.rc $(top_srcdir)/extras/package/win32/vlc.exe.manifest
+vlc_win32_rc.$(OBJEXT): vlc_win32_rc.rc $(top_srcdir)/extras/package/win32/apoi.exe.manifest
 	$(WINDRES) --include-dir $(top_srcdir)/share/icons --include-dir $(top_srcdir)/extras/package/win32 -i $< -o $@
 
 #

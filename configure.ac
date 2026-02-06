@@ -2,7 +2,7 @@ dnl Autoconf settings for vlc
 
 AC_COPYRIGHT([Copyright 1999-2026 VLC authors and VideoLAN])
 
-AC_INIT([vlc], [4.0.0-dev])
+AC_INIT([apoi], [4.0.0-dev])
 VERSION_MAJOR=4
 VERSION_MINOR=0
 VERSION_REVISION=0
@@ -14,7 +14,7 @@ LIBVLC_ABI_MAJOR=12
 LIBVLC_ABI_MINOR=0
 LIBVLC_ABI_MICRO=0
 
-PKGDIR="vlc"
+PKGDIR="apoi"
 AC_SUBST([PKGDIR])
 
 CONFIGURE_LINE="`echo "$0 $ac_configure_args" | sed -e 's/\\\/\\\\\\\/g'`"
@@ -5028,7 +5028,7 @@ AC_CONFIG_FILES([
 AM_COND_IF([HAVE_WIN32], [
   AC_CONFIG_FILES([
     extras/package/win32/NSIS/spad.nsi
-    extras/package/win32/NSIS/vlc.win32.nsi
+    extras/package/win32/NSIS/apoi.win32.nsi
     extras/package/win32/msi/config.wxi
   ])
 ])
