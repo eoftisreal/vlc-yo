@@ -115,7 +115,7 @@ FunctionEnd
 
 ; Remove shortcuts
 !macro HideIcons
-  WriteRegDWORD HKLM "Software\Clients\Media\VLC\InstallInfo" "IconsVisible" 0
+  WriteRegDWORD HKLM "Software\Clients\Media\APOI\InstallInfo" "IconsVisible" 0
   SetShellVarContext all  ; Set $DESKTOP to All Users
   ${Unless} ${FileExists} "$DESKTOP\APOI media player.lnk"
     SetShellVarContext current  ; Set $DESKTOP to the current user's desktop
@@ -131,7 +131,7 @@ FunctionEnd
 
 ; Adds shortcuts 
 !macro ShowIcons
-  WriteRegDWORD HKLM "Software\Clients\Media\VLC\InstallInfo" "IconsVisible" 1
+  WriteRegDWORD HKLM "Software\Clients\Media\APOI\InstallInfo" "IconsVisible" 1
   SetShellVarContext all  ; Set $DESKTOP to All Users
   ${Unless} ${FileExists} "$DESKTOP\APOI media player.lnk"
     CreateShortCut "$DESKTOP\APOI media player.lnk" "$EXEDIR\apoi.exe" "" "$EXEDIR\apoi.exe" 0
