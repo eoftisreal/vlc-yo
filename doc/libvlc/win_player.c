@@ -3,14 +3,14 @@
 #include <windows.h>
 #include <assert.h>
 
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 
 #define SCREEN_WIDTH  1500
 #define SCREEN_HEIGHT  900
 
 struct vlc_context
 {
-    libvlc_instance_t     *p_libvlc;
+    libapoi_instance_t     *p_libvlc;
     libvlc_media_player_t *p_mediaplayer;
 };
 

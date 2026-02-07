@@ -29,7 +29,7 @@
 #include <vlc_services_discovery.h>
 #include <vlc_probe.h>
 #include <vlc_modules.h>
-#include "../libvlc.h"
+#include "../libapoi.h"
 
 typedef struct
 {

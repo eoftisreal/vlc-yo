@@ -1,5 +1,5 @@
 /*****************************************************************************
- * libvlc_audio.c: New libvlc audio control API
+ * libapoi_audio.c: New libapoi audio control API
  *****************************************************************************
  * Copyright (C) 2006 VLC authors and VideoLAN
  *
@@ -28,42 +28,42 @@
 #include <assert.h>
 #include <math.h>
 
-#include <vlc/libvlc.h>
-#include <vlc/libvlc_renderer_discoverer.h>
-#include <vlc/libvlc_picture.h>
-#include <vlc/libvlc_media.h>
-#include <vlc/libvlc_media_player.h>
+#include <apoi/libapoi.h>
+#include <apoi/libapoi_renderer_discoverer.h>
+#include <apoi/libapoi_picture.h>
+#include <apoi/libapoi_media.h>
+#include <apoi/libapoi_media_player.h>
 
 #include <vlc_common.h>
 #include <vlc_aout.h>
 #include <vlc_modules.h>
 
-#include "libvlc_internal.h"
+#include "libapoi_internal.h"
 #include "media_player_internal.h"
 
 /*
  * Remember to release the returned audio_output_t since it is locked at
  * the end of this function.
  */
-static audio_output_t *GetAOut( libvlc_media_player_t *mp )
+static audio_output_t *GetAOut( libapoi_media_player_t *mp )
 {
     assert( mp != NULL );
 
     audio_output_t *p_aout = vlc_player_aout_Hold(mp->player);
     if( p_aout == NULL )
-        libvlc_printerr( "No active audio output" );
+        libapoi_printerr( "No active audio output" );
     return p_aout;
 }
 
 /*****************************************
  * Get the list of available audio outputs
  *****************************************/
-libvlc_audio_output_t *
-        libvlc_audio_output_list_get( libvlc_instance_t *p_instance )
+libapoi_audio_output_t *
+        libapoi_audio_output_list_get( libapoi_instance_t *p_instance )
 {
     size_t count;
     module_t **module_list = module_list_get( &count );
-    libvlc_audio_output_t *list = NULL;
+    libapoi_audio_output_t *list = NULL;
 
     for (size_t i = 0; i < count; i++)
     {
@@ -72,12 +72,12 @@ libvlc_audio_output_t *
         if( !module_provides( module, "audio output" ) )
             continue;
 
-        libvlc_audio_output_t *item = malloc( sizeof( *item ) );
+        libapoi_audio_output_t *item = malloc( sizeof( *item ) );
         if( unlikely(item == NULL) )
         {
     error:
-            libvlc_printerr( "Not enough memory" );
-            libvlc_audio_output_list_release( list );
+            libapoi_printerr( "Not enough memory" );
+            libapoi_audio_output_list_release( list );
             list = NULL;
             break;
         }
@@ -103,11 +103,11 @@ libvlc_audio_output_t *
 /********************************************
  * Free the list of available audio outputs
  ***********************************************/
-void libvlc_audio_output_list_release( libvlc_audio_output_t *list )
+void libapoi_audio_output_list_release( libapoi_audio_output_t *list )
 {
     while( list != NULL )
     {
-        libvlc_audio_output_t *next = list->p_next;
+        libapoi_audio_output_t *next = list->p_next;
 
         free( list->psz_name );
         free( list->psz_description );
@@ -120,7 +120,7 @@ void libvlc_audio_output_list_release( libvlc_audio_output_t *list )
 /***********************
  * Set the audio output.
  ***********************/
-int libvlc_audio_output_set( libvlc_media_player_t *mp, const char *psz_name )
+int libapoi_audio_output_set( libapoi_media_player_t *mp, const char *psz_name )
 {
     char *value;
 
@@ -134,14 +134,14 @@ int libvlc_audio_output_set( libvlc_media_player_t *mp, const char *psz_name )
     return 0;
 }
 
-libvlc_audio_output_device_t *
-libvlc_audio_output_device_enum( libvlc_media_player_t *mp )
+libapoi_audio_output_device_t *
+libapoi_audio_output_device_enum( libapoi_media_player_t *mp )
 {
     audio_output_t *aout = GetAOut( mp );
     if( aout == NULL )
         return NULL;
 
-    libvlc_audio_output_device_t *list, **pp = &list;
+    libapoi_audio_output_device_t *list, **pp = &list;
     char **values, **texts;
 
     int n = aout_DevicesList( aout, &values, &texts );
@@ -151,7 +151,7 @@ libvlc_audio_output_device_enum( libvlc_media_player_t *mp )
 
     for (int i = 0; i < n; i++)
     {
-        libvlc_audio_output_device_t *item = malloc( sizeof(*item) );
+        libapoi_audio_output_device_t *item = malloc( sizeof(*item) );
         if( unlikely(item == NULL) )
         {
             free( texts[i] );
@@ -172,11 +172,11 @@ err:
     return list;
 }
 
-void libvlc_audio_output_device_list_release( libvlc_audio_output_device_t *l )
+void libapoi_audio_output_device_list_release( libapoi_audio_output_device_t *l )
 {
     while( l != NULL )
     {
-        libvlc_audio_output_device_t *next = l->p_next;
+        libapoi_audio_output_device_t *next = l->p_next;
 
         free( l->psz_description );
         free( l->psz_device );
@@ -188,7 +188,7 @@ void libvlc_audio_output_device_list_release( libvlc_audio_output_device_t *l )
 /*****************************
  * Set device for using
  *****************************/
-int libvlc_audio_output_device_set( libvlc_media_player_t *mp,
+int libapoi_audio_output_device_set( libapoi_media_player_t *mp,
                                     const char *devid )
 {
     if( devid == NULL )
@@ -203,7 +203,7 @@ int libvlc_audio_output_device_set( libvlc_media_player_t *mp,
     return ret;
 }
 
-char *libvlc_audio_output_device_get( libvlc_media_player_t *mp )
+char *libapoi_audio_output_device_get( libapoi_media_player_t *mp )
 {
     audio_output_t *aout = GetAOut( mp );
     if( aout == NULL )
@@ -216,14 +216,14 @@ char *libvlc_audio_output_device_get( libvlc_media_player_t *mp )
     return devid;
 }
 
-void libvlc_audio_toggle_mute( libvlc_media_player_t *mp )
+void libapoi_audio_toggle_mute( libapoi_media_player_t *mp )
 {
-    int mute = libvlc_audio_get_mute( mp );
+    int mute = libapoi_audio_get_mute( mp );
     if( mute != -1 )
-        libvlc_audio_set_mute( mp, !mute );
+        libapoi_audio_set_mute( mp, !mute );
 }
 
-int libvlc_audio_get_mute( libvlc_media_player_t *mp )
+int libapoi_audio_get_mute( libapoi_media_player_t *mp )
 {
     int mute = -1;
 
@@ -236,7 +236,7 @@ int libvlc_audio_get_mute( libvlc_media_player_t *mp )
     return mute;
 }
 
-void libvlc_audio_set_mute( libvlc_media_player_t *mp, int mute )
+void libapoi_audio_set_mute( libapoi_media_player_t *mp, int mute )
 {
     audio_output_t *aout = GetAOut( mp );
     if( aout != NULL )
@@ -246,7 +246,7 @@ void libvlc_audio_set_mute( libvlc_media_player_t *mp, int mute )
     }
 }
 
-int libvlc_audio_get_volume( libvlc_media_player_t *mp )
+int libapoi_audio_get_volume( libapoi_media_player_t *mp )
 {
     int volume = -1;
 
@@ -260,12 +260,12 @@ int libvlc_audio_get_volume( libvlc_media_player_t *mp )
     return volume;
 }
 
-int libvlc_audio_set_volume( libvlc_media_player_t *mp, int volume )
+int libapoi_audio_set_volume( libapoi_media_player_t *mp, int volume )
 {
     float vol = volume / 100.f;
     if (!isgreaterequal(vol, 0.f))
     {
-        libvlc_printerr( "Volume out of range" );
+        libapoi_printerr( "Volume out of range" );
         return -1;
     }
 
@@ -280,13 +280,13 @@ int libvlc_audio_set_volume( libvlc_media_player_t *mp, int volume )
 }
 
 /*****************************************************************************
- * libvlc_audio_get_stereomode : Get the current audio stereo-mode
+ * libapoi_audio_get_stereomode : Get the current audio stereo-mode
  *****************************************************************************/
-libvlc_audio_output_stereomode_t libvlc_audio_get_stereomode( libvlc_media_player_t *mp )
+libapoi_audio_output_stereomode_t libapoi_audio_get_stereomode( libapoi_media_player_t *mp )
 {
     audio_output_t *p_aout = GetAOut( mp );
     if( !p_aout )
-        return libvlc_AudioStereoMode_Unset;
+        return libapoi_AudioStereoMode_Unset;
 
     int val = var_GetInteger( p_aout, "stereo-mode" );
     aout_Release(p_aout);
@@ -294,18 +294,18 @@ libvlc_audio_output_stereomode_t libvlc_audio_get_stereomode( libvlc_media_playe
 }
 
 /*****************************************************************************
- * libvlc_audio_set_stereomode : Set the current audio stereo-mode
+ * libapoi_audio_set_stereomode : Set the current audio stereo-mode
  *****************************************************************************/
-int libvlc_audio_set_stereomode( libvlc_media_player_t *mp, libvlc_audio_output_stereomode_t mode )
+int libapoi_audio_set_stereomode( libapoi_media_player_t *mp, libapoi_audio_output_stereomode_t mode )
 {
-    static_assert(libvlc_AudioStereoMode_Unset == AOUT_VAR_CHAN_UNSET &&
-                  libvlc_AudioStereoMode_Stereo == AOUT_VAR_CHAN_STEREO &&
-                  libvlc_AudioStereoMode_RStereo == AOUT_VAR_CHAN_RSTEREO &&
-                  libvlc_AudioStereoMode_Left == AOUT_VAR_CHAN_LEFT &&
-                  libvlc_AudioStereoMode_Right == AOUT_VAR_CHAN_RIGHT &&
-                  libvlc_AudioStereoMode_Dolbys == AOUT_VAR_CHAN_DOLBYS &&
-                  libvlc_AudioStereoMode_Mono == AOUT_VAR_CHAN_MONO,
-                  "Mismatch with stereo-mode LibVLC/VLC enums");
+    static_assert(libapoi_AudioStereoMode_Unset == AOUT_VAR_CHAN_UNSET &&
+                  libapoi_AudioStereoMode_Stereo == AOUT_VAR_CHAN_STEREO &&
+                  libapoi_AudioStereoMode_RStereo == AOUT_VAR_CHAN_RSTEREO &&
+                  libapoi_AudioStereoMode_Left == AOUT_VAR_CHAN_LEFT &&
+                  libapoi_AudioStereoMode_Right == AOUT_VAR_CHAN_RIGHT &&
+                  libapoi_AudioStereoMode_Dolbys == AOUT_VAR_CHAN_DOLBYS &&
+                  libapoi_AudioStereoMode_Mono == AOUT_VAR_CHAN_MONO,
+                  "Mismatch with stereo-mode LibAPOI/VLC enums");
 
     audio_output_t *p_aout = GetAOut( mp );
     int ret = 0;
@@ -315,7 +315,7 @@ int libvlc_audio_set_stereomode( libvlc_media_player_t *mp, libvlc_audio_output_
 
     if( var_SetInteger( p_aout, "stereo-mode", mode ) < 0 )
     {
-        libvlc_printerr( "Audio stereo-mode out of range" );
+        libapoi_printerr( "Audio stereo-mode out of range" );
         ret = -1;
     }
     aout_Release(p_aout);
@@ -323,13 +323,13 @@ int libvlc_audio_set_stereomode( libvlc_media_player_t *mp, libvlc_audio_output_
 }
 
 /*****************************************************************************
- * libvlc_audio_get_mixmode : Get the current audio mix-mode
+ * libapoi_audio_get_mixmode : Get the current audio mix-mode
  *****************************************************************************/
-libvlc_audio_output_mixmode_t libvlc_audio_get_mixmode( libvlc_media_player_t *mp )
+libapoi_audio_output_mixmode_t libapoi_audio_get_mixmode( libapoi_media_player_t *mp )
 {
     audio_output_t *p_aout = GetAOut( mp );
     if( !p_aout )
-        return libvlc_AudioMixMode_Unset;
+        return libapoi_AudioMixMode_Unset;
 
     int val = var_GetInteger( p_aout, "mix-mode" );
     aout_Release(p_aout);
@@ -337,17 +337,17 @@ libvlc_audio_output_mixmode_t libvlc_audio_get_mixmode( libvlc_media_player_t *m
 }
 
 /*****************************************************************************
- * libvlc_audio_set_mixmode : Set the current audio mix-mode
+ * libapoi_audio_set_mixmode : Set the current audio mix-mode
  *****************************************************************************/
-int libvlc_audio_set_mixmode( libvlc_media_player_t *mp, libvlc_audio_output_mixmode_t mode )
+int libapoi_audio_set_mixmode( libapoi_media_player_t *mp, libapoi_audio_output_mixmode_t mode )
 {
-    static_assert(libvlc_AudioMixMode_Unset == AOUT_VAR_CHAN_UNSET &&
-                  libvlc_AudioMixMode_Stereo == AOUT_MIX_MODE_STEREO &&
-                  libvlc_AudioMixMode_Binaural == AOUT_MIX_MODE_BINAURAL &&
-                  libvlc_AudioMixMode_4_0 == AOUT_MIX_MODE_4_0 &&
-                  libvlc_AudioMixMode_5_1 == AOUT_MIX_MODE_5_1 &&
-                  libvlc_AudioMixMode_7_1 == AOUT_MIX_MODE_7_1,
-                  "Mismatch with mix-mode LibVLC/VLC enums");
+    static_assert(libapoi_AudioMixMode_Unset == AOUT_VAR_CHAN_UNSET &&
+                  libapoi_AudioMixMode_Stereo == AOUT_MIX_MODE_STEREO &&
+                  libapoi_AudioMixMode_Binaural == AOUT_MIX_MODE_BINAURAL &&
+                  libapoi_AudioMixMode_4_0 == AOUT_MIX_MODE_4_0 &&
+                  libapoi_AudioMixMode_5_1 == AOUT_MIX_MODE_5_1 &&
+                  libapoi_AudioMixMode_7_1 == AOUT_MIX_MODE_7_1,
+                  "Mismatch with mix-mode LibAPOI/VLC enums");
 
     audio_output_t *p_aout = GetAOut( mp );
     int ret = 0;
@@ -357,7 +357,7 @@ int libvlc_audio_set_mixmode( libvlc_media_player_t *mp, libvlc_audio_output_mix
 
     if( var_SetInteger( p_aout, "mix-mode", mode ) < 0 )
     {
-        libvlc_printerr( "Audio mix-mode out of range" );
+        libapoi_printerr( "Audio mix-mode out of range" );
         ret = -1;
     }
     aout_Release(p_aout);
@@ -365,9 +365,9 @@ int libvlc_audio_set_mixmode( libvlc_media_player_t *mp, libvlc_audio_output_mix
 }
 
 /*****************************************************************************
- * libvlc_audio_get_delay : Get the current audio delay
+ * libapoi_audio_get_delay : Get the current audio delay
  *****************************************************************************/
-int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi )
+int64_t libapoi_audio_get_delay( libapoi_media_player_t *p_mi )
 {
     vlc_player_t *player = p_mi->player;
     vlc_player_Lock(player);
@@ -380,9 +380,9 @@ int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi )
 }
 
 /*****************************************************************************
- * libvlc_audio_set_delay : Set the current audio delay
+ * libapoi_audio_set_delay : Set the current audio delay
  *****************************************************************************/
-int libvlc_audio_set_delay( libvlc_media_player_t *p_mi, int64_t i_delay )
+int libapoi_audio_set_delay( libapoi_media_player_t *p_mi, int64_t i_delay )
 {
     vlc_player_t *player = p_mi->player;
     vlc_player_Lock(player);
@@ -396,17 +396,17 @@ int libvlc_audio_set_delay( libvlc_media_player_t *p_mi, int64_t i_delay )
 }
 
 /*****************************************************************************
- * libvlc_audio_equalizer_get_preset_count : Get the number of equalizer presets
+ * libapoi_audio_equalizer_get_preset_count : Get the number of equalizer presets
  *****************************************************************************/
-unsigned libvlc_audio_equalizer_get_preset_count( void )
+unsigned libapoi_audio_equalizer_get_preset_count( void )
 {
     return NB_PRESETS;
 }
 
 /*****************************************************************************
- * libvlc_audio_equalizer_get_preset_name : Get the name for a preset
+ * libapoi_audio_equalizer_get_preset_name : Get the name for a preset
  *****************************************************************************/
-const char *libvlc_audio_equalizer_get_preset_name( unsigned u_index )
+const char *libapoi_audio_equalizer_get_preset_name( unsigned u_index )
 {
     if ( u_index >= NB_PRESETS )
         return NULL;
@@ -415,17 +415,17 @@ const char *libvlc_audio_equalizer_get_preset_name( unsigned u_index )
 }
 
 /*****************************************************************************
- * libvlc_audio_equalizer_get_band_count : Get the number of equalizer frequency bands
+ * libapoi_audio_equalizer_get_band_count : Get the number of equalizer frequency bands
  *****************************************************************************/
-unsigned libvlc_audio_equalizer_get_band_count( void )
+unsigned libapoi_audio_equalizer_get_band_count( void )
 {
     return EQZ_BANDS_MAX;
 }
 
 /*****************************************************************************
- * libvlc_audio_equalizer_get_band_frequency : Get the frequency for a band
+ * libapoi_audio_equalizer_get_band_frequency : Get the frequency for a band
  *****************************************************************************/
-float libvlc_audio_equalizer_get_band_frequency( unsigned u_index )
+float libapoi_audio_equalizer_get_band_frequency( unsigned u_index )
 {
     if ( u_index >= EQZ_BANDS_MAX )
         return -1.f;
@@ -434,11 +434,11 @@ float libvlc_audio_equalizer_get_band_frequency( unsigned u_index )
 }
 
 /*****************************************************************************
- * libvlc_audio_equalizer_new : Create a new audio equalizer with zeroed values
+ * libapoi_audio_equalizer_new : Create a new audio equalizer with zeroed values
  *****************************************************************************/
-libvlc_equalizer_t *libvlc_audio_equalizer_new( void )
+libapoi_equalizer_t *libapoi_audio_equalizer_new( void )
 {
-    libvlc_equalizer_t *p_equalizer;
+    libapoi_equalizer_t *p_equalizer;
     p_equalizer = malloc( sizeof( *p_equalizer ) );
     if ( unlikely( p_equalizer == NULL ) )
         return NULL;
@@ -451,11 +451,11 @@ libvlc_equalizer_t *libvlc_audio_equalizer_new( void )
 }
 
 /*****************************************************************************
- * libvlc_audio_equalizer_new_from_preset : Create a new audio equalizer based on a preset
+ * libapoi_audio_equalizer_new_from_preset : Create a new audio equalizer based on a preset
  *****************************************************************************/
-libvlc_equalizer_t *libvlc_audio_equalizer_new_from_preset( unsigned u_index )
+libapoi_equalizer_t *libapoi_audio_equalizer_new_from_preset( unsigned u_index )
 {
-    libvlc_equalizer_t *p_equalizer;
+    libapoi_equalizer_t *p_equalizer;
 
     if ( u_index >= NB_PRESETS )
         return NULL;
@@ -473,17 +473,17 @@ libvlc_equalizer_t *libvlc_audio_equalizer_new_from_preset( unsigned u_index )
 }
 
 /*****************************************************************************
- * libvlc_audio_equalizer_release : Release a previously created equalizer
+ * libapoi_audio_equalizer_release : Release a previously created equalizer
  *****************************************************************************/
-void libvlc_audio_equalizer_release( libvlc_equalizer_t *p_equalizer )
+void libapoi_audio_equalizer_release( libapoi_equalizer_t *p_equalizer )
 {
     free( p_equalizer );
 }
 
 /*****************************************************************************
- * libvlc_audio_equalizer_set_preamp : Set the preamp value for an equalizer
+ * libapoi_audio_equalizer_set_preamp : Set the preamp value for an equalizer
  *****************************************************************************/
-int libvlc_audio_equalizer_set_preamp( libvlc_equalizer_t *p_equalizer, float f_preamp )
+int libapoi_audio_equalizer_set_preamp( libapoi_equalizer_t *p_equalizer, float f_preamp )
 {
     if( isnan(f_preamp) )
         return -1;
@@ -497,17 +497,17 @@ int libvlc_audio_equalizer_set_preamp( libvlc_equalizer_t *p_equalizer, float f_
 }
 
 /*****************************************************************************
- * libvlc_audio_equalizer_get_preamp : Get the preamp value for an equalizer
+ * libapoi_audio_equalizer_get_preamp : Get the preamp value for an equalizer
  *****************************************************************************/
-float libvlc_audio_equalizer_get_preamp( libvlc_equalizer_t *p_equalizer )
+float libapoi_audio_equalizer_get_preamp( libapoi_equalizer_t *p_equalizer )
 {
     return p_equalizer->f_preamp;
 }
 
 /*****************************************************************************
- * libvlc_audio_equalizer_set_amp_at_index : Set the amplification value for an equalizer band
+ * libapoi_audio_equalizer_set_amp_at_index : Set the amplification value for an equalizer band
  *****************************************************************************/
-int libvlc_audio_equalizer_set_amp_at_index( libvlc_equalizer_t *p_equalizer, float f_amp, unsigned u_band )
+int libapoi_audio_equalizer_set_amp_at_index( libapoi_equalizer_t *p_equalizer, float f_amp, unsigned u_band )
 {
     if( u_band >= EQZ_BANDS_MAX || isnan(f_amp) )
         return -1;
@@ -523,9 +523,9 @@ int libvlc_audio_equalizer_set_amp_at_index( libvlc_equalizer_t *p_equalizer, fl
 }
 
 /*****************************************************************************
- * libvlc_audio_equalizer_get_amp_at_index : Get the amplification value for an equalizer band
+ * libapoi_audio_equalizer_get_amp_at_index : Get the amplification value for an equalizer band
  *****************************************************************************/
-float libvlc_audio_equalizer_get_amp_at_index( libvlc_equalizer_t *p_equalizer, unsigned u_band )
+float libapoi_audio_equalizer_get_amp_at_index( libapoi_equalizer_t *p_equalizer, unsigned u_band )
 {
     if ( u_band >= EQZ_BANDS_MAX )
         return nanf("");

@@ -6,7 +6,7 @@
  ******************************/
 
 #include "player.h"
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 
 #define qtu( i ) ((i).toUtf8().constData())
 

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * renderer_discoverer.c: libvlc renderer API
+ * renderer_discoverer.c: libapoi renderer API
  *****************************************************************************
  * Copyright © 2016 VLC authors and VideoLAN
  *
@@ -24,18 +24,18 @@
 
 #include <assert.h>
 
-#include <vlc/libvlc.h>
-#include <vlc/libvlc_renderer_discoverer.h>
+#include <apoi/libapoi.h>
+#include <apoi/libapoi_renderer_discoverer.h>
 
 #include <vlc_common.h>
 #include <vlc_arrays.h>
 
-#include "libvlc_internal.h"
+#include "libapoi_internal.h"
 #include "renderer_discoverer_internal.h"
 
-struct libvlc_renderer_discoverer_t
+struct libapoi_renderer_discoverer_t
 {
-    libvlc_event_manager_t  event_manager;
+    libapoi_event_manager_t  event_manager;
     vlc_object_t *          p_object;
     vlc_renderer_discovery_t *p_rd;
 
@@ -44,12 +44,12 @@ struct libvlc_renderer_discoverer_t
     char                    name[];
 };
 
-static_assert( VLC_RENDERER_CAN_AUDIO == LIBVLC_RENDERER_CAN_AUDIO &&
-               VLC_RENDERER_CAN_VIDEO == LIBVLC_RENDERER_CAN_VIDEO,
-              "core/libvlc renderer flags mismatch" );
+static_assert( VLC_RENDERER_CAN_AUDIO == LIBAPOI_RENDERER_CAN_AUDIO &&
+               VLC_RENDERER_CAN_VIDEO == LIBAPOI_RENDERER_CAN_VIDEO,
+              "core/libapoi renderer flags mismatch" );
 
 vlc_renderer_item_t *
-libvlc_renderer_item_to_vlc( libvlc_renderer_item_t *p_item )
+libapoi_renderer_item_to_vlc( libapoi_renderer_item_t *p_item )
 {
     return (vlc_renderer_item_t*) p_item;
 }
@@ -57,106 +57,106 @@ libvlc_renderer_item_to_vlc( libvlc_renderer_item_t *p_item )
 static void renderer_discovery_item_added( vlc_renderer_discovery_t *rd,
                                            vlc_renderer_item_t *p_item )
 {
-    libvlc_renderer_discoverer_t *p_lrd = rd->owner.sys;
+    libapoi_renderer_discoverer_t *p_lrd = rd->owner.sys;
 
     vlc_renderer_item_hold( p_item );
 
     TAB_APPEND( p_lrd->i_items, p_lrd->pp_items, p_item );
 
-    libvlc_event_t event = {
-        .type = libvlc_RendererDiscovererItemAdded,
+    libapoi_event_t event = {
+        .type = libapoi_RendererDiscovererItemAdded,
         .u.renderer_discoverer_item_added.item =
-            (libvlc_renderer_item_t*) p_item,
+            (libapoi_renderer_item_t*) p_item,
     };
-    libvlc_event_send( &p_lrd->event_manager, &event );
+    libapoi_event_send( &p_lrd->event_manager, &event );
 }
 
 static void renderer_discovery_item_removed( vlc_renderer_discovery_t *rd,
                                              vlc_renderer_item_t *p_item )
 {
-    libvlc_renderer_discoverer_t *p_lrd = rd->owner.sys;
+    libapoi_renderer_discoverer_t *p_lrd = rd->owner.sys;
 
     int i_idx;
     TAB_FIND( p_lrd->i_items, p_lrd->pp_items, p_item, i_idx );
     assert( i_idx != -1 );
     TAB_ERASE( p_lrd->i_items, p_lrd->pp_items, i_idx );
 
-    libvlc_event_t event = {
-        .type = libvlc_RendererDiscovererItemDeleted,
+    libapoi_event_t event = {
+        .type = libapoi_RendererDiscovererItemDeleted,
         .u.renderer_discoverer_item_deleted.item =
-            (libvlc_renderer_item_t*) p_item,
+            (libapoi_renderer_item_t*) p_item,
     };
-    libvlc_event_send( &p_lrd->event_manager, &event );
+    libapoi_event_send( &p_lrd->event_manager, &event );
 
     vlc_renderer_item_release( p_item );
 }
 
-libvlc_renderer_item_t *
-libvlc_renderer_item_hold(libvlc_renderer_item_t *p_item)
+libapoi_renderer_item_t *
+libapoi_renderer_item_hold(libapoi_renderer_item_t *p_item)
 {
     vlc_renderer_item_hold( (vlc_renderer_item_t *) p_item );
     return p_item;
 }
 
 void
-libvlc_renderer_item_release(libvlc_renderer_item_t *p_item)
+libapoi_renderer_item_release(libapoi_renderer_item_t *p_item)
 {
     vlc_renderer_item_release( (vlc_renderer_item_t *) p_item );
 }
 
 const char *
-libvlc_renderer_item_name( const libvlc_renderer_item_t *p_item )
+libapoi_renderer_item_name( const libapoi_renderer_item_t *p_item )
 {
     return vlc_renderer_item_name( (const vlc_renderer_item_t *) p_item );
 }
 
 const char *
-libvlc_renderer_item_type( const libvlc_renderer_item_t *p_item )
+libapoi_renderer_item_type( const libapoi_renderer_item_t *p_item )
 {
     return vlc_renderer_item_type( (const vlc_renderer_item_t *) p_item );
 }
 
 const char *
-libvlc_renderer_item_icon_uri( const libvlc_renderer_item_t *p_item )
+libapoi_renderer_item_icon_uri( const libapoi_renderer_item_t *p_item )
 {
     return vlc_renderer_item_icon_uri( (const vlc_renderer_item_t *) p_item );
 }
 
 int
-libvlc_renderer_item_flags( const libvlc_renderer_item_t *p_item )
+libapoi_renderer_item_flags( const libapoi_renderer_item_t *p_item )
 {
     return vlc_renderer_item_flags( (const vlc_renderer_item_t *) p_item );
 }
 
-libvlc_renderer_discoverer_t *
-libvlc_renderer_discoverer_new( libvlc_instance_t *p_inst,
+libapoi_renderer_discoverer_t *
+libapoi_renderer_discoverer_new( libapoi_instance_t *p_inst,
                                 const char *psz_name )
 {
     size_t len = strlen( psz_name ) + 1;
-    libvlc_renderer_discoverer_t *p_lrd = malloc( sizeof(*p_lrd) + len );
+    libapoi_renderer_discoverer_t *p_lrd = malloc( sizeof(*p_lrd) + len );
 
     if( unlikely(p_lrd == NULL) )
         return NULL;
 
-    p_lrd->p_object = VLC_OBJECT(p_inst->p_libvlc_int);
+    p_lrd->p_object = VLC_OBJECT(p_inst->p_libapoi_int);
     memcpy( p_lrd->name, psz_name, len );
     TAB_INIT( p_lrd->i_items, p_lrd->pp_items );
     p_lrd->p_rd = NULL;
-    libvlc_event_manager_init( &p_lrd->event_manager, p_lrd );
+    libapoi_event_manager_init( &p_lrd->event_manager, p_lrd );
 
     return p_lrd;
 }
 
 void
-libvlc_renderer_discoverer_release( libvlc_renderer_discoverer_t *p_lrd )
+libapoi_renderer_discoverer_release( libapoi_renderer_discoverer_t *p_lrd )
 {
-    libvlc_renderer_discoverer_stop( p_lrd );
-    libvlc_event_manager_destroy( &p_lrd->event_manager );
+    libapoi_renderer_discoverer_stop( p_lrd );
+    libapoi_event_manager_destroy( &p_lrd->event_manager );
     free( p_lrd );
 }
 
 int
-libvlc_renderer_discoverer_start( libvlc_renderer_discoverer_t *p_lrd )
+libapoi_renderer_discoverer_start( libapoi_renderer_discoverer_t *p_lrd )
 {
     assert( p_lrd->p_rd == NULL );
 
@@ -172,7 +172,7 @@ libvlc_renderer_discoverer_start( libvlc_renderer_discoverer_t *p_lrd )
 }
 
 void
-libvlc_renderer_discoverer_stop( libvlc_renderer_discoverer_t *p_lrd )
+libapoi_renderer_discoverer_stop( libapoi_renderer_discoverer_t *p_lrd )
 {
     if( p_lrd->p_rd != NULL )
     {
@@ -185,14 +185,14 @@ libvlc_renderer_discoverer_stop( libvlc_renderer_discoverer_t *p_lrd )
     TAB_CLEAN( p_lrd->i_items, p_lrd->pp_items );
 }
 
-libvlc_event_manager_t *
-libvlc_renderer_discoverer_event_manager( libvlc_renderer_discoverer_t *p_lrd )
+libapoi_event_manager_t *
+libapoi_renderer_discoverer_event_manager( libapoi_renderer_discoverer_t *p_lrd )
 {
     return &p_lrd->event_manager;
 }
 
 void
-libvlc_renderer_discoverer_list_release( libvlc_rd_description_t **pp_services,
+libapoi_renderer_discoverer_list_release( libapoi_rd_description_t **pp_services,
                                          size_t i_count )
 {
     if( i_count > 0 )
@@ -208,14 +208,14 @@ libvlc_renderer_discoverer_list_release( libvlc_rd_description_t **pp_services,
 }
 
 size_t
-libvlc_renderer_discoverer_list_get( libvlc_instance_t *p_inst,
-                                     libvlc_rd_description_t ***ppp_services )
+libapoi_renderer_discoverer_list_get( libapoi_instance_t *p_inst,
+                                     libapoi_rd_description_t ***ppp_services )
 {
     assert( p_inst != NULL && ppp_services != NULL );
 
     /* Fetch all rd names, and longnames */
     char **ppsz_names, **ppsz_longnames;
-    int i_ret = vlc_rd_get_names( p_inst->p_libvlc_int, &ppsz_names,
+    int i_ret = vlc_rd_get_names( p_inst->p_libapoi_int, &ppsz_names,
                                   &ppsz_longnames );
 
     if( i_ret != VLC_SUCCESS )
@@ -230,7 +230,7 @@ libvlc_renderer_discoverer_list_get( libvlc_instance_t *p_inst,
     for( ; *ppsz_name != NULL; ppsz_name++ )
         i_nb_services++;
 
-    libvlc_rd_description_t **pp_services = NULL,
+    libapoi_rd_description_t **pp_services = NULL,
                                               *p_services = NULL;
     if( i_nb_services > 0 )
     {
@@ -240,10 +240,10 @@ libvlc_renderer_discoverer_list_get( libvlc_instance_t *p_inst,
 
         pp_services =
             malloc( i_nb_services
-                    * sizeof(libvlc_rd_description_t *) );
+                    * sizeof(libapoi_rd_description_t *) );
         p_services =
             malloc( i_nb_services
-                    * sizeof(libvlc_rd_description_t) );
+                    * sizeof(libapoi_rd_description_t) );
         if( pp_services == NULL || p_services == NULL )
         {
             free( pp_services );
@@ -259,7 +259,7 @@ libvlc_renderer_discoverer_list_get( libvlc_instance_t *p_inst,
     /* Fill output pp_services or free unused name, longname */
     char **ppsz_longname = ppsz_longnames;
     unsigned int i_service_idx = 0;
-    libvlc_rd_description_t *p_service = p_services;
+    libapoi_rd_description_t *p_service = p_services;
     for( ppsz_name = ppsz_names; *ppsz_name != NULL; ppsz_name++, ppsz_longname++ )
     {
         if( pp_services != NULL )

@@ -186,7 +186,7 @@ stream_close( struct reader *p_reader )
 static struct reader *
 stream_open( const char *psz_url )
 {
-    libvlc_instance_t *p_vlc;
+    libapoi_instance_t *p_vlc;
     struct reader *p_reader;
     const char * argv[] = {
         "-v",

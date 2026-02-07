@@ -40,7 +40,7 @@
 #include <vlc_common.h>
 #include <vlc_threads.h>
 
-#include "../libvlc.h"
+#include "../libapoi.h"
 #include <vlc_aout.h>
 #include "audio_output/aout_internal.h"
 
@@ -119,7 +119,7 @@ vlc_object_t *(vlc_object_parent)(vlc_object_t *obj)
 
 struct vlc_tracer *vlc_object_get_tracer(vlc_object_t *obj)
 {
-    libvlc_int_t *vlc = vlc_object_instance(obj);
+    libapoi_int_t *vlc = vlc_object_instance(obj);
     libvlc_priv_t *vlc_priv = libvlc_priv(vlc);
     return vlc_priv->tracer;
 }

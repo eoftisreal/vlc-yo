@@ -20,7 +20,7 @@ libfingerprinter_plugin_la_SOURCES =  \
         misc/webservices/json_helper.h \
 	misc/fingerprinter.c
 libfingerprinter_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/misc
-libfingerprinter_plugin_la_LIBADD = libvlc_json.la $(LIBM)
+libfingerprinter_plugin_la_LIBADD = libapoi_json.la $(LIBM)
 misc_LTLIBRARIES += libfingerprinter_plugin.la
 
 libgnutls_plugin_la_SOURCES = misc/gnutls.c

@@ -33,7 +33,7 @@
 #include <direct.h>
 #include <shlobj.h>
 
-#include "../libvlc.h"
+#include "../libapoi.h"
 #include <vlc_charset.h>
 #include <vlc_configuration.h>
 #include "../config/configuration.h"

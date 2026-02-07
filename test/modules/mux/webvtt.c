@@ -159,7 +159,7 @@ static struct test_scenario TEST_SCENARIOS[] = {
     },
 };
 
-static void RunTests(libvlc_instance_t *instance)
+static void RunTests(libapoi_instance_t *instance)
 {
     for (size_t i = 0; i < ARRAY_SIZE(TEST_SCENARIOS); ++i)
     {
@@ -197,7 +197,7 @@ int main(void)
     const char *const args[] = {
         "-vvv",
     };
-    libvlc_instance_t *vlc = libvlc_new(ARRAY_SIZE(args), args);
+    libapoi_instance_t *vlc = libvlc_new(ARRAY_SIZE(args), args);
     if (vlc == NULL)
         return 1;
 

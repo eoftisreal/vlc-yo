@@ -35,7 +35,7 @@
 #include <vlc_threads.h>
 #include <vlc_modules.h>
 
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 
 #ifndef TEST_THUMB_TYPE
 # error Define TEST_THUMB_TYPE to a libvlc_picture_type_t value
@@ -49,7 +49,7 @@ static void thumbnail_generated(const libvlc_event_t *event, void *user_data)
     vlc_sem_post(sem);
 }
 
-static void test_media_thumbnail(libvlc_instance_t *vlc, const char *location,
+static void test_media_thumbnail(libapoi_instance_t *vlc, const char *location,
                                  unsigned width, unsigned height,
                                  enum libvlc_picture_type_t picture_type)
 {
@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
     return 77;
 #else
 
-    libvlc_instance_t *vlc = libvlc_new (test_defaults_nargs,
+    libapoi_instance_t *vlc = libvlc_new (test_defaults_nargs,
                                          test_defaults_args);
     assert (vlc != NULL);
 

@@ -964,7 +964,7 @@ struct vlc_medialibrary_module_t
     const vlc_medialibrary_callbacks_t* cbs;
 };
 
-vlc_medialibrary_t* libvlc_MlCreate( libvlc_int_t* p_libvlc );
+vlc_medialibrary_t* libvlc_MlCreate( libapoi_int_t* p_libvlc );
 void libvlc_MlRelease( vlc_medialibrary_t* p_ml );
 
 VLC_API vlc_medialibrary_t* vlc_ml_instance_get( vlc_object_t* p_obj ) VLC_USED;

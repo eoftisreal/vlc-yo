@@ -31,7 +31,7 @@
 #include <vlc_common.h>
 #include <vlc_modules.h>
 #include <vlc_tracer.h>
-#include "../libvlc.h"
+#include "../libapoi.h"
 
 struct vlc_tracer {
     const struct vlc_tracer_operations *ops;

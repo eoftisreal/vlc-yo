@@ -43,7 +43,7 @@
 #include <vlc_modules.h>
 #include <vlc_interface.h>
 #include <vlc_playlist.h>
-#include "../libvlc.h"
+#include "../libapoi.h"
 #include "../lib/libvlc_internal.h"
 
 static int AddIntfCallback( vlc_object_t *, char const *,
@@ -64,7 +64,7 @@ vlc_intf_GetMainPlaylist(intf_thread_t *intf)
  * @param chain configuration chain string
  * @return VLC_SUCCESS or an error code
  */
-int intf_Create( libvlc_int_t *libvlc, const char *chain )
+int intf_Create( libapoi_int_t *libvlc, const char *chain )
 {
     assert( libvlc );
     libvlc_priv_t *priv = libvlc_priv(libvlc);
@@ -135,7 +135,7 @@ error:
  * beginning of the playlist. That is meant to compensate for the reverse
  * parsing order of the command line.
  */
-int intf_InsertItem(libvlc_int_t *libvlc, const char *mrl, unsigned optc,
+int intf_InsertItem(libapoi_int_t *libvlc, const char *mrl, unsigned optc,
                     const char *const *optv, unsigned flags)
 {
     input_item_t *item = input_item_New(mrl, NULL);
@@ -159,7 +159,7 @@ int intf_InsertItem(libvlc_int_t *libvlc, const char *mrl, unsigned optc,
     return ret;
 }
 
-void libvlc_InternalPlay(libvlc_int_t *libvlc)
+void libvlc_InternalPlay(libapoi_int_t *libvlc)
 {
     if (!var_InheritBool(VLC_OBJECT(libvlc), "playlist-autostart"))
         return;
@@ -176,14 +176,14 @@ void libvlc_InternalPlay(libvlc_int_t *libvlc)
     vlc_playlist_Unlock(playlist);
 }
 
-static void libvlc_AutoRun(libvlc_int_t *libvlc)
+static void libvlc_AutoRun(libapoi_int_t *libvlc)
 {
     struct vlc_logger *log = libvlc->obj.logger;
     module_t **mods;
     ssize_t total = vlc_module_match("autorun", NULL, false, &mods, NULL);
 
     for (ssize_t i = 0; i < total; i++) {
-        void (*func)(libvlc_int_t *) = vlc_module_map(log, mods[i]);
+        void (*func)(libapoi_int_t *) = vlc_module_map(log, mods[i]);
 
         assert(func != NULL);
         func(libvlc);
@@ -195,7 +195,7 @@ static void libvlc_AutoRun(libvlc_int_t *libvlc)
 /**
  * Starts an interface plugin.
  */
-int libvlc_InternalAddIntf(libvlc_int_t *libvlc, const char *name)
+int libvlc_InternalAddIntf(libapoi_int_t *libvlc, const char *name)
 {
     int ret;
 
@@ -224,7 +224,7 @@ int libvlc_InternalAddIntf(libvlc_int_t *libvlc, const char *name)
  * @warning FIXME
  * @param libvlc the LibVLC instance
  */
-void intf_DestroyAll(libvlc_int_t *libvlc)
+void intf_DestroyAll(libapoi_int_t *libvlc)
 {
     libvlc_priv_t *priv = libvlc_priv(libvlc);
 

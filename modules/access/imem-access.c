@@ -29,9 +29,9 @@
 #include <vlc_access.h>
 #include <vlc_plugin.h>
 
-#include <vlc/libvlc.h>
-#include <vlc/libvlc_picture.h>
-#include <vlc/libvlc_media.h>
+#include <apoi/libapoi.h>
+#include <apoi/libapoi_picture.h>
+#include <apoi/libapoi_media.h>
 
 typedef struct
 {

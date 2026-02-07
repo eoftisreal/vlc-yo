@@ -1,38 +1,38 @@
 NULL =
 
-LIBVLC_SAMPLES = \
-	libvlc/gtk_player.c \
-	libvlc/QtPlayer/LICENSE \
-	libvlc/QtPlayer/main.cpp \
-	libvlc/QtPlayer/player.cpp \
-	libvlc/QtPlayer/player.h \
-	libvlc/QtPlayer/QtVLC.pro \
-	libvlc/QtGL/main.cpp \
-	libvlc/QtGL/qtvlcwidget.cpp \
-	libvlc/QtGL/qtvlcwidget.h \
-	libvlc/QtGL/QtGl.pro \
-	libvlc/thumbnailer.c \
-	libvlc/wx_player.cpp \
-	libvlc/d3d11_player.cpp \
-	libvlc/d3d9_player.c \
-	libvlc/win_player.c \
-	libvlc/CMakeLists.txt \
-	libvlc/appkit_player.m \
+LIBAPOI_SAMPLES = \
+	libapoi/gtk_player.c \
+	libapoi/QtPlayer/LICENSE \
+	libapoi/QtPlayer/main.cpp \
+	libapoi/QtPlayer/player.cpp \
+	libapoi/QtPlayer/player.h \
+	libapoi/QtPlayer/QtVLC.pro \
+	libapoi/QtGL/main.cpp \
+	libapoi/QtGL/qtvlcwidget.cpp \
+	libapoi/QtGL/qtvlcwidget.h \
+	libapoi/QtGL/QtGl.pro \
+	libapoi/thumbnailer.c \
+	libapoi/wx_player.cpp \
+	libapoi/d3d11_player.cpp \
+	libapoi/d3d9_player.c \
+	libapoi/win_player.c \
+	libapoi/CMakeLists.txt \
+	libapoi/appkit_player.m \
 	$(NULL)
 
-# Check that samples that depends only on LibVLC can build
+# Check that samples that depends only on LibAPOI can build
 AUTOMAKE_OPTIONS = subdir-objects
 AM_LDFLAGS = -no-install $(LDFLAGS_vlc) -L../src/ -lvlccore -L../lib -lvlc
 
-samples_libvlc_example_SOURCES = libvlc/example.c
-samples_libvlc_thumbnailer_SOURCES = libvlc/thumbnailer.c
+samples_libapoi_example_SOURCES = libapoi/example.c
+samples_libapoi_thumbnailer_SOURCES = libapoi/thumbnailer.c
 
 check_PROGRAMS = \
-	samples_libvlc_example \
-	samples_libvlc_thumbnailer \
+	samples_libapoi_example \
+	samples_libapoi_thumbnailer \
 	$(NULL)
 
-nobase_doc_DATA = $(LIBVLC_SAMPLES)
+nobase_doc_DATA = $(LIBAPOI_SAMPLES)
 
 doc_DATA = \
 	fortunes.txt \
@@ -76,7 +76,7 @@ man1_MANS = \
 EXTRA_DIST = \
 	$(CHANGELOGS) \
 	$(man1_MANS) \
-	$(LIBVLC_SAMPLES) \
+	$(LIBAPOI_SAMPLES) \
 	fortunes.txt \
 	release-howto.txt \
 	Doxyfile.in \

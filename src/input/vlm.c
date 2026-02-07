@@ -48,7 +48,7 @@
 #include <vlc_sout.h>
 #include <vlc_url.h>
 #include "../misc/threads.h"
-#include "../libvlc.h"
+#include "../libapoi.h"
 
 /*****************************************************************************
  * Local prototypes.
@@ -115,7 +115,7 @@ static vlc_mutex_t vlm_mutex = VLC_STATIC_MUTEX;
 /*****************************************************************************
  * vlm_New:
  *****************************************************************************/
-vlm_t *vlm_New( libvlc_int_t *libvlc, const char *psz_vlmconf )
+vlm_t *vlm_New( libapoi_int_t *libvlc, const char *psz_vlmconf )
 {
     vlm_t *p_vlm = NULL, **pp_vlm = &(libvlc_priv(libvlc)->p_vlm);
     vlc_object_t *p_this = VLC_OBJECT(libvlc);

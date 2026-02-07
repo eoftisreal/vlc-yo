@@ -53,7 +53,7 @@ libpuzzle_plugin_la_LIBADD = $(LIBM)
 libripple_plugin_la_SOURCES = video_filter/ripple.c
 libripple_plugin_la_LIBADD = $(LIBM)
 librotate_plugin_la_SOURCES = video_filter/rotate.c
-librotate_plugin_la_LIBADD = libvlc_motion.la $(LIBM)
+librotate_plugin_la_LIBADD = libapoi_motion.la $(LIBM)
 librotate_plugin_la_LDFLAGS = $(AM_LDFLAGS) -rpath '$(video_filterdir)'
 if HAVE_DARWIN
 if !HAVE_TVOS
@@ -134,11 +134,11 @@ libopengl_filter_plugin_la_SOURCES = video_filter/opengl.c
 
 if HAVE_LINUX
 if HAVE_ANDROID
-libopengl_filter_plugin_la_LIBADD = libvlc_opengles.la
+libopengl_filter_plugin_la_LIBADD = libapoi_opengles.la
 libopengl_filter_plugin_la_CFLAGS = -DUSE_OPENGL_ES2=1
 video_filter_LTLIBRARIES += libopengl_filter_plugin.la
 else
-libopengl_filter_plugin_la_LIBADD = libvlc_opengl.la
+libopengl_filter_plugin_la_LIBADD = libapoi_opengl.la
 if HAVE_GL
 video_filter_LTLIBRARIES += libopengl_filter_plugin.la
 endif
@@ -146,13 +146,13 @@ endif
 endif
 
 if HAVE_IOS_OR_TVOS
-libopengl_filter_plugin_la_LIBADD = libvlc_opengles.la
+libopengl_filter_plugin_la_LIBADD = libapoi_opengles.la
 libopengl_filter_plugin_la_CFLAGS = -DUSE_OPENGL_ES2=1
 video_filter_LTLIBRARIES += libopengl_filter_plugin.la
 endif
 
 if HAVE_OSX
-libopengl_filter_plugin_la_LIBADD = libvlc_opengl.la
+libopengl_filter_plugin_la_LIBADD = libapoi_opengl.la
 video_filter_LTLIBRARIES += libopengl_filter_plugin.la
 endif
 
@@ -184,23 +184,23 @@ video_filter_LTLIBRARIES += libdeinterlace_plugin.la
 libglblend_plugin_la_SOURCES = video_filter/deinterlace/glblend.c
 libglblend_plugin_la_CFLAGS = $(AM_CFLAGS)
 if HAVE_GL
-libglblend_plugin_la_LIBADD = libvlc_opengl.la
+libglblend_plugin_la_LIBADD = libapoi_opengl.la
 video_filter_LTLIBRARIES += libglblend_plugin.la
 endif
 
 if HAVE_OSX
 video_filter_LTLIBRARIES += libglblend_plugin.la
-libglblend_plugin_la_LIBADD = libvlc_opengl.la
+libglblend_plugin_la_LIBADD = libapoi_opengl.la
 endif
 if HAVE_IOS_OR_TVOS
 video_filter_LTLIBRARIES += libglblend_plugin.la
-libglblend_plugin_la_LIBADD = libvlc_opengles.la
+libglblend_plugin_la_LIBADD = libapoi_opengles.la
 libglblend_plugin_la_CFLAGS += -DUSE_OPENGL_ES2=1
 endif
 
 if !HAVE_GL
 if HAVE_GLES2
-libglblend_plugin_la_LIBADD = libvlc_opengles.la
+libglblend_plugin_la_LIBADD = libapoi_opengles.la
 libglblend_plugin_la_CFLAGS += -DUSE_OPENGL_ES2=1
 video_filter_LTLIBRARIES += libglblend_plugin.la
 endif

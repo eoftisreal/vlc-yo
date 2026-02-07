@@ -33,7 +33,7 @@
 #include <vlc_block.h>
 #include <vlc_url.h>
 
-#include <vlc/libvlc.h>
+#include <apoi/libapoi.h>
 #include "../../../lib/libvlc_internal.h"
 
 #include "common.h"

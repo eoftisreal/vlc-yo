@@ -136,7 +136,7 @@ static int updatePalette(vlc_qt_theme_provider_t* obj)
 
     QPalette& palette = sys->m_palette;
 
-    QColor accent = QColor( sys->m_isDark ? "#FF8800" : "#FF610A" );
+    QColor accent = QColor( sys->m_isDark ? "#3498db" : "#2980b9" );
     QColor accentPressed = QColor( sys->m_isDark ? "#e67a30" : "#e65609" );
     QColor textOnAccent = Qt::white;
     QColor visualFocus =  sys->m_isDark ? Qt::white : Qt::black;

@@ -53,7 +53,7 @@
 #include <vlc_tracer.h>
 #include <vlc_atomic.h>
 
-#include "../libvlc.h"
+#include "../libapoi.h"
 #include "vout_private.h"
 #include "vout_internal.h"
 #include "display.h"

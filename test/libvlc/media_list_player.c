@@ -109,7 +109,7 @@ static void check_items_order_callback(const libvlc_event_t * p_event, void * us
 
 static void test_media_list_player_items_queue(const char** argv, int argc)
 {
-    libvlc_instance_t *vlc;
+    libapoi_instance_t *vlc;
     libvlc_media_t *md;
     libvlc_media_list_t *ml;
     libvlc_media_list_player_t *mlp;
@@ -174,7 +174,7 @@ static void test_media_list_player_items_queue(const char** argv, int argc)
 
 static void test_media_list_player_previous(const char** argv, int argc)
 {
-    libvlc_instance_t *vlc;
+    libapoi_instance_t *vlc;
     libvlc_media_t *md;
     libvlc_media_list_t *ml;
     libvlc_media_list_player_t *mlp;
@@ -233,7 +233,7 @@ static void test_media_list_player_previous(const char** argv, int argc)
 
 static void test_media_list_player_next(const char** argv, int argc)
 {
-    libvlc_instance_t *vlc;
+    libapoi_instance_t *vlc;
     libvlc_media_t *md;
     libvlc_media_list_t *ml;
     libvlc_media_list_player_t *mlp;
@@ -292,7 +292,7 @@ static void test_media_list_player_next(const char** argv, int argc)
 
 static void test_media_list_player_pause_stop(const char** argv, int argc)
 {
-    libvlc_instance_t *vlc;
+    libapoi_instance_t *vlc;
     libvlc_media_t *md;
     libvlc_media_list_t *ml;
     libvlc_media_list_player_t *mlp;
@@ -332,7 +332,7 @@ static void test_media_list_player_pause_stop(const char** argv, int argc)
 
 static void test_media_list_player_play_item_at_index(const char** argv, int argc)
 {
-    libvlc_instance_t *vlc;
+    libapoi_instance_t *vlc;
     libvlc_media_t *md;
     libvlc_media_list_t *ml;
     libvlc_media_list_player_t *mlp;
@@ -370,7 +370,7 @@ static void test_media_list_player_play_item_at_index(const char** argv, int arg
 
 static void test_media_list_player_playback_options (const char** argv, int argc)
 {
-    libvlc_instance_t *vlc;
+    libapoi_instance_t *vlc;
     libvlc_media_t *md;
     libvlc_media_t *md2;
     libvlc_media_t *md3;

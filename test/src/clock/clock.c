@@ -33,7 +33,7 @@
 
 #include "../../../src/clock/clock.h"
 
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 #include "../../libvlc/test.h"
 #include "../../../lib/libvlc_internal.h"
 
@@ -464,7 +464,7 @@ static void run_scenarios(int argc, const char *argv[],
         }
     }
 
-    libvlc_instance_t *vlc = libvlc_new(argc, argv);
+    libapoi_instance_t *vlc = libvlc_new(argc, argv);
     assert(vlc != NULL);
 
     tracer_ctx_Init(&tracer_ctx);

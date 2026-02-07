@@ -1,5 +1,5 @@
 /*****************************************************************************
- * vlc.h: global header for libvlc
+ * vlc.h: global header for libapoi
  *****************************************************************************
  * Copyright (C) 1998-2008 VLC authors and VideoLAN
  *
@@ -29,24 +29,24 @@
 
 /**
  * \file
- * This file defines libvlc new external API
+ * This file defines libapoi new external API
  */
 
 # ifdef __cplusplus
 extern "C" {
 # endif
 
-#include "libvlc.h"
-#include "libvlc_renderer_discoverer.h"
-#include "libvlc_picture.h"
-#include "libvlc_media.h"
-#include "libvlc_media_player.h"
-#include "libvlc_media_list.h"
-#include "libvlc_media_list_player.h"
-#include "libvlc_media_discoverer.h"
-#include "libvlc_events.h"
-#include "libvlc_dialog.h"
-#include "libvlc_version.h"
+#include "libapoi.h"
+#include "libapoi_renderer_discoverer.h"
+#include "libapoi_picture.h"
+#include "libapoi_media.h"
+#include "libapoi_media_player.h"
+#include "libapoi_media_list.h"
+#include "libapoi_media_list_player.h"
+#include "libapoi_media_discoverer.h"
+#include "libapoi_events.h"
+#include "libapoi_dialog.h"
+#include "libapoi_version.h"
 
 # ifdef __cplusplus
 }

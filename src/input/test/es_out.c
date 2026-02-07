@@ -40,7 +40,7 @@
 
 #include <limits.h>
 
-#include "../src/libvlc.h"
+#include "../s../libapoi.h"
 #include "../lib/libvlc_internal.h"
 #include "../src/input/es_out.h"
 #include "../src/input/decoder.h"

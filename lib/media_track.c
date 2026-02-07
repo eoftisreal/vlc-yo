@@ -26,25 +26,25 @@
 #include <errno.h>
 #include <stdckdint.h>
 
-#include <vlc/libvlc.h>
-#include <vlc/libvlc_picture.h>
-#include <vlc/libvlc_media.h>
-#include <vlc/libvlc_events.h>
+#include <apoi/libapoi.h>
+#include <apoi/libapoi_picture.h>
+#include <apoi/libapoi_media.h>
+#include <apoi/libapoi_events.h>
 
-#include "libvlc_internal.h"
+#include "libapoi_internal.h"
 #include "media_internal.h"
 
-struct libvlc_media_tracklist_t
+struct libapoi_media_tracklist_t
 {
     size_t count;
-    libvlc_media_trackpriv_t *tracks[];
+    libapoi_media_trackpriv_t *tracks[];
 };
 
 void
-libvlc_media_trackpriv_from_es( libvlc_media_trackpriv_t *trackpriv,
+libapoi_media_trackpriv_from_es( libapoi_media_trackpriv_t *trackpriv,
                                 const es_format_t *es  )
 {
-    libvlc_media_track_t *track = &trackpriv->t;
+    libapoi_media_track_t *track = &trackpriv->t;
 
     track->i_codec = es->i_codec;
     track->i_original_fourcc = es->i_original_fourcc;
@@ -65,11 +65,11 @@ libvlc_media_trackpriv_from_es( libvlc_media_trackpriv_t *trackpriv,
     {
     case UNKNOWN_ES:
     default:
-        track->i_type = libvlc_track_unknown;
+        track->i_type = libapoi_track_unknown;
         break;
     case VIDEO_ES:
         track->video = &trackpriv->video;
-        track->i_type = libvlc_track_video;
+        track->i_type = libapoi_track_video;
         track->video->i_height = es->video.i_visible_height;
         track->video->i_width = es->video.i_visible_width;
         track->video->i_sar_num = es->video.i_sar_num;
@@ -98,24 +98,24 @@ libvlc_media_trackpriv_from_es( libvlc_media_trackpriv_t *trackpriv,
         break;
     case AUDIO_ES:
         track->audio = &trackpriv->audio;
-        track->i_type = libvlc_track_audio;
+        track->i_type = libapoi_track_audio;
         track->audio->i_channels = es->audio.i_channels;
         track->audio->i_rate = es->audio.i_rate;
         break;
     case SPU_ES:
         track->subtitle = &trackpriv->subtitle;
-        track->i_type = libvlc_track_text;
+        track->i_type = libapoi_track_text;
         track->subtitle->psz_encoding = es->subs.psz_encoding != NULL ?
                                         strdup(es->subs.psz_encoding) : NULL;
         break;
     }
 }
 
-static libvlc_media_trackpriv_t *
-libvlc_media_trackpriv_new( void )
+static libapoi_media_trackpriv_t *
+libapoi_media_trackpriv_new( void )
 {
-    libvlc_media_trackpriv_t *trackpriv =
-        malloc( sizeof (libvlc_media_trackpriv_t ) );
+    libapoi_media_trackpriv_t *trackpriv =
+        malloc( sizeof (libapoi_media_trackpriv_t ) );
 
     if( trackpriv == NULL )
         return NULL;
@@ -126,44 +126,44 @@ libvlc_media_trackpriv_new( void )
     return trackpriv;
 }
 
-static void libvlc_media_track_clean( libvlc_media_track_t *track )
+static void libapoi_media_track_clean( libapoi_media_track_t *track )
 {
     free( track->psz_language );
     free( track->psz_description );
     free( track->psz_name );
     switch( track->i_type )
     {
-    case libvlc_track_audio:
+    case libapoi_track_audio:
         break;
-    case libvlc_track_video:
+    case libapoi_track_video:
         break;
-    case libvlc_track_text:
+    case libapoi_track_text:
         free( track->subtitle->psz_encoding );
         break;
-    case libvlc_track_unknown:
+    case libapoi_track_unknown:
     default:
         break;
     }
 }
 
-libvlc_media_track_t *
-libvlc_media_track_hold( libvlc_media_track_t *track )
+libapoi_media_track_t *
+libapoi_media_track_hold( libapoi_media_track_t *track )
 {
-    libvlc_media_trackpriv_t *trackpriv =
-        container_of( track, libvlc_media_trackpriv_t, t );
+    libapoi_media_trackpriv_t *trackpriv =
+        container_of( track, libapoi_media_trackpriv_t, t );
     vlc_atomic_rc_inc( &trackpriv->rc );
     return track;
 }
 
 void
-libvlc_media_track_release( libvlc_media_track_t *track )
+libapoi_media_track_release( libapoi_media_track_t *track )
 {
-    libvlc_media_trackpriv_t *trackpriv =
-        container_of( track, libvlc_media_trackpriv_t, t );
+    libapoi_media_trackpriv_t *trackpriv =
+        container_of( track, libapoi_media_trackpriv_t, t );
 
     if( vlc_atomic_rc_dec( &trackpriv->rc ) )
     {
-        libvlc_media_track_clean( track );
+        libapoi_media_track_clean( track );
         if( trackpriv->es_id )
             vlc_es_id_Release( trackpriv->es_id );
         free( trackpriv->item_str_id );
@@ -171,15 +171,15 @@ libvlc_media_track_release( libvlc_media_track_t *track )
     }
 }
 
-static libvlc_media_tracklist_t *
-libvlc_media_tracklist_alloc( size_t count )
+static libapoi_media_tracklist_t *
+libapoi_media_tracklist_alloc( size_t count )
 {
     size_t size;
-    if (ckd_mul(&size, count, sizeof (libvlc_media_trackpriv_t *)) ||
-        ckd_add(&size, size, sizeof (libvlc_media_tracklist_t)))
+    if (ckd_mul(&size, count, sizeof (libapoi_media_trackpriv_t *)) ||
+        ckd_add(&size, size, sizeof (libapoi_media_tracklist_t)))
         return NULL;
 
-    libvlc_media_tracklist_t *list = malloc( size );
+    libapoi_media_tracklist_t *list = malloc( size );
     if( list == NULL )
         return NULL;
 
@@ -187,11 +187,11 @@ libvlc_media_tracklist_alloc( size_t count )
     return list;
 }
 
-libvlc_media_tracklist_t *
-libvlc_media_tracklist_from_item( input_item_t *item, libvlc_track_type_t type )
+libapoi_media_tracklist_t *
+libapoi_media_tracklist_from_item( input_item_t *item, libapoi_track_type_t type )
 {
     size_t count = 0;
-    const enum es_format_category_e cat = libvlc_track_type_to_escat( type );
+    const enum es_format_category_e cat = libapoi_track_type_to_escat( type );
 
     for( size_t i = 0; i < item->es_vec.size; ++i )
     {
@@ -200,7 +200,7 @@ libvlc_media_tracklist_from_item( input_item_t *item, libvlc_track_type_t type )
             count++;
     }
 
-    libvlc_media_tracklist_t *list = libvlc_media_tracklist_alloc( count );
+    libapoi_media_tracklist_t *list = libapoi_media_tracklist_alloc( count );
 
     if( count == 0 || list == NULL )
         return list;
@@ -211,19 +211,19 @@ libvlc_media_tracklist_from_item( input_item_t *item, libvlc_track_type_t type )
         const es_format_t *es_fmt = &item_es->es;
         if( es_fmt->i_cat == cat )
         {
-            libvlc_media_trackpriv_t *trackpriv = libvlc_media_trackpriv_new();
+            libapoi_media_trackpriv_t *trackpriv = libapoi_media_trackpriv_new();
             if( trackpriv == NULL )
             {
-                libvlc_media_tracklist_delete( list );
+                libapoi_media_tracklist_delete( list );
                 return NULL;
             }
             list->tracks[list->count++] = trackpriv;
-            libvlc_media_trackpriv_from_es( trackpriv, es_fmt );
+            libapoi_media_trackpriv_from_es( trackpriv, es_fmt );
 
             trackpriv->item_str_id = strdup( item_es->id );
             if( trackpriv->item_str_id == NULL )
             {
-                libvlc_media_tracklist_delete( list );
+                libapoi_media_tracklist_delete( list );
                 return NULL;
             }
             trackpriv->t.psz_id = trackpriv->item_str_id;
@@ -235,10 +235,10 @@ libvlc_media_tracklist_from_item( input_item_t *item, libvlc_track_type_t type )
 }
 
 static void
-libvlc_media_trackpriv_from_player_track( libvlc_media_trackpriv_t *trackpriv,
+libapoi_media_trackpriv_from_player_track( libapoi_media_trackpriv_t *trackpriv,
                                           const struct vlc_player_track *track )
 {
-    libvlc_media_trackpriv_from_es( trackpriv, &track->fmt );
+    libapoi_media_trackpriv_from_es( trackpriv, &track->fmt );
 
     trackpriv->es_id = vlc_es_id_Hold( track->es_id );
 
@@ -248,21 +248,21 @@ libvlc_media_trackpriv_from_player_track( libvlc_media_trackpriv_t *trackpriv,
     trackpriv->t.selected = track->selected;
 }
 
-libvlc_media_track_t *
-libvlc_media_track_create_from_player_track( const struct vlc_player_track *track )
+libapoi_media_track_t *
+libapoi_media_track_create_from_player_track( const struct vlc_player_track *track )
 {
-    libvlc_media_trackpriv_t *trackpriv = libvlc_media_trackpriv_new();
+    libapoi_media_trackpriv_t *trackpriv = libapoi_media_trackpriv_new();
     if( trackpriv == NULL )
         return NULL;
-    libvlc_media_trackpriv_from_player_track( trackpriv, track );
+    libapoi_media_trackpriv_from_player_track( trackpriv, track );
     return &trackpriv->t;
 }
 
-libvlc_media_tracklist_t *
-libvlc_media_tracklist_from_player( vlc_player_t *player,
-                                    libvlc_track_type_t type, bool selected )
+libapoi_media_tracklist_t *
+libapoi_media_tracklist_from_player( vlc_player_t *player,
+                                    libapoi_track_type_t type, bool selected )
 {
-    const enum es_format_category_e cat = libvlc_track_type_to_escat( type );
+    const enum es_format_category_e cat = libapoi_track_type_to_escat( type );
 
     size_t count = vlc_player_GetTrackCount( player, cat );
 
@@ -280,7 +280,7 @@ libvlc_media_tracklist_from_player( vlc_player_t *player,
         count = selected_count;
     }
 
-    libvlc_media_tracklist_t *list = libvlc_media_tracklist_alloc( count );
+    libapoi_media_tracklist_t *list = libapoi_media_tracklist_alloc( count );
 
     if( count == 0 || list == NULL )
         return list;
@@ -294,39 +294,39 @@ libvlc_media_tracklist_from_player( vlc_player_t *player,
         if( selected && !track->selected )
             continue;
 
-        libvlc_media_trackpriv_t *trackpriv = libvlc_media_trackpriv_new();
+        libapoi_media_trackpriv_t *trackpriv = libapoi_media_trackpriv_new();
         if( trackpriv == NULL )
         {
-            libvlc_media_tracklist_delete( list );
+            libapoi_media_tracklist_delete( list );
             return NULL;
         }
         list->tracks[list->count++] = trackpriv;
-        libvlc_media_trackpriv_from_player_track( trackpriv, track );
+        libapoi_media_trackpriv_from_player_track( trackpriv, track );
     }
 
     return list;
 }
 
 size_t
-libvlc_media_tracklist_count( const libvlc_media_tracklist_t *list )
+libapoi_media_tracklist_count( const libapoi_media_tracklist_t *list )
 {
     return list->count;
 }
 
-libvlc_media_track_t *
-libvlc_media_tracklist_at( libvlc_media_tracklist_t *list, size_t idx )
+libapoi_media_track_t *
+libapoi_media_tracklist_at( libapoi_media_tracklist_t *list, size_t idx )
 {
     assert( idx < list->count );
     return &list->tracks[idx]->t;
 }
 
 void
-libvlc_media_tracklist_delete( libvlc_media_tracklist_t *list )
+libapoi_media_tracklist_delete( libapoi_media_tracklist_t *list )
 {
     for( size_t i = 0; i < list->count; ++i )
     {
-        libvlc_media_trackpriv_t *trackpriv = list->tracks[i];
-        libvlc_media_track_release( &trackpriv->t );
+        libapoi_media_trackpriv_t *trackpriv = list->tracks[i];
+        libapoi_media_track_release( &trackpriv->t );
     }
     free( list );
 }

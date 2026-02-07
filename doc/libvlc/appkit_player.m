@@ -46,7 +46,7 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 {
-    libvlc_instance_t *instance;
+    libapoi_instance_t *instance;
     libvlc_media_player_t *player;
     libvlc_media_t *media;
 }

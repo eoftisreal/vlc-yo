@@ -39,7 +39,7 @@
 
 #include <vlc_common.h>
 #include <vlc_block.h>
-#include "../libvlc.h"
+#include "../libapoi.h"
 
 #include <vlc_plugin.h>
 #include <errno.h>
@@ -373,7 +373,7 @@ error:
  * actually load the dynamically loadable module.
  * This allows us to only fully load plugins when they are actually used.
  */
-vlc_plugin_t *vlc_cache_load(libvlc_int_t *p_this, const char *dir,
+vlc_plugin_t *vlc_cache_load(libapoi_int_t *p_this, const char *dir,
                              block_t **backingp)
 {
     char *psz_filename;
@@ -657,7 +657,7 @@ error:
 /**
  * Saves a module cache to disk, and release cache data from memory.
  */
-void CacheSave(libvlc_int_t *p_this, const char *dir,
+void CacheSave(libapoi_int_t *p_this, const char *dir,
                vlc_plugin_t *const *entries, size_t n)
 {
     char *filename = NULL, *tmpname = NULL;

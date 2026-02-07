@@ -13,7 +13,7 @@
 #include <SDL2/SDL.h>
 #define GL_GLEXT_PROTOTYPES 1
 #include <SDL2/SDL_opengl.h>
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 
 /*
  * This program show how to use libvlc_video_set_output_callbacks API.
@@ -210,7 +210,7 @@ public:
 
 private:
     //VLC objects
-    libvlc_instance_t*  m_vlc = nullptr;
+    libapoi_instance_t*  m_vlc = nullptr;
     libvlc_media_player_t* m_mp = nullptr;
     libvlc_media_t* m_media = nullptr;
 

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * renderer_discoverer_internal.h:  libvlc external API
+ * renderer_discoverer_internal.h:  libapoi external API
  *****************************************************************************
  * Copyright © 2016 VLC authors and VideoLAN
  *
@@ -18,12 +18,12 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef _LIBVLC_RENDERER_DISCOVERER_INTERNAL_H
-#define _LIBVLC_RENDERER_DISCOVERER_INTERNAL_H 1
+#ifndef _LIBAPOI_RENDERER_DISCOVERER_INTERNAL_H
+#define _LIBAPOI_RENDERER_DISCOVERER_INTERNAL_H 1
 
 #include <vlc_renderer_discovery.h>
 
 vlc_renderer_item_t *
-libvlc_renderer_item_to_vlc( libvlc_renderer_item_t *p_item );
+libapoi_renderer_item_to_vlc( libapoi_renderer_item_t *p_item );
 
 #endif

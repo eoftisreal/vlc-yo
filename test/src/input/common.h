@@ -18,7 +18,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 
 #if 0
 #define debug(...) printf(__VA_ARGS__)
@@ -41,4 +41,4 @@ struct vlc_run_args
 
 void vlc_run_args_init(struct vlc_run_args *args);
 
-libvlc_instance_t *libvlc_create(const struct vlc_run_args *args);
+libapoi_instance_t *libvlc_create(const struct vlc_run_args *args);

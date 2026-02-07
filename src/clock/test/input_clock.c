@@ -27,7 +27,7 @@
 #include <vlc_messages.h>
 #include <vlc_tick.h>
 
-#include <vlc/libvlc.h>
+#include <apoi/libapoi.h>
 
 #include "../../../src/clock/input_clock.h"
 #include "../../../src/clock/clock.h"

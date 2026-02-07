@@ -30,7 +30,7 @@
 #undef VLC_DYNAMIC_PLUGINS
 
 #import <UIKit/UIKit.h>
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 
 #include <vlc_common.h>
 #include <vlc_variables.h>
@@ -42,7 +42,7 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     @public
-    libvlc_instance_t *_libvlc;
+    libapoi_instance_t *_libvlc;
     UIWindow *window;
     UIView *subview;
 

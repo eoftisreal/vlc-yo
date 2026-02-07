@@ -21,7 +21,7 @@
 # include "config.h"
 #endif
 
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 #include "../../../lib/libvlc_internal.h"
 #include "../../libvlc/test.h"
 
@@ -118,7 +118,7 @@ int main(void)
 {
     test_init();
 
-    libvlc_instance_t *vlc = libvlc_new(0, NULL);
+    libapoi_instance_t *vlc = libvlc_new(0, NULL);
     if(!vlc)
         return 1;
 

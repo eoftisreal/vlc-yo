@@ -1,5 +1,5 @@
 /*****************************************************************************
- * media_list.c: libvlc new API media list functions
+ * media_list.c: libapoi new API media list functions
  *****************************************************************************
  * Copyright (C) 2007 VLC authors and VideoLAN
  *
@@ -26,17 +26,17 @@
 
 #include <assert.h>
 
-#include <vlc/libvlc.h>
-#include <vlc/libvlc_picture.h>
-#include <vlc/libvlc_media.h>
-#include <vlc/libvlc_media_list.h>
-#include <vlc/libvlc_events.h>
+#include <apoi/libapoi.h>
+#include <apoi/libapoi_picture.h>
+#include <apoi/libapoi_media.h>
+#include <apoi/libapoi_media_list.h>
+#include <apoi/libapoi_events.h>
 
 #include <vlc_common.h>
 #include <vlc_atomic.h>
 
-#include "libvlc_internal.h"
-#include "media_internal.h" // libvlc_media_new_from_input_item()
+#include "libapoi_internal.h"
+#include "media_internal.h" // libapoi_media_new_from_input_item()
 #include "media_list_internal.h"
 
 typedef enum EventPlaceInTime {
@@ -56,29 +56,29 @@ typedef enum EventPlaceInTime {
  * Do the appropriate action when an item is deleted.
  **************************************************************************/
 static void
-notify_item_addition( libvlc_media_list_t * p_mlist,
-                      libvlc_media_t * p_md,
+notify_item_addition( libapoi_media_list_t * p_mlist,
+                      libapoi_media_t * p_md,
                       int index,
                       EventPlaceInTime event_status )
 {
-    libvlc_event_t event;
+    libapoi_event_t event;
 
     /* Construct the event */
     if( event_status == EventDidHappen )
     {
-        event.type = libvlc_MediaListItemAdded;
+        event.type = libapoi_MediaListItemAdded;
         event.u.media_list_item_added.item = p_md;
         event.u.media_list_item_added.index = index;
     }
     else /* if( event_status == EventWillHappen ) */
     {
-        event.type = libvlc_MediaListWillAddItem;
+        event.type = libapoi_MediaListWillAddItem;
         event.u.media_list_will_add_item.item = p_md;
         event.u.media_list_will_add_item.index = index;
     }
 
     /* Send the event */
-    libvlc_event_send( &p_mlist->event_manager, &event );
+    libapoi_event_send( &p_mlist->event_manager, &event );
 }
 
 /**************************************************************************
@@ -87,78 +87,78 @@ notify_item_addition( libvlc_media_list_t * p_mlist,
  * Do the appropriate action when an item is added.
  **************************************************************************/
 static void
-notify_item_deletion( libvlc_media_list_t * p_mlist,
-                      libvlc_media_t * p_md,
+notify_item_deletion( libapoi_media_list_t * p_mlist,
+                      libapoi_media_t * p_md,
                       int index,
                       EventPlaceInTime event_status )
 {
-    libvlc_event_t event;
+    libapoi_event_t event;
 
     /* Construct the event */
     if( event_status == EventDidHappen )
     {
-        event.type = libvlc_MediaListItemDeleted;
+        event.type = libapoi_MediaListItemDeleted;
         event.u.media_list_item_deleted.item = p_md;
         event.u.media_list_item_deleted.index = index;
     }
     else /* if( event_status == EventWillHappen ) */
     {
-        event.type = libvlc_MediaListWillDeleteItem;
+        event.type = libapoi_MediaListWillDeleteItem;
         event.u.media_list_will_delete_item.item = p_md;
         event.u.media_list_will_delete_item.index = index;
     }
 
     /* Send the event */
-    libvlc_event_send( &p_mlist->event_manager, &event );
+    libapoi_event_send( &p_mlist->event_manager, &event );
 }
 
-/* LibVLC internal */
-void libvlc_media_list_internal_end_reached( libvlc_media_list_t * p_mlist )
+/* LibAPOI internal */
+void libapoi_media_list_internal_end_reached( libapoi_media_list_t * p_mlist )
 {
-    libvlc_event_t event;
+    libapoi_event_t event;
 
-    event.type = libvlc_MediaListEndReached;
+    event.type = libapoi_MediaListEndReached;
 
     /* Send the event */
-    libvlc_event_send( &p_mlist->event_manager, &event );
+    libapoi_event_send( &p_mlist->event_manager, &event );
 }
 
 /**************************************************************************
  *       static mlist_is_writable (private)
  **************************************************************************/
 static inline
-bool mlist_is_writable( libvlc_media_list_t *p_mlist )
+bool mlist_is_writable( libapoi_media_list_t *p_mlist )
 {
     if( !p_mlist||p_mlist->b_read_only )
     {
         /* We are read-only from user side */
-        libvlc_printerr( "Attempt to write a read-only media list" );
+        libapoi_printerr( "Attempt to write a read-only media list" );
         return false;
     }
     return true;
 }
 
 /*
- * Public libvlc functions
+ * Public libapoi functions
  */
 
 /**************************************************************************
- *       libvlc_media_list_new (Public)
+ *       libapoi_media_list_new (Public)
  *
  * Init an object.
  **************************************************************************/
-libvlc_media_list_t *libvlc_media_list_new(void)
+libapoi_media_list_t *libapoi_media_list_new(void)
 {
-    libvlc_media_list_t * p_mlist;
+    libapoi_media_list_t * p_mlist;
 
-    p_mlist = malloc(sizeof(libvlc_media_list_t));
+    p_mlist = malloc(sizeof(libapoi_media_list_t));
     if( unlikely(p_mlist == NULL) )
     {
-        libvlc_printerr( "Not enough memory" );
+        libapoi_printerr( "Not enough memory" );
         return NULL;
     }
 
-    libvlc_event_manager_init( &p_mlist->event_manager, p_mlist );
+    libapoi_event_manager_init( &p_mlist->event_manager, p_mlist );
     p_mlist->b_read_only = false;
 
     vlc_mutex_init( &p_mlist->object_lock );
@@ -173,24 +173,24 @@ libvlc_media_list_t *libvlc_media_list_new(void)
 }
 
 /**************************************************************************
- *       libvlc_media_list_release (Public)
+ *       libapoi_media_list_release (Public)
  *
  * Release an object.
  **************************************************************************/
-void libvlc_media_list_release( libvlc_media_list_t * p_mlist )
+void libapoi_media_list_release( libapoi_media_list_t * p_mlist )
 {
     if( !vlc_atomic_rc_dec( &p_mlist->rc ) )
         return;
 
     /* Refcount null, time to free */
 
-    libvlc_event_manager_destroy( &p_mlist->event_manager );
-    libvlc_media_release( p_mlist->p_md );
+    libapoi_event_manager_destroy( &p_mlist->event_manager );
+    libapoi_media_release( p_mlist->p_md );
 
     for( size_t i = 0; i < vlc_array_count( &p_mlist->items ); i++ )
     {
-        libvlc_media_t* p_md = vlc_array_item_at_index( &p_mlist->items, i );
-        libvlc_media_release( p_md );
+        libapoi_media_t* p_md = vlc_array_item_at_index( &p_mlist->items, i );
+        libapoi_media_release( p_md );
     }
 
     vlc_array_clear( &p_mlist->items );
@@ -199,11 +199,11 @@ void libvlc_media_list_release( libvlc_media_list_t * p_mlist )
 }
 
 /**************************************************************************
- *       libvlc_media_list_retain (Public)
+ *       libapoi_media_list_retain (Public)
  *
  * Increase an object refcount.
  **************************************************************************/
-libvlc_media_list_t *libvlc_media_list_retain( libvlc_media_list_t * p_mlist )
+libapoi_media_list_t *libapoi_media_list_retain( libapoi_media_list_t * p_mlist )
 {
     vlc_atomic_rc_inc( &p_mlist->rc );
     return p_mlist;
@@ -212,8 +212,8 @@ libvlc_media_list_t *libvlc_media_list_retain( libvlc_media_list_t * p_mlist )
 /**************************************************************************
  *       set_media (Public)
  **************************************************************************/
-void libvlc_media_list_set_media( libvlc_media_list_t * p_mlist,
-                                  libvlc_media_t * p_md )
+void libapoi_media_list_set_media( libapoi_media_list_t * p_mlist,
+                                  libapoi_media_t * p_md )
 
 {
     vlc_mutex_lock( &p_mlist->object_lock );
@@ -222,8 +222,8 @@ void libvlc_media_list_set_media( libvlc_media_list_t * p_mlist,
         vlc_mutex_unlock( &p_mlist->object_lock );
         return;
     }
-    libvlc_media_release( p_mlist->p_md );
-    libvlc_media_retain( p_md );
+    libapoi_media_release( p_mlist->p_md );
+    libapoi_media_retain( p_md );
     p_mlist->p_md = p_md;
     vlc_mutex_unlock( &p_mlist->object_lock );
 }
@@ -237,49 +237,49 @@ void libvlc_media_list_set_media( libvlc_media_list_t * p_mlist,
  * Indeed a media_list can have meta information through this
  * media.
  **************************************************************************/
-libvlc_media_t *
-libvlc_media_list_media( libvlc_media_list_t * p_mlist )
+libapoi_media_t *
+libapoi_media_list_media( libapoi_media_list_t * p_mlist )
 {
-    libvlc_media_t *p_md;
+    libapoi_media_t *p_md;
 
     vlc_mutex_lock( &p_mlist->object_lock );
     p_md = p_mlist->p_internal_md ? p_mlist->p_internal_md : p_mlist->p_md;
     if( p_md )
-        libvlc_media_retain( p_md );
+        libapoi_media_retain( p_md );
     vlc_mutex_unlock( &p_mlist->object_lock );
 
     return p_md;
 }
 
 /**************************************************************************
- *       libvlc_media_list_count (Public)
+ *       libapoi_media_list_count (Public)
  *
  * Lock should be held when entering.
  **************************************************************************/
-int libvlc_media_list_count( libvlc_media_list_t * p_mlist )
+int libapoi_media_list_count( libapoi_media_list_t * p_mlist )
 {
     return vlc_array_count( &p_mlist->items );
 }
 
 /**************************************************************************
- *       libvlc_media_list_add_media (Public)
+ *       libapoi_media_list_add_media (Public)
  *
  * Lock should be held when entering.
  **************************************************************************/
-int libvlc_media_list_add_media( libvlc_media_list_t * p_mlist,
-                                 libvlc_media_t * p_md )
+int libapoi_media_list_add_media( libapoi_media_list_t * p_mlist,
+                                 libapoi_media_t * p_md )
 {
     if( !mlist_is_writable(p_mlist) )
         return -1;
-    libvlc_media_list_internal_add_media( p_mlist, p_md );
+    libapoi_media_list_internal_add_media( p_mlist, p_md );
     return 0;
 }
 
-/* LibVLC internal version */
-void libvlc_media_list_internal_add_media( libvlc_media_list_t * p_mlist,
-                                           libvlc_media_t * p_md )
+/* LibAPOI internal version */
+void libapoi_media_list_internal_add_media( libapoi_media_list_t * p_mlist,
+                                           libapoi_media_t * p_md )
 {
-    libvlc_media_retain( p_md );
+    libapoi_media_retain( p_md );
 
     notify_item_addition( p_mlist, p_md, vlc_array_count( &p_mlist->items ),
                           EventWillHappen );
@@ -289,26 +289,26 @@ void libvlc_media_list_internal_add_media( libvlc_media_list_t * p_mlist,
 }
 
 /**************************************************************************
- *       libvlc_media_list_insert_media (Public)
+ *       libapoi_media_list_insert_media (Public)
  *
  * Lock should be hold when entering.
  **************************************************************************/
-int libvlc_media_list_insert_media( libvlc_media_list_t * p_mlist,
-                                    libvlc_media_t * p_md,
+int libapoi_media_list_insert_media( libapoi_media_list_t * p_mlist,
+                                    libapoi_media_t * p_md,
                                     int index )
 {
     if( !mlist_is_writable(p_mlist) )
         return -1;
-    libvlc_media_list_internal_insert_media( p_mlist, p_md, index );
+    libapoi_media_list_internal_insert_media( p_mlist, p_md, index );
     return 0;
 }
 
-/* LibVLC internal version */
-void libvlc_media_list_internal_insert_media( libvlc_media_list_t * p_mlist,
-                                              libvlc_media_t * p_md,
+/* LibAPOI internal version */
+void libapoi_media_list_internal_insert_media( libapoi_media_list_t * p_mlist,
+                                              libapoi_media_t * p_md,
                                               int index )
 {
-    libvlc_media_retain( p_md );
+    libapoi_media_retain( p_md );
 
     notify_item_addition( p_mlist, p_md, index, EventWillHappen );
     vlc_array_insert_or_abort( &p_mlist->items, p_md, index );
@@ -316,27 +316,27 @@ void libvlc_media_list_internal_insert_media( libvlc_media_list_t * p_mlist,
 }
 
 /**************************************************************************
- *       libvlc_media_list_remove_index (Public)
+ *       libapoi_media_list_remove_index (Public)
  *
  * Lock should be held when entering.
  **************************************************************************/
-int libvlc_media_list_remove_index( libvlc_media_list_t * p_mlist,
+int libapoi_media_list_remove_index( libapoi_media_list_t * p_mlist,
                                      int index )
 {
     if( !mlist_is_writable(p_mlist) )
         return -1;
-    return libvlc_media_list_internal_remove_index( p_mlist, index );
+    return libapoi_media_list_internal_remove_index( p_mlist, index );
 }
 
-/* LibVLC internal version */
-int libvlc_media_list_internal_remove_index( libvlc_media_list_t * p_mlist,
+/* LibAPOI internal version */
+int libapoi_media_list_internal_remove_index( libapoi_media_list_t * p_mlist,
                                              int index )
 {
-    libvlc_media_t * p_md;
+    libapoi_media_t * p_md;
 
     if( (size_t) index >= vlc_array_count( &p_mlist->items ))
     {
-        libvlc_printerr( "Index out of bounds" );
+        libapoi_printerr( "Index out of bounds" );
         return -1;
     }
 
@@ -346,88 +346,88 @@ int libvlc_media_list_internal_remove_index( libvlc_media_list_t * p_mlist,
     vlc_array_remove( &p_mlist->items, index );
     notify_item_deletion( p_mlist, p_md, index, EventDidHappen );
 
-    libvlc_media_release( p_md );
+    libapoi_media_release( p_md );
     return 0;
 }
 
 /**************************************************************************
- *       libvlc_media_list_item_at_index (Public)
+ *       libapoi_media_list_item_at_index (Public)
  *
  * Lock should be held when entering.
  **************************************************************************/
-libvlc_media_t *
-libvlc_media_list_item_at_index( libvlc_media_list_t * p_mlist,
+libapoi_media_t *
+libapoi_media_list_item_at_index( libapoi_media_list_t * p_mlist,
                                  int index )
 {
-    libvlc_media_t * p_md;
+    libapoi_media_t * p_md;
 
     if( (size_t) index >= vlc_array_count( &p_mlist->items ))
     {
-        libvlc_printerr( "Index out of bounds" );
+        libapoi_printerr( "Index out of bounds" );
         return NULL;
     }
 
     p_md = vlc_array_item_at_index( &p_mlist->items, index );
-    libvlc_media_retain( p_md );
+    libapoi_media_retain( p_md );
     return p_md;
 }
 
 /**************************************************************************
- *       libvlc_media_list_index_of_item (Public)
+ *       libapoi_media_list_index_of_item (Public)
  *
  * Lock should be held when entering.
  * Warning: this function returns the first matching item.
  **************************************************************************/
-int libvlc_media_list_index_of_item( libvlc_media_list_t * p_mlist,
-                                     libvlc_media_t * p_searched_md )
+int libapoi_media_list_index_of_item( libapoi_media_list_t * p_mlist,
+                                     libapoi_media_t * p_searched_md )
 {
     int idx = vlc_array_index_of_item( &p_mlist->items, p_searched_md );
     if( idx == -1 )
-        libvlc_printerr( "Media not found" );
+        libapoi_printerr( "Media not found" );
 
     return idx;
 }
 
 /**************************************************************************
- *       libvlc_media_list_is_readonly (Public)
+ *       libapoi_media_list_is_readonly (Public)
  *
  * This indicates if this media list is read-only from a user point of view
  **************************************************************************/
-bool libvlc_media_list_is_readonly( libvlc_media_list_t * p_mlist )
+bool libapoi_media_list_is_readonly( libapoi_media_list_t * p_mlist )
 {
     return p_mlist->b_read_only;
 }
 
 /**************************************************************************
- *       libvlc_media_list_lock (Public)
+ *       libapoi_media_list_lock (Public)
  *
  * The lock must be held in access operations. It is never used in the
  * Public method.
  **************************************************************************/
-void libvlc_media_list_lock( libvlc_media_list_t * p_mlist )
+void libapoi_media_list_lock( libapoi_media_list_t * p_mlist )
 {
     vlc_mutex_lock( &p_mlist->object_lock );
 }
 
 
 /**************************************************************************
- *       libvlc_media_list_unlock (Public)
+ *       libapoi_media_list_unlock (Public)
  *
  * The lock must be held in access operations
  **************************************************************************/
-void libvlc_media_list_unlock( libvlc_media_list_t * p_mlist )
+void libapoi_media_list_unlock( libapoi_media_list_t * p_mlist )
 {
     vlc_mutex_unlock( &p_mlist->object_lock );
 }
 
 
 /**************************************************************************
- *       libvlc_media_list_event_manager (Public)
+ *       libapoi_media_list_event_manager (Public)
  *
  * The p_event_manager is immutable, so you don't have to hold the lock
  **************************************************************************/
-libvlc_event_manager_t *
-libvlc_media_list_event_manager( libvlc_media_list_t * p_mlist )
+libapoi_event_manager_t *
+libapoi_media_list_event_manager( libapoi_media_list_t * p_mlist )
 {
     return &p_mlist->event_manager;
 }

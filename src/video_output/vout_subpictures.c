@@ -38,7 +38,7 @@
 #include <vlc_vector.h>
 #include <vlc_vout_display.h>
 
-#include "../libvlc.h"
+#include "../libapoi.h"
 #include "vout_internal.h"
 #include "../misc/subpicture.h"
 #include "../input/input_internal.h"

@@ -42,7 +42,7 @@
 #include <vlc_tls.h>
 #include "../../../lib/libvlc_internal.h"
 
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 
 static vlc_tls_server_t *server_creds;
 static vlc_tls_client_t *client_creds;
@@ -125,7 +125,7 @@ static const char *const alpn_bad[] = { "baz", NULL };
 
 int main(void)
 {
-    libvlc_instance_t *vlc;
+    libapoi_instance_t *vlc;
     vlc_object_t *obj;
     vlc_thread_t th;
     void *p;

@@ -33,8 +33,8 @@
 #include <vlc_window.h>
 #include <vlc_codec.h>
 
-#include <vlc/libvlc.h>
-#include <vlc/libvlc_media_player.h>
+#include <apoi/libapoi.h>
+#include <apoi/libapoi_media_player.h>
 
 #include <dlfcn.h>
 #include <jni.h>

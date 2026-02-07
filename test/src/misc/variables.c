@@ -444,7 +444,7 @@ static void test_creation_and_type( libvlc_int_t *p_libvlc )
     assert( var_Get( p_libvlc, "bla", &val ) == VLC_ENOENT );
 }
 
-static void test_variables( libvlc_instance_t *p_vlc )
+static void test_variables( libapoi_instance_t *p_vlc )
 {
     libvlc_int_t *p_libvlc = p_vlc->p_libvlc_int;
     srand( time( NULL ) );
@@ -486,7 +486,7 @@ static void test_variables( libvlc_instance_t *p_vlc )
 
 int main( void )
 {
-    libvlc_instance_t *p_vlc;
+    libapoi_instance_t *p_vlc;
 
     test_init();
 

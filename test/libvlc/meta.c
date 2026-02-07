@@ -30,7 +30,7 @@
 
 static int test_meta (const char ** argv, int argc)
 {
-    libvlc_instance_t *vlc;
+    libapoi_instance_t *vlc;
     libvlc_media_t *media;
     char * artist;
 

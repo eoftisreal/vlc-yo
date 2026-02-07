@@ -1,5 +1,5 @@
 /*****************************************************************************
- * log.c: libvlc new API log functions
+ * log.c: libapoi new API log functions
  *****************************************************************************
  * Copyright (C) 2005 VLC authors and VideoLAN
  *
@@ -26,14 +26,14 @@
 #endif
 
 #include <assert.h>
-#include <vlc/vlc.h>
-#include "libvlc_internal.h"
+#include <apoi/apoi.h>
+#include "libapoi_internal.h"
 #include <vlc_common.h>
 #include <vlc_interface.h>
 
 /*** Logging core dispatcher ***/
 
-void libvlc_log_get_context(const libvlc_log_t *ctx,
+void libapoi_log_get_context(const libapoi_log_t *ctx,
                             const char **restrict module,
                             const char **restrict file,
                             unsigned *restrict line)
@@ -46,7 +46,7 @@ void libvlc_log_get_context(const libvlc_log_t *ctx,
         *line = ctx->line;
 }
 
-void libvlc_log_get_object(const libvlc_log_t *ctx,
+void libapoi_log_get_object(const libapoi_log_t *ctx,
                            const char **restrict name,
                            const char **restrict header,
                            uintptr_t *restrict id)
@@ -60,41 +60,41 @@ void libvlc_log_get_object(const libvlc_log_t *ctx,
         *id = ctx->i_object_id;
 }
 
-static void libvlc_logf (void *data, int level, const vlc_log_t *item,
+static void libapoi_logf (void *data, int level, const vlc_log_t *item,
                          const char *fmt, va_list ap)
 {
-    libvlc_instance_t *inst = data;
+    libapoi_instance_t *inst = data;
 
     switch (level)
     {
-        case VLC_MSG_INFO: level = LIBVLC_NOTICE;  break;
-        case VLC_MSG_ERR:  level = LIBVLC_ERROR;   break;
-        case VLC_MSG_WARN: level = LIBVLC_WARNING; break;
-        case VLC_MSG_DBG:  level = LIBVLC_DEBUG;   break;
+        case VLC_MSG_INFO: level = LIBAPOI_NOTICE;  break;
+        case VLC_MSG_ERR:  level = LIBAPOI_ERROR;   break;
+        case VLC_MSG_WARN: level = LIBAPOI_WARNING; break;
+        case VLC_MSG_DBG:  level = LIBAPOI_DEBUG;   break;
     }
 
     inst->log.cb (inst->log.data, level, item, fmt, ap);
 }
 
-static const struct vlc_logger_operations libvlc_log_ops = {
-    libvlc_logf, NULL
+static const struct vlc_logger_operations libapoi_log_ops = {
+    libapoi_logf, NULL
 };
 
-void libvlc_log_unset (libvlc_instance_t *inst)
+void libapoi_log_unset (libapoi_instance_t *inst)
 {
-    vlc_LogSet (inst->p_libvlc_int, NULL, NULL);
+    vlc_LogSet (inst->p_libapoi_int, NULL, NULL);
 }
 
-void libvlc_log_set (libvlc_instance_t *inst, libvlc_log_cb cb, void *data)
+void libapoi_log_set (libapoi_instance_t *inst, libapoi_log_cb cb, void *data)
 {
-    libvlc_log_unset (inst); /* <- Barrier before modifying the callback */
+    libapoi_log_unset (inst); /* <- Barrier before modifying the callback */
     inst->log.cb = cb;
     inst->log.data = data;
-    vlc_LogSet(inst->p_libvlc_int, &libvlc_log_ops, inst);
+    vlc_LogSet(inst->p_libapoi_int, &libapoi_log_ops, inst);
 }
 
 /*** Helpers for logging to files ***/
-static void libvlc_log_file (void *data, int level, const libvlc_log_t *log,
+static void libapoi_log_file (void *data, int level, const libapoi_log_t *log,
                              const char *fmt, va_list ap)
 {
     FILE *stream = data;
@@ -106,7 +106,7 @@ static void libvlc_log_file (void *data, int level, const libvlc_log_t *log,
     (void) level; (void) log;
 }
 
-void libvlc_log_set_file (libvlc_instance_t *inst, FILE *stream)
+void libapoi_log_set_file (libapoi_instance_t *inst, FILE *stream)
 {
-    libvlc_log_set (inst, libvlc_log_file, stream);
+    libapoi_log_set (inst, libapoi_log_file, stream);
 }

@@ -30,7 +30,7 @@
 #define MODULE_NAME ios_interface
 #undef VLC_DYNAMIC_PLUGINS
 
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 
 #include <vlc_common.h>
 #include <vlc_variables.h>
@@ -62,7 +62,7 @@
 
 @interface AppDelegate : NSObject <WKApplicationDelegate> {
     @public
-    libvlc_instance_t *_libvlc;
+    libapoi_instance_t *_libvlc;
 }
 @end
 

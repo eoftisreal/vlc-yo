@@ -5,7 +5,7 @@
 
 #include <wx/wx.h>
 #include <wx/filename.h>
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 #include <climits>
 
 #ifdef __WXGTK__
@@ -62,7 +62,7 @@ class MainWindow : public wxFrame {
         wxWindow *player_widget;
 
         libvlc_media_player_t *media_player;
-        libvlc_instance_t *vlc_inst;
+        libapoi_instance_t *vlc_inst;
         libvlc_event_manager_t *vlc_evt_man;
 };
 

@@ -32,7 +32,7 @@
 #include <vlc_meta.h>
 #include <vlc_modules.h>
 #include <vlc_picture.h>
-#include "../libvlc.h"
+#include "../libapoi.h"
 
 #include <stdckdint.h>
 

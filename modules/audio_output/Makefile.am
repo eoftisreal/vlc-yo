@@ -5,18 +5,18 @@ aout_LTLIBRARIES =
 installaoutLTLIBRARIES = install-aoutLTLIBRARIES
 $(installaoutLTLIBRARIES): install-pkglibLTLIBRARIES
 
-libvlc_android_audioformat_jni_la_SOURCES = \
+libapoi_android_audioformat_jni_la_SOURCES = \
 	audio_output/android/audioformat_jni.c \
 	audio_output/android/audioformat_jni.h
 
-libvlc_android_dynamicsprocessing_jni_la_SOURCES = \
+libapoi_android_dynamicsprocessing_jni_la_SOURCES = \
 	audio_output/android/dynamicsprocessing_jni.c \
 	audio_output/android/dynamicsprocessing_jni.h
 
 if HAVE_ANDROID
 noinst_LTLIBRARIES += \
-	libvlc_android_audioformat_jni.la \
-	libvlc_android_dynamicsprocessing_jni.la
+	libapoi_android_audioformat_jni.la \
+	libapoi_android_dynamicsprocessing_jni.la
 endif
 
 libopensles_android_plugin_la_SOURCES = audio_output/android/opensles.c
@@ -24,16 +24,16 @@ libopensles_android_plugin_la_LIBADD = $(LIBDL) $(LIBM)
 
 libandroid_audiotrack_plugin_la_SOURCES = audio_output/android/audiotrack.c audio_output/android/device.h
 libandroid_audiotrack_plugin_la_LIBADD = libandroid_env.la \
-	libvlc_android_audioformat_jni.la \
-	libvlc_android_dynamicsprocessing_jni.la
+	libapoi_android_audioformat_jni.la \
+	libapoi_android_dynamicsprocessing_jni.la
 
 libandroid_aaudio_plugin_la_SOURCES = audio_output/android/aaudio.c audio_output/android/device.h
-libandroid_aaudio_plugin_la_LIBADD = libandroid_env.la libvlc_android_dynamicsprocessing_jni.la $(LIBDL)
+libandroid_aaudio_plugin_la_LIBADD = libandroid_env.la libapoi_android_dynamicsprocessing_jni.la $(LIBDL)
 
 libandroid_audiodevice_plugin_la_SOURCES = audio_output/android/device.c audio_output/android/device.h
 libandroid_audiodevice_plugin_la_LIBADD = libandroid_env.la \
-	libvlc_android_audioformat_jni.la \
-	libvlc_android_dynamicsprocessing_jni.la
+	libapoi_android_audioformat_jni.la \
+	libapoi_android_dynamicsprocessing_jni.la
 
 if HAVE_ANDROID
 aout_LTLIBRARIES += libandroid_audiodevice_plugin.la libopensles_android_plugin.la \
@@ -65,33 +65,33 @@ if HAVE_ALSA
 aout_LTLIBRARIES += libalsa_plugin.la
 endif
 
-libvlc_pipewire_la_SOURCES = audio_output/vlc_pipewire.c audio_output/vlc_pipewire.h
-libvlc_pipewire_la_CFLAGS = $(AM_CFLAGS) $(PIPEWIRE_CFLAGS)
-libvlc_pipewire_la_LIBADD = $(PIPEWIRE_LIBS) $(LTLIBVLCCORE)
-libvlc_pipewire_la_LDFLAGS = \
+libapoi_pipewire_la_SOURCES = audio_output/vlc_pipewire.c audio_output/vlc_pipewire.h
+libapoi_pipewire_la_CFLAGS = $(AM_CFLAGS) $(PIPEWIRE_CFLAGS)
+libapoi_pipewire_la_LIBADD = $(PIPEWIRE_LIBS) $(LTLIBAPOICORE)
+libapoi_pipewire_la_LDFLAGS = \
 	-no-undefined \
 	-export-symbols-regex ^vlc_pw_ \
 	-version-info 0:0:0
 libaout_pipewire_plugin_la_SOURCES = audio_output/pipewire.c
 libaout_pipewire_plugin_la_CFLAGS = $(AM_CFLAGS) $(PIPEWIRE_CFLAGS)
-libaout_pipewire_plugin_la_LIBADD = libvlc_pipewire.la $(PIPEWIRE_LIBS) $(LIBM)
+libaout_pipewire_plugin_la_LIBADD = libapoi_pipewire.la $(PIPEWIRE_LIBS) $(LIBM)
 if HAVE_PIPEWIRE
-pkglib_LTLIBRARIES += libvlc_pipewire.la
+pkglib_LTLIBRARIES += libapoi_pipewire.la
 aout_LTLIBRARIES += libaout_pipewire_plugin.la
 endif
 
-libvlc_pulse_la_SOURCES = audio_output/vlcpulse.c audio_output/vlcpulse.h
-libvlc_pulse_la_CFLAGS = $(AM_CFLAGS) $(PULSE_CFLAGS)
-libvlc_pulse_la_LIBADD = $(PULSE_LIBS) $(LTLIBVLCCORE)
-libvlc_pulse_la_LDFLAGS = \
+libapoi_pulse_la_SOURCES = audio_output/vlcpulse.c audio_output/vlcpulse.h
+libapoi_pulse_la_CFLAGS = $(AM_CFLAGS) $(PULSE_CFLAGS)
+libapoi_pulse_la_LIBADD = $(PULSE_LIBS) $(LTLIBAPOICORE)
+libapoi_pulse_la_LDFLAGS = \
 	-no-undefined \
 	-export-symbols-regex ^vlc_pa_ \
 	-version-info 0:0:0
 libpulse_plugin_la_SOURCES = audio_output/pulse.c
 libpulse_plugin_la_CFLAGS = $(AM_CFLAGS) $(PULSE_CFLAGS)
-libpulse_plugin_la_LIBADD = libvlc_pulse.la $(PULSE_LIBS) $(LIBM)
+libpulse_plugin_la_LIBADD = libapoi_pulse.la $(PULSE_LIBS) $(LIBM)
 if HAVE_PULSE
-pkglib_LTLIBRARIES += libvlc_pulse.la
+pkglib_LTLIBRARIES += libapoi_pulse.la
 aout_LTLIBRARIES += libpulse_plugin.la
 endif
 

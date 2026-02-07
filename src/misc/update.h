@@ -157,7 +157,7 @@ typedef struct
  */
 struct update_t
 {
-    libvlc_int_t *p_libvlc;
+    libapoi_int_t *p_libvlc;
     vlc_mutex_t lock;
     struct update_release_t release;    ///< Release (version)
     public_key_t *p_pkey;

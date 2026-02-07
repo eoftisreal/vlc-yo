@@ -34,7 +34,7 @@
 #include <vlc_http.h>
 #include <vlc_vout_osd.h>
 
-#include "../libvlc.h"
+#include "../libapoi.h"
 #include "input/resource.h"
 #include "audio_output/aout_internal.h"
 

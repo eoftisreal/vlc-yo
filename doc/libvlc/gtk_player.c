@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 
 #define BORDER_WIDTH 6
 
@@ -20,7 +20,7 @@ void on_playpause(GtkWidget *widget, gpointer data);
 void on_stop(GtkWidget *widget, gpointer data);
 
 libvlc_media_player_t *media_player;
-libvlc_instance_t *vlc_inst;
+libapoi_instance_t *vlc_inst;
 GtkWidget *playpause_button;
 
 void destroy(GtkWidget *widget, gpointer data) {

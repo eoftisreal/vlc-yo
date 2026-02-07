@@ -1,5 +1,5 @@
 /*****************************************************************************
- * libvlc_picture.h:  libvlc external API
+ * libapoi_picture.h:  libapoi external API
  *****************************************************************************
  * Copyright (C) 2018 VLC authors and VideoLAN
  *
@@ -20,121 +20,121 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef VLC_LIBVLC_PICTURE_H
-#define VLC_LIBVLC_PICTURE_H 1
+#ifndef VLC_LIBAPOI_PICTURE_H
+#define VLC_LIBAPOI_PICTURE_H 1
 
 # ifdef __cplusplus
 extern "C" {
 # endif
 
-typedef struct libvlc_picture_t libvlc_picture_t;
-typedef struct libvlc_picture_list_t libvlc_picture_list_t;
+typedef struct libapoi_picture_t libapoi_picture_t;
+typedef struct libapoi_picture_list_t libapoi_picture_list_t;
 
-typedef enum libvlc_picture_type_t
+typedef enum libapoi_picture_type_t
 {
-    libvlc_picture_Argb,
-    libvlc_picture_Png,
-    libvlc_picture_Jpg,
-    libvlc_picture_WebP,
-    libvlc_picture_Rgba,
-} libvlc_picture_type_t;
+    libapoi_picture_Argb,
+    libapoi_picture_Png,
+    libapoi_picture_Jpg,
+    libapoi_picture_WebP,
+    libapoi_picture_Rgba,
+} libapoi_picture_type_t;
 
 /**
  * Increment the reference count of this picture.
  *
- * \see libvlc_picture_release()
+ * \see libapoi_picture_release()
  * \param pic A picture object
  * \return the same object
  */
-LIBVLC_API libvlc_picture_t *
-libvlc_picture_retain( libvlc_picture_t* pic );
+LIBAPOI_API libapoi_picture_t *
+libapoi_picture_retain( libapoi_picture_t* pic );
 
 /**
  * Decrement the reference count of this picture.
  * When the reference count reaches 0, the picture will be released.
  * The picture must not be accessed after calling this function.
  *
- * \see libvlc_picture_retain
+ * \see libapoi_picture_retain
  * \param pic A picture object
  */
-LIBVLC_API void
-libvlc_picture_release( libvlc_picture_t* pic );
+LIBAPOI_API void
+libapoi_picture_release( libapoi_picture_t* pic );
 
 /**
  * Saves this picture to a file. The image format is the same as the one
- * returned by \link libvlc_picture_type \endlink
+ * returned by \link libapoi_picture_type \endlink
  *
  * \param pic A picture object
  * \param path The path to the generated file
  * \return 0 in case of success, -1 otherwise
  */
-LIBVLC_API int
-libvlc_picture_save( const libvlc_picture_t* pic, const char* path );
+LIBAPOI_API int
+libapoi_picture_save( const libapoi_picture_t* pic, const char* path );
 
 /**
  * Returns the image internal buffer, including potential padding.
- * The libvlc_picture_t owns the returned buffer, which must not be modified nor
+ * The libapoi_picture_t owns the returned buffer, which must not be modified nor
  * freed.
  *
  * \param pic A picture object
  * \param size A pointer to a size_t that will hold the size of the buffer [required]
  * \return A pointer to the internal buffer.
  */
-LIBVLC_API const unsigned char*
-libvlc_picture_get_buffer( const libvlc_picture_t* pic, size_t *size );
+LIBAPOI_API const unsigned char*
+libapoi_picture_get_buffer( const libapoi_picture_t* pic, size_t *size );
 
 /**
  * Returns the picture type
  *
  * \param pic A picture object
- * \see libvlc_picture_type_t
+ * \see libapoi_picture_type_t
  */
-LIBVLC_API libvlc_picture_type_t
-libvlc_picture_type( const libvlc_picture_t* pic );
+LIBAPOI_API libapoi_picture_type_t
+libapoi_picture_type( const libapoi_picture_t* pic );
 
 /**
  * Returns the image stride, ie. the number of bytes per line.
- * This can only be called on images of type libvlc_picture_Argb
+ * This can only be called on images of type libapoi_picture_Argb
  *
  * \param pic A picture object
  */
-LIBVLC_API unsigned int
-libvlc_picture_get_stride( const libvlc_picture_t* pic );
+LIBAPOI_API unsigned int
+libapoi_picture_get_stride( const libapoi_picture_t* pic );
 
 /**
  * Returns the width of the image in pixels
  *
  * \param pic A picture object
  */
-LIBVLC_API unsigned int
-libvlc_picture_get_width( const libvlc_picture_t* pic );
+LIBAPOI_API unsigned int
+libapoi_picture_get_width( const libapoi_picture_t* pic );
 
 /**
  * Returns the height of the image in pixels
  *
  * \param pic A picture object
  */
-LIBVLC_API unsigned int
-libvlc_picture_get_height( const libvlc_picture_t* pic );
+LIBAPOI_API unsigned int
+libapoi_picture_get_height( const libapoi_picture_t* pic );
 
 /**
  * Returns the time at which this picture was generated, in milliseconds
  * \param pic A picture object
  */
-LIBVLC_API libvlc_time_t
-libvlc_picture_get_time( const libvlc_picture_t* pic );
+LIBAPOI_API libapoi_time_t
+libapoi_picture_get_time( const libapoi_picture_t* pic );
 
 /**
  * Returns the number of pictures in the list
  */
-LIBVLC_API size_t libvlc_picture_list_count( const libvlc_picture_list_t* list );
+LIBAPOI_API size_t libapoi_picture_list_count( const libapoi_picture_list_t* list );
 
 /**
  * Returns the picture at the provided index.
  *
  * If the index is out of bound, the result is undefined.
  */
-LIBVLC_API libvlc_picture_t* libvlc_picture_list_at( const libvlc_picture_list_t* list,
+LIBAPOI_API libapoi_picture_t* libapoi_picture_list_at( const libapoi_picture_list_t* list,
                                                      size_t index );
 
 /**
@@ -143,10 +143,10 @@ LIBVLC_API libvlc_picture_t* libvlc_picture_list_at( const libvlc_picture_list_t
  *
  * Calling this function with a NULL list is safe and will return immediately
  */
-LIBVLC_API void libvlc_picture_list_destroy( libvlc_picture_list_t* list );
+LIBAPOI_API void libapoi_picture_list_destroy( libapoi_picture_list_t* list );
 
 # ifdef __cplusplus
 }
 # endif
 
-#endif // VLC_LIBVLC_PICTURE_H
+#endif // VLC_LIBAPOI_PICTURE_H

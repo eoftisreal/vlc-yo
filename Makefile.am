@@ -5,7 +5,7 @@
 # SUBDIRS stores the directories where a "make" is required when building
 # something. DIST_SUBDIRS stores the directories where nothing is built but
 # which have makefiles with distribution information.
-#  - src (libvlccore) is nedeed by modules
+#  - src (libapoicore) is nedeed by modules
 SUBDIRS = compat po share src modules lib doc bin test
 DIST_SUBDIRS = m4 $(SUBDIRS)
 
@@ -92,32 +92,32 @@ EXTRA_DIST += \
 	contrib/src
 
 ###############################################################################
-# Building libvlc
+# Building libapoi
 ###############################################################################
 
 CLEANFILES =
 DISTCLEANFILES = $(BUILT_SOURCES_distclean) compile doltcompile doltlibtool
 MAINTAINERCLEANFILES = ChangeLog
 
-# Shortcut for developers to rebuild the core (libvlc + vlc)
+# Shortcut for developers to rebuild the core (libapoi + vlc)
 # Don't use it if you don't know what it is about.
 # Don't complain if it doesn't work. -- Courmisch
 libcompat:
 	cd compat && $(MAKE) $(AM_MAKEFLAGS)
 
-libvlccore: libcompat
-	cd src && $(MAKE) $(AM_MAKEFLAGS) libvlccore.la
+libapoicore: libcompat
+	cd src && $(MAKE) $(AM_MAKEFLAGS) libapoicore.la
 
-libvlc: libvlccore
-	cd lib && $(MAKE) $(AM_MAKEFLAGS) libvlc.la
+libapoi: libapoicore
+	cd lib && $(MAKE) $(AM_MAKEFLAGS) libapoi.la
 
-core: libvlc vlc$(EXEEXT)
+core: libapoi vlc$(EXEEXT)
 	cd bin && $(MAKE) $(AM_MAKEFLAGS) vlc$(EXEEXT) vlc-static$(EXEEXT)
 
 doc:
 	cd doc && $(MAKE) $(AM_MAKEFLAGS) doc
 
-.PHONY: libvlc core doc
+.PHONY: libapoi core doc
 
 ###############################################################################
 # Building aliases

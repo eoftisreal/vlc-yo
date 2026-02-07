@@ -1,5 +1,5 @@
 /*****************************************************************************
- * media_internal.h : Definition of opaque structures for libvlc exported API
+ * media_internal.h : Definition of opaque structures for libapoi exported API
  * Also contains some internal utility functions
  *****************************************************************************
  * Copyright (C) 2005-2009 VLC authors and VideoLAN
@@ -21,11 +21,11 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef _LIBVLC_MEDIA_INTERNAL_H
-#define _LIBVLC_MEDIA_INTERNAL_H 1
+#ifndef _LIBAPOI_MEDIA_INTERNAL_H
+#define _LIBAPOI_MEDIA_INTERNAL_H 1
 
-#include <vlc/libvlc.h>
-#include <vlc/libvlc_media.h>
+#include <apoi/libapoi.h>
+#include <apoi/libapoi_media.h>
 
 #include <vlc_common.h>
 #include <vlc_input.h>
@@ -33,14 +33,14 @@
 #include <vlc_preparser.h>
 #include <vlc_atomic.h>
 
-struct libvlc_media_t
+struct libapoi_media_t
 {
-    libvlc_event_manager_t event_manager;
+    libapoi_event_manager_t event_manager;
 
     input_item_t      *p_input_item;
     vlc_atomic_rc_t    rc;
 
-    VLC_FORWARD_DECLARE_OBJECT(libvlc_media_list_t*) p_subitems; /* A media descriptor can have Sub items. This is the only dependency we really have on media_list */
+    VLC_FORWARD_DECLARE_OBJECT(libapoi_media_list_t*) p_subitems; /* A media descriptor can have Sub items. This is the only dependency we really have on media_list */
     void *p_user_data;
 
     /* Idle protection to prevent the media from being released during
@@ -48,63 +48,63 @@ struct libvlc_media_t
      * be blocking until no async code is using the media anymore. */
     atomic_uint worker_count;
 
-    _Atomic libvlc_media_parsed_status_t parsed_status;
+    _Atomic libapoi_media_parsed_status_t parsed_status;
     vlc_preparser_req *req;
 };
 
 /* Media Descriptor */
-libvlc_media_t * libvlc_media_new_from_input_item( input_item_t * );
+libapoi_media_t * libapoi_media_new_from_input_item( input_item_t * );
 
-void libvlc_media_add_subtree(libvlc_media_t *, const input_item_node_t *);
+void libapoi_media_add_subtree(libapoi_media_t *, const input_item_node_t *);
 
 static inline enum es_format_category_e
-libvlc_track_type_to_escat( libvlc_track_type_t i_type )
+libapoi_track_type_to_escat( libapoi_track_type_t i_type )
 {
     switch( i_type )
     {
-        case libvlc_track_audio:
+        case libapoi_track_audio:
             return AUDIO_ES;
-        case libvlc_track_video:
+        case libapoi_track_video:
             return VIDEO_ES;
-        case libvlc_track_text:
+        case libapoi_track_text:
             return SPU_ES;
-        case libvlc_track_unknown:
+        case libapoi_track_unknown:
         default:
             return UNKNOWN_ES;
     }
 }
 
-typedef struct libvlc_media_trackpriv_t
+typedef struct libapoi_media_trackpriv_t
 {
-    libvlc_media_track_t t;
+    libapoi_media_track_t t;
     union {
-        libvlc_audio_track_t audio;
-        libvlc_video_track_t video;
-        libvlc_subtitle_track_t subtitle;
+        libapoi_audio_track_t audio;
+        libapoi_video_track_t video;
+        libapoi_subtitle_track_t subtitle;
     };
     vlc_es_id_t *es_id;
     char *item_str_id;
     vlc_atomic_rc_t rc;
-} libvlc_media_trackpriv_t;
+} libapoi_media_trackpriv_t;
 
-static inline const libvlc_media_trackpriv_t *
-libvlc_media_track_to_priv( const libvlc_media_track_t *track )
+static inline const libapoi_media_trackpriv_t *
+libapoi_media_track_to_priv( const libapoi_media_track_t *track )
 {
-    return container_of( track, const libvlc_media_trackpriv_t, t );
+    return container_of( track, const libapoi_media_trackpriv_t, t );
 }
 
 void
-libvlc_media_trackpriv_from_es( libvlc_media_trackpriv_t *trackpriv,
+libapoi_media_trackpriv_from_es( libapoi_media_trackpriv_t *trackpriv,
                                 const es_format_t *es  );
 
-libvlc_media_track_t *
-libvlc_media_track_create_from_player_track( const struct vlc_player_track *track );
+libapoi_media_track_t *
+libapoi_media_track_create_from_player_track( const struct vlc_player_track *track );
 
-libvlc_media_tracklist_t *
-libvlc_media_tracklist_from_item( input_item_t *item, libvlc_track_type_t type );
+libapoi_media_tracklist_t *
+libapoi_media_tracklist_from_item( input_item_t *item, libapoi_track_type_t type );
 
-libvlc_media_tracklist_t *
-libvlc_media_tracklist_from_player( vlc_player_t *player,
-                                    libvlc_track_type_t type, bool selected );
+libapoi_media_tracklist_t *
+libapoi_media_tracklist_from_player( vlc_player_t *player,
+                                    libapoi_track_type_t type, bool selected );
 
 #endif

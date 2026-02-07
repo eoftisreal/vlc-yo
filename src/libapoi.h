@@ -1,5 +1,5 @@
 /*****************************************************************************
- * libvlc.h: Internal libvlc generic/misc declaration
+ * libapoi.h: Internal libapoi generic/misc declaration
  *****************************************************************************
  * Copyright (C) 1999, 2000, 2001, 2002 VLC authors and VideoLAN
  * Copyright © 2006-2007 Rémi Denis-Courmont
@@ -21,8 +21,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef LIBVLC_LIBVLC_H
-# define LIBVLC_LIBVLC_H 1
+#ifndef LIBAPOI_LIBAPOI_H
+# define LIBAPOI_LIBAPOI_H 1
 
 #include <vlc_input_item.h>
 
@@ -38,7 +38,7 @@ typedef struct variable_t variable_t;
  * OS-specific initialization
  */
 void system_Init      ( void );
-void system_Configure ( libvlc_int_t *, int, const char *const [] );
+void system_Configure ( libapoi_int_t *, int, const char *const [] );
 #if defined(_WIN32) || defined(__OS2__)
 void system_End(void);
 #endif
@@ -48,7 +48,7 @@ void vlc_CPU_dump(vlc_object_t *);
  * Threads subsystem
  */
 
-void vlc_threads_setup (libvlc_int_t *);
+void vlc_threads_setup (libapoi_int_t *);
 
 void vlc_trace (const char *fn, const char *file, unsigned line);
 #define vlc_backtrace() vlc_trace(__func__, __FILE__, __LINE__)
@@ -59,11 +59,11 @@ void vlc_trace (const char *fn, const char *file, unsigned line);
 typedef struct vlc_logger vlc_logger_t;
 typedef struct vlc_tracer vlc_tracer_t;
 
-int vlc_LogPreinit(libvlc_int_t *) VLC_USED;
-void vlc_LogInit(libvlc_int_t *);
+int vlc_LogPreinit(libapoi_int_t *) VLC_USED;
+void vlc_LogInit(libapoi_int_t *);
 
 /*
- * LibVLC exit event handling
+ * LibAPOI exit event handling
  */
 typedef struct vlc_exit
 {
@@ -75,7 +75,7 @@ typedef struct vlc_exit
 void vlc_ExitInit( vlc_exit_t * );
 
 /*
- * LibVLC objects stuff
+ * LibAPOI objects stuff
  */
 
 /**
@@ -163,7 +163,7 @@ void vlc_objres_remove(vlc_object_t *obj, void *data,
                        bool (*match)(void *, void *));
 
 /**
- * Private LibVLC instance data.
+ * Private LibAPOI instance data.
  */
 typedef struct vlc_dialog_provider vlc_dialog_provider;
 typedef struct vlc_keystore vlc_keystore;
@@ -172,9 +172,9 @@ typedef struct vlc_playlist vlc_playlist_t;
 typedef struct vlc_media_source_provider_t vlc_media_source_provider_t;
 typedef struct intf_thread_t intf_thread_t;
 
-typedef struct libvlc_priv_t
+typedef struct libapoi_priv_t
 {
-    libvlc_int_t       public_data;
+    libapoi_int_t       public_data;
 
     /* Singleton objects */
     vlc_mutex_t lock; ///< protect playlist and interfaces
@@ -190,19 +190,19 @@ typedef struct libvlc_priv_t
 
     /* Exit callback */
     vlc_exit_t       exit;
-} libvlc_priv_t;
+} libapoi_priv_t;
 
-static inline libvlc_priv_t *libvlc_priv (libvlc_int_t *libvlc)
+static inline libapoi_priv_t *libapoi_priv (libapoi_int_t *libapoi)
 {
-    return container_of(libvlc, libvlc_priv_t, public_data);
+    return container_of(libapoi, libapoi_priv_t, public_data);
 }
 
-int intf_InsertItem(libvlc_int_t *, const char *mrl, unsigned optc,
+int intf_InsertItem(libapoi_int_t *, const char *mrl, unsigned optc,
                     const char * const *optv, unsigned flags);
-void intf_DestroyAll( libvlc_int_t * );
+void intf_DestroyAll( libapoi_int_t * );
 
 vlc_playlist_t *
-libvlc_GetMainPlaylist(libvlc_int_t *libvlc);
+libapoi_GetMainPlaylist(libapoi_int_t *libapoi);
 
 /*
  * Variables stuff

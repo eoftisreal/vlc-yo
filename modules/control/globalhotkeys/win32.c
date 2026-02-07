@@ -42,7 +42,7 @@ static void Close( vlc_object_t *p_this );
 static void *Thread( void *p_data );
 LRESULT CALLBACK WMHOTKEYPROC( HWND, UINT, WPARAM, LPARAM );
 
-static void AutoRun(libvlc_int_t *libvlc)
+static void AutoRun(libapoi_int_t *libvlc)
 {
     intf_Create(libvlc, MODULE_STRING);
 }

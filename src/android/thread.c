@@ -31,7 +31,7 @@
 #include <vlc_common.h>
 #include <vlc_threads.h>
 
-#include "../libvlc.h"
+#include "../libapoi.h"
 #include <signal.h>
 #include <errno.h>
 #include <stdatomic.h>
@@ -92,7 +92,7 @@ struct vlc_thread
 
 static thread_local struct vlc_thread *thread = NULL;
 
-void vlc_threads_setup (libvlc_int_t *p_libvlc)
+void vlc_threads_setup (libapoi_int_t *p_libvlc)
 {
     (void)p_libvlc;
 }

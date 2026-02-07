@@ -26,7 +26,7 @@ endif
 #
 # Main VLC executable
 #
-vlc_LDADD = ../lib/libvlc.la ../src/libvlccore.la
+vlc_LDADD = ../lib/libapoi.la ../src/libapoicore.la
 vlc_CPPFLAGS = $(AM_CPPFLAGS)
 if !HAVE_WIN32
 vlc_SOURCES = vlc.c override.c
@@ -56,7 +56,7 @@ vlc_osx_LDFLAGS += -Wl,-framework,Breakpad
 vlc_osx_OBJCFLAGS = -F$(CONTRIB_DIR)/Frameworks
 vlc_osx_CPPFLAGS = -DHAVE_BREAKPAD
 endif
-vlc_osx_LDADD = ../lib/libvlc.la
+vlc_osx_LDADD = ../lib/libapoi.la
 
 vlc_osx_static_SOURCES = $(vlc_osx_SOURCES)
 vlc_osx_static_OBJCFLAGS = $(AM_OBJCFLAGS) \
@@ -118,7 +118,7 @@ vlc_cache_gen_SOURCES = cachegen.c
 vlc_cache_gen_LDADD = \
 	$(GNUGETOPT_LIBS) \
 	../compat/libcompat.la \
-	../lib/libvlc.la
+	../lib/libapoi.la
 if HAVE_WIN32
 vlc_cache_gen_LDADD += vlc_win32_rc.$(OBJEXT)
 vlc_cache_gen_LDFLAGS = -Wc,-static

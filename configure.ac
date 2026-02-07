@@ -1,6 +1,6 @@
 dnl Autoconf settings for vlc
 
-AC_COPYRIGHT([Copyright 1999-2026 VLC authors and VideoLAN])
+AC_COPYRIGHT([Copyright 1999-2026 Apoi authors])
 
 AC_INIT([apoi], [4.0.0-dev])
 VERSION_MAJOR=4
@@ -9,10 +9,10 @@ VERSION_REVISION=0
 VERSION_EXTRA=0
 VERSION_DEV=dev
 
-# libvlc .so version values
-LIBVLC_ABI_MAJOR=12
-LIBVLC_ABI_MINOR=0
-LIBVLC_ABI_MICRO=0
+# libapoi .so version values
+LIBAPOI_ABI_MAJOR=12
+LIBAPOI_ABI_MINOR=0
+LIBAPOI_ABI_MICRO=0
 
 PKGDIR="apoi"
 AC_SUBST([PKGDIR])
@@ -21,7 +21,7 @@ CONFIGURE_LINE="`echo "$0 $ac_configure_args" | sed -e 's/\\\/\\\\\\\/g'`"
 CODENAME="Otto Chriek"
 COPYRIGHT_YEARS="1996-2026"
 
-AC_CONFIG_SRCDIR([src/libvlc.c])
+AC_CONFIG_SRCDIR([src/libapoi.c])
 AC_CONFIG_AUX_DIR([autotools])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_LIBOBJ_DIR([compat])
@@ -48,7 +48,7 @@ AH_VERBATIM([FORTIFY_SOURCE],
 # define _FORTIFY_SOURCE 2
 #endif])
 AC_DEFINE([_FILE_OFFSET_BITS], 64, [Define to 64 for large files support.])
-AC_DEFINE([LIBVLC_INTERNAL_],, [Define within the LibVLC source code tree.])
+AC_DEFINE([LIBAPOI_INTERNAL_],, [Define within the LibAPOI source code tree.])
 
 AC_PROG_CXX
 AC_PROG_CPP
@@ -193,7 +193,7 @@ case "${host_os}" in
     AX_APPEND_FLAG([-Werror=partial-availability], [OBJCFLAGS])
     AX_APPEND_FLAG([-Wl,-headerpad_max_install_names], [LDFLAGS])
 
-    VLC_ADD_LIBS([libvlccore],[-Wl,-framework,CoreFoundation])
+    VLC_ADD_LIBS([libapoicore],[-Wl,-framework,CoreFoundation])
 
     dnl This is not supported when bitcode is enabled. In that case, we need
     dnl to disable the static bank loader.
@@ -206,9 +206,9 @@ __attribute__((visibility("default"))) extern int my_array[];
 int foo() { return my_array[0]; }
 ]],[[return foo();]])],
        [
-        VLC_ADD_LDFLAGS([libvlccore],[-Wl,-U,_vlc_static_modules])
-        VLC_ADD_LDFLAGS([libvlc vlc],[-Wl,-undefined,dynamic_lookup])
-        VLC_ADD_CPPFLAGS([libvlccore],[-DHAVE_DYLIB_DYNAMIC_LOOKUP=1])
+        VLC_ADD_LDFLAGS([libapoicore],[-Wl,-U,_vlc_static_modules])
+        VLC_ADD_LDFLAGS([libapoi vlc],[-Wl,-undefined,dynamic_lookup])
+        VLC_ADD_CPPFLAGS([libapoicore],[-DHAVE_DYLIB_DYNAMIC_LOOKUP=1])
         AC_MSG_RESULT([yes])
        ],[AC_MSG_RESULT([no])])
     VLC_RESTORE_FLAGS
@@ -262,7 +262,7 @@ int foo() { return my_array[0]; }
              ac_cv_func_fork=no
              ],)
 
-    AS_IF([test "${HAVE_OSX}" = "1"],[VLC_ADD_LIBS([libvlccore],[-Wl,-framework,CoreServices])])
+    AS_IF([test "${HAVE_OSX}" = "1"],[VLC_ADD_LIBS([libapoicore],[-Wl,-framework,CoreServices])])
 
     dnl
     dnl  Handle Mac OS X SDK flags
@@ -322,7 +322,7 @@ int foo() { return my_array[0]; }
       AC_MSG_RESULT([no])
     ],[
       AC_MSG_RESULT([yes])
-      VLC_ADD_LIBS([libvlccore], [-lsynchronization])
+      VLC_ADD_LIBS([libapoicore], [-lsynchronization])
     ])
     AC_DEFINE([WIN32_LEAN_AND_MEAN],, [Define to limit the scope of <windows.h>.])
     AC_DEFINE([UNICODE], [1], [Define to 1 for Unicode (Wide Chars) APIs.])
@@ -480,7 +480,7 @@ AS_IF([test "${SYS}" = "mingw32"],[
   AS_IF([test "${enable_winstore_app}" = "yes"], [
     vlc_winstore_app=1
     LIBCOM="-loleaut32"
-    VLC_ADD_LIBS([libvlccore], [-lruntimeobject])
+    VLC_ADD_LIBS([libapoicore], [-lruntimeobject])
     AC_LIBOBJ([gai_strerror])
   ],[])
   AC_SUBST([LIBCOM])
@@ -714,7 +714,7 @@ dnl Check for broken versions of mingw-runtime compatibility library
         AC_MSG_RESULT([ok])
     ], [
         AC_MSG_RESULT([present])
-        AC_MSG_ERROR([LibVLC requires Mingw-w64 version 6.0 or higher!])
+        AC_MSG_ERROR([LibAPOI requires Mingw-w64 version 6.0 or higher!])
     ])
 
     AS_IF([test "${win_ucrt_build}" = "no"], [
@@ -4954,7 +4954,7 @@ dnl
 dnl  Stuff used by the program
 dnl
 VERSION_MESSAGE="${VERSION} ${CODENAME}"
-COPYRIGHT_MESSAGE="Copyright © ${COPYRIGHT_YEARS} the VideoLAN team"
+COPYRIGHT_MESSAGE="Copyright © ${COPYRIGHT_YEARS} the Apoi team"
 AC_DEFINE_UNQUOTED([VERSION_MESSAGE], "${VERSION_MESSAGE}", [Simple version string])
 AC_DEFINE_UNQUOTED([COPYRIGHT_MESSAGE], "${COPYRIGHT_MESSAGE}", [Copyright string])
 AC_DEFINE_UNQUOTED([COPYRIGHT_YEARS], "${COPYRIGHT_YEARS}", [The copyright years])
@@ -4964,18 +4964,18 @@ AC_DEFINE_UNQUOTED([PACKAGE_VERSION_MINOR],${VERSION_MINOR}, [version minor numb
 AC_DEFINE_UNQUOTED([PACKAGE_VERSION_REVISION],${VERSION_REVISION}, [version revision number])
 AC_DEFINE_UNQUOTED([PACKAGE_VERSION_EXTRA],${VERSION_EXTRA}, [version extra number])
 AC_DEFINE_UNQUOTED([PACKAGE_VERSION_DEV],"${VERSION_DEV}", [version development string])
-AC_DEFINE_UNQUOTED([LIBVLC_ABI_MAJOR],${LIBVLC_ABI_MAJOR}, [libvlc version major number])
-AC_DEFINE_UNQUOTED([LIBVLC_ABI_MINOR],${LIBVLC_ABI_MINOR}, [libvlc version minor number])
-AC_DEFINE_UNQUOTED([LIBVLC_ABI_MICRO],${LIBVLC_ABI_MICRO}, [libvlc version micro number])
+AC_DEFINE_UNQUOTED([LIBAPOI_ABI_MAJOR],${LIBAPOI_ABI_MAJOR}, [libapoi version major number])
+AC_DEFINE_UNQUOTED([LIBAPOI_ABI_MINOR],${LIBAPOI_ABI_MINOR}, [libapoi version minor number])
+AC_DEFINE_UNQUOTED([LIBAPOI_ABI_MICRO],${LIBAPOI_ABI_MICRO}, [libapoi version micro number])
 AC_SUBST([COPYRIGHT_MESSAGE])
 AC_SUBST([VERSION_MESSAGE])
 AC_SUBST([VERSION_MAJOR])
 AC_SUBST([VERSION_MINOR])
 AC_SUBST([VERSION_REVISION])
 AC_SUBST([VERSION_EXTRA])
-AC_SUBST([LIBVLC_ABI_MAJOR])
-AC_SUBST([LIBVLC_ABI_MINOR])
-AC_SUBST([LIBVLC_ABI_MICRO])
+AC_SUBST([LIBAPOI_ABI_MAJOR])
+AC_SUBST([LIBAPOI_ABI_MINOR])
+AC_SUBST([LIBAPOI_ABI_MICRO])
 AC_SUBST([COPYRIGHT_YEARS])
 AS_IF([test -z "$VLC_COMPILE_BY"],[
    VLC_COMPILE_BY=`whoami|sed -e 's/\\\/\\\\\\\/g'`
@@ -5006,8 +5006,8 @@ AC_SUBST([WINDRES])
 AC_SUBST([LIBEXT])
 AC_SUBST([AM_CPPFLAGS])
 AC_SUBST([MACOSX_DEPLOYMENT_TARGET])
-AC_SUBST([FILE_LIBVLCCORE_DLL])
-AC_SUBST([FILE_LIBVLC_DLL])
+AC_SUBST([FILE_LIBAPOICORE_DLL])
+AC_SUBST([FILE_LIBAPOI_DLL])
 
 AC_CONFIG_FILES([
   Makefile
@@ -5072,7 +5072,7 @@ exit $ERROR'] >compile
 chmod a+x compile
 
 echo "
-libvlc configuration
+libapoi configuration
 --------------------
 version               : ${VERSION}
 system                : ${SYS}

@@ -189,9 +189,9 @@ static int updatePalette(vlc_qt_theme_provider_t* obj)
 
     GdkRGBA accent;
     if (isDark)
-        gdk_rgba_parse(&accent, "#FF8800");
+        gdk_rgba_parse(&accent, "#3498db");
     else
-        gdk_rgba_parse(&accent, "#FF610A");
+        gdk_rgba_parse(&accent, "#2980b9");
 
     //IDK how to retreive the shadow color from GTK, using a black like in our theme is good enough
     GdkRGBA shadow;

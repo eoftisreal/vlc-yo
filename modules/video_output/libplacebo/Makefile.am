@@ -37,13 +37,13 @@ endif
 libplacebo_gl_plugin_la_SOURCES = $(LIBPLACEBO_COMMONSOURCES) \
 				  video_output/libplacebo/instance_opengl.c
 libplacebo_gl_plugin_la_CFLAGS = $(AM_CFLAGS) $(LIBPLACEBO_CFLAGS)
-libplacebo_gl_plugin_la_LIBADD = $(LIBPLACEBO_LIBS) libvlc_opengl.la
+libplacebo_gl_plugin_la_LIBADD = $(LIBPLACEBO_LIBS) libapoi_opengl.la
 libplacebo_gl_plugin_la_LDFLAGS = $(AM_LDFLAGS) -rpath '$(voutdir)'
 
 libplacebo_gles2_plugin_la_SOURCES = $(LIBPLACEBO_COMMONSOURCES) \
 				     video_output/libplacebo/instance_opengl.c
 libplacebo_gles2_plugin_la_CFLAGS = $(AM_CFLAGS) $(LIBPLACEBO_CFLAGS) -DUSE_OPENGL_ES2
-libplacebo_gles2_plugin_la_LIBADD = $(LIBPLACEBO_LIBS) libvlc_opengles.la
+libplacebo_gles2_plugin_la_LIBADD = $(LIBPLACEBO_LIBS) libapoi_opengles.la
 libplacebo_gles2_plugin_la_LDFLAGS = $(AM_LDFLAGS) -rpath '$(voutdir)'
 
 if HAVE_GL

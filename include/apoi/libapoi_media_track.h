@@ -1,5 +1,5 @@
 /*****************************************************************************
- * libvlc_media_track.h:  libvlc external API
+ * libapoi_media_track.h:  libapoi external API
  *****************************************************************************
  * Copyright (C) 1998-2020 VLC authors and VideoLAN
  *
@@ -22,10 +22,10 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef VLC_LIBVLC_MEDIA_TRACK_H
-#define VLC_LIBVLC_MEDIA_TRACK_H 1
+#ifndef VLC_LIBAPOI_MEDIA_TRACK_H
+#define VLC_LIBAPOI_MEDIA_TRACK_H 1
 
-# include "libvlc_video.h"
+# include "libapoi_video.h"
 
 # ifdef __cplusplus
 extern "C" {
@@ -33,42 +33,42 @@ extern "C" {
 #  include <stdbool.h>
 # endif
 
-/** \defgroup libvlc_media_track LibVLC media track
- * \ingroup libvlc
- * @ref libvlc_media_track_t is an abstract representation of a media track.
+/** \defgroup libapoi_media_track LibAPOI media track
+ * \ingroup libapoi
+ * @ref libapoi_media_track_t is an abstract representation of a media track.
  * @{
  * \file
- * LibVLC media track
+ * LibAPOI media track
  */
 
-typedef enum libvlc_track_type_t
+typedef enum libapoi_track_type_t
 {
-    libvlc_track_unknown   = -1,
-    libvlc_track_audio     = 0,
-    libvlc_track_video     = 1,
-    libvlc_track_text      = 2
-} libvlc_track_type_t;
+    libapoi_track_unknown   = -1,
+    libapoi_track_audio     = 0,
+    libapoi_track_video     = 1,
+    libapoi_track_text      = 2
+} libapoi_track_type_t;
 
-typedef struct libvlc_audio_track_t
+typedef struct libapoi_audio_track_t
 {
     unsigned    i_channels;
     unsigned    i_rate;
-} libvlc_audio_track_t;
+} libapoi_audio_track_t;
 
 /**
  * Viewpoint
  *
- * \warning allocate using libvlc_video_new_viewpoint()
+ * \warning allocate using libapoi_video_new_viewpoint()
  */
-typedef struct libvlc_video_viewpoint_t
+typedef struct libapoi_video_viewpoint_t
 {
     float f_yaw;           /**< view point yaw in degrees  ]-180;180] */
     float f_pitch;         /**< view point pitch in degrees  ]-90;90] */
     float f_roll;          /**< view point roll in degrees ]-180;180] */
     float f_field_of_view; /**< field of view in degrees ]0;180[ (default 80.)*/
-} libvlc_video_viewpoint_t;
+} libapoi_video_viewpoint_t;
 
-typedef struct libvlc_video_track_t
+typedef struct libapoi_video_track_t
 {
     unsigned    i_height;
     unsigned    i_width;
@@ -77,33 +77,33 @@ typedef struct libvlc_video_track_t
     unsigned    i_frame_rate_num;
     unsigned    i_frame_rate_den;
 
-    libvlc_video_orient_t       i_orientation;
-    libvlc_video_projection_t   i_projection;
-    libvlc_video_viewpoint_t    pose; /**< Initial view point */
-    libvlc_video_multiview_t    i_multiview;
-} libvlc_video_track_t;
+    libapoi_video_orient_t       i_orientation;
+    libapoi_video_projection_t   i_projection;
+    libapoi_video_viewpoint_t    pose; /**< Initial view point */
+    libapoi_video_multiview_t    i_multiview;
+} libapoi_video_track_t;
 
-typedef struct libvlc_subtitle_track_t
+typedef struct libapoi_subtitle_track_t
 {
     char *psz_encoding;
-} libvlc_subtitle_track_t;
+} libapoi_subtitle_track_t;
 
-typedef struct libvlc_media_track_t
+typedef struct libapoi_media_track_t
 {
     /* Codec fourcc */
     uint32_t    i_codec;
     uint32_t    i_original_fourcc;
     int         i_id; /* DEPRECATED: use psz_id */
-    libvlc_track_type_t i_type;
+    libapoi_track_type_t i_type;
 
     /* Codec specific */
     int         i_profile;
     int         i_level;
 
     union {
-        libvlc_audio_track_t *audio;
-        libvlc_video_track_t *video;
-        libvlc_subtitle_track_t *subtitle;
+        libapoi_audio_track_t *audio;
+        libapoi_video_track_t *video;
+        libapoi_subtitle_track_t *subtitle;
     };
 
     unsigned int i_bitrate;
@@ -111,7 +111,7 @@ typedef struct libvlc_media_track_t
     char *psz_description;
 
     /** String identifier of track, can be used to save the track preference
-     * from an other LibVLC run */
+     * from an other LibAPOI run */
     const char *psz_id;
     /** A string identifier is stable when it is certified to be the same
      * across different playback instances for the same track. */
@@ -123,90 +123,90 @@ typedef struct libvlc_media_track_t
      * a media_player */
     bool selected;
 
-} libvlc_media_track_t;
+} libapoi_media_track_t;
 
 /**
  * Opaque struct containing a list of tracks
  */
-typedef struct libvlc_media_tracklist_t libvlc_media_tracklist_t;
+typedef struct libapoi_media_tracklist_t libapoi_media_tracklist_t;
 
 /**
  * Get the number of tracks in a tracklist
  *
- * \version LibVLC 4.0.0 and later.
+ * \version LibAPOI 4.0.0 and later.
  *
  * \param list valid tracklist
  *
  * \return number of tracks, or 0 if the list is empty
  */
-LIBVLC_API size_t
-libvlc_media_tracklist_count( const libvlc_media_tracklist_t *list );
+LIBAPOI_API size_t
+libapoi_media_tracklist_count( const libapoi_media_tracklist_t *list );
 
 /**
  * Get a track at a specific index
  *
  * \warning The behaviour is undefined if the index is not valid.
  *
- * \version LibVLC 4.0.0 and later.
+ * \version LibAPOI 4.0.0 and later.
  *
  * \param list valid tracklist
  * \param index valid index in the range [0; count[
  *
- * \return a valid track (can't be NULL if libvlc_media_tracklist_count()
+ * \return a valid track (can't be NULL if libapoi_media_tracklist_count()
  * returned a valid count)
  */
-LIBVLC_API libvlc_media_track_t *
-libvlc_media_tracklist_at( libvlc_media_tracklist_t *list, size_t index );
+LIBAPOI_API libapoi_media_track_t *
+libapoi_media_tracklist_at( libapoi_media_tracklist_t *list, size_t index );
 
 /**
  * Release a tracklist
  *
- * \version LibVLC 4.0.0 and later.
+ * \version LibAPOI 4.0.0 and later.
  *
- * \see libvlc_media_get_tracklist
- * \see libvlc_media_player_get_tracklist
+ * \see libapoi_media_get_tracklist
+ * \see libapoi_media_player_get_tracklist
  *
  * \param list valid tracklist
  */
-LIBVLC_API void
-libvlc_media_tracklist_delete( libvlc_media_tracklist_t *list );
+LIBAPOI_API void
+libapoi_media_tracklist_delete( libapoi_media_tracklist_t *list );
 
 
 /**
  * Hold a single track reference
  *
- * \version LibVLC 4.0.0 and later.
+ * \version LibAPOI 4.0.0 and later.
  *
  * This function can be used to hold a track from a tracklist. In that case,
  * the track can outlive its tracklist.
  *
  * \param track valid track
- * \return the same track, need to be released with libvlc_media_track_release()
+ * \return the same track, need to be released with libapoi_media_track_release()
  */
-LIBVLC_API libvlc_media_track_t *
-libvlc_media_track_hold( libvlc_media_track_t *track );
+LIBAPOI_API libapoi_media_track_t *
+libapoi_media_track_hold( libapoi_media_track_t *track );
 
 /**
  * Release a single track
  *
- * \version LibVLC 4.0.0 and later.
+ * \version LibAPOI 4.0.0 and later.
  *
  * \warning Tracks from a tracklist are released alongside the list with
- * libvlc_media_tracklist_delete().
+ * libapoi_media_tracklist_delete().
  *
  * \note You only need to release tracks previously held with
- * libvlc_media_track_hold() or returned by
- * libvlc_media_player_get_selected_track() and
- * libvlc_media_player_get_track_from_id()
+ * libapoi_media_track_hold() or returned by
+ * libapoi_media_player_get_selected_track() and
+ * libapoi_media_player_get_track_from_id()
  *
  * \param track valid track
  */
-LIBVLC_API void
-libvlc_media_track_release( libvlc_media_track_t *track );
+LIBAPOI_API void
+libapoi_media_track_release( libapoi_media_track_t *track );
 /** @}*/
 
 # ifdef __cplusplus
 }
 # endif
 
-#endif /* VLC_LIBVLC_MEDIA_TRACK_H */
+#endif /* VLC_LIBAPOI_MEDIA_TRACK_H */

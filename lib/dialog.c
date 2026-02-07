@@ -1,5 +1,5 @@
 /*****************************************************************************
- * dialog.c: libvlc dialog API
+ * dialog.c: libapoi dialog API
  *****************************************************************************
  * Copyright © 2016 VLC authors and VideoLAN
  *
@@ -24,22 +24,22 @@
 
 #include <assert.h>
 
-#include <vlc/libvlc.h>
-#include <vlc/libvlc_dialog.h>
+#include <apoi/libapoi.h>
+#include <apoi/libapoi_dialog.h>
 
 #include <vlc_common.h>
 #include <vlc_dialog.h>
 
-#include "libvlc_internal.h"
+#include "libapoi_internal.h"
 
-static libvlc_dialog_question_type
-vlc_to_libvlc_dialog_question_type(vlc_dialog_question_type i_type)
+static libapoi_dialog_question_type
+vlc_to_libapoi_dialog_question_type(vlc_dialog_question_type i_type)
 {
     switch (i_type)
     {
-    case VLC_DIALOG_QUESTION_NORMAL: return LIBVLC_DIALOG_QUESTION_NORMAL;
-    case VLC_DIALOG_QUESTION_WARNING: return LIBVLC_DIALOG_QUESTION_WARNING;
-    case VLC_DIALOG_QUESTION_CRITICAL: return LIBVLC_DIALOG_QUESTION_CRITICAL;
+    case VLC_DIALOG_QUESTION_NORMAL: return LIBAPOI_DIALOG_QUESTION_NORMAL;
+    case VLC_DIALOG_QUESTION_WARNING: return LIBAPOI_DIALOG_QUESTION_WARNING;
+    case VLC_DIALOG_QUESTION_CRITICAL: return LIBAPOI_DIALOG_QUESTION_CRITICAL;
     default: vlc_assert_unreachable();
     }
 }
@@ -49,10 +49,10 @@ display_login_cb(void *p_data, vlc_dialog_id *p_id, const char *psz_title,
                  const char *psz_text, const char *psz_default_username,
                  bool b_ask_store)
 {
-    libvlc_instance_t *p_instance = p_data;
+    libapoi_instance_t *p_instance = p_data;
 
     p_instance->dialog.cbs.pf_display_login(p_instance->dialog.data,
-                                            (libvlc_dialog_id *) p_id,
+                                            (libapoi_dialog_id *) p_id,
                                             psz_title, psz_text,
                                             psz_default_username, b_ask_store);
 }
@@ -63,12 +63,12 @@ display_question_cb(void *p_data, vlc_dialog_id *p_id, const char *psz_title,
                     const char *psz_cancel, const char *psz_action1,
                     const char *psz_action2)
 {
-    libvlc_instance_t *p_instance = p_data;
-    const libvlc_dialog_question_type i_ltype =
-        vlc_to_libvlc_dialog_question_type(i_type);
+    libapoi_instance_t *p_instance = p_data;
+    const libapoi_dialog_question_type i_ltype =
+        vlc_to_libapoi_dialog_question_type(i_type);
 
     p_instance->dialog.cbs.pf_display_question(p_instance->dialog.data,
-                                               (libvlc_dialog_id *) p_id,
+                                               (libapoi_dialog_id *) p_id,
                                                psz_title, psz_text, i_ltype,
                                                psz_cancel,
                                                psz_action1, psz_action2);
@@ -79,10 +79,10 @@ display_progress_cb(void *p_data, vlc_dialog_id *p_id, const char *psz_title,
                     const char *psz_text, bool b_indeterminate,
                     float f_position, const char *psz_cancel)
 {
-    libvlc_instance_t *p_instance = p_data;
+    libapoi_instance_t *p_instance = p_data;
 
     p_instance->dialog.cbs.pf_display_progress(p_instance->dialog.data,
-                                               (libvlc_dialog_id *) p_id,
+                                               (libapoi_dialog_id *) p_id,
                                                psz_title, psz_text,
                                                b_indeterminate, f_position,
                                                psz_cancel);
@@ -91,26 +91,26 @@ display_progress_cb(void *p_data, vlc_dialog_id *p_id, const char *psz_title,
 static void
 cancel_cb(void *p_data, vlc_dialog_id *p_id)
 {
-    libvlc_instance_t *p_instance = p_data;
+    libapoi_instance_t *p_instance = p_data;
     p_instance->dialog.cbs.pf_cancel(p_instance->dialog.data,
-                                     (libvlc_dialog_id *)p_id);
+                                     (libapoi_dialog_id *)p_id);
 }
 
 static void
 update_progress_cb(void *p_data, vlc_dialog_id *p_id, float f_position,
                    const char *psz_text)
 {
-    libvlc_instance_t *p_instance = p_data;
+    libapoi_instance_t *p_instance = p_data;
     p_instance->dialog.cbs.pf_update_progress(p_instance->dialog.data,
-                                              (libvlc_dialog_id *) p_id,
+                                              (libapoi_dialog_id *) p_id,
                                               f_position, psz_text);
 }
 
 void
-libvlc_dialog_set_callbacks(libvlc_instance_t *p_instance,
-                            const libvlc_dialog_cbs *p_cbs, void *p_data)
+libapoi_dialog_set_callbacks(libapoi_instance_t *p_instance,
+                            const libapoi_dialog_cbs *p_cbs, void *p_data)
 {
-    libvlc_int_t *p_libvlc = p_instance->p_libvlc_int;
+    libapoi_int_t *p_libapoi = p_instance->p_libapoi_int;
 
     if (p_cbs != NULL)
     {
@@ -129,34 +129,34 @@ libvlc_dialog_set_callbacks(libvlc_instance_t *p_instance,
         p_instance->dialog.cbs = *p_cbs;
         p_instance->dialog.data = p_data;
 
-        vlc_dialog_provider_set_callbacks(p_libvlc, &dialog_cbs, p_instance);
+        vlc_dialog_provider_set_callbacks(p_libapoi, &dialog_cbs, p_instance);
     }
     else
-        vlc_dialog_provider_set_callbacks(p_libvlc, NULL, NULL);
+        vlc_dialog_provider_set_callbacks(p_libapoi, NULL, NULL);
 }
 
 void
-libvlc_dialog_set_error_callback(libvlc_instance_t *p_instance,
-                                 libvlc_dialog_error_cbs p_cbs, void *p_data)
+libapoi_dialog_set_error_callback(libapoi_instance_t *p_instance,
+                                 libapoi_dialog_error_cbs p_cbs, void *p_data)
 {
-    libvlc_int_t *p_libvlc = p_instance->p_libvlc_int;
-    vlc_dialog_provider_set_error_callback(p_libvlc, p_cbs, p_data);
+    libapoi_int_t *p_libapoi = p_instance->p_libapoi_int;
+    vlc_dialog_provider_set_error_callback(p_libapoi, p_cbs, p_data);
 }
 
 void
-libvlc_dialog_set_context(libvlc_dialog_id *p_id, void *p_context)
+libapoi_dialog_set_context(libapoi_dialog_id *p_id, void *p_context)
 {
     vlc_dialog_id_set_context((vlc_dialog_id *)p_id, p_context);
 }
 
 void *
-libvlc_dialog_get_context(libvlc_dialog_id *p_id)
+libapoi_dialog_get_context(libapoi_dialog_id *p_id)
 {
     return vlc_dialog_id_get_context((vlc_dialog_id *)p_id);
 }
 
 int
-libvlc_dialog_post_login(libvlc_dialog_id *p_id, const char *psz_username,
+libapoi_dialog_post_login(libapoi_dialog_id *p_id, const char *psz_username,
                          const char *psz_password, bool b_store)
 {
     int i_ret = vlc_dialog_id_post_login((vlc_dialog_id *)p_id, psz_username,
@@ -165,14 +165,14 @@ libvlc_dialog_post_login(libvlc_dialog_id *p_id, const char *psz_username,
 }
 
 int
-libvlc_dialog_post_action(libvlc_dialog_id *p_id, int i_action)
+libapoi_dialog_post_action(libapoi_dialog_id *p_id, int i_action)
 {
     int i_ret = vlc_dialog_id_post_action((vlc_dialog_id *)p_id, i_action);
     return i_ret == VLC_SUCCESS ? 0 : -1;
 }
 
 int
-libvlc_dialog_dismiss(libvlc_dialog_id *p_id)
+libapoi_dialog_dismiss(libapoi_dialog_id *p_id)
 {
     int i_ret = vlc_dialog_id_dismiss((vlc_dialog_id *)p_id);
     return i_ret == VLC_SUCCESS ? 0 : -1;

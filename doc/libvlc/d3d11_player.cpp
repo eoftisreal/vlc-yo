@@ -24,7 +24,7 @@
 # include <dxgidebug.h>
 #endif
 
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 
 #define INITIAL_WIDTH  1500
 #define INITIAL_HEIGHT  900
@@ -689,7 +689,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
     WNDCLASSEX wc;
     struct render_context Context = { };
     char *file_path;
-    libvlc_instance_t *p_libvlc;
+    libapoi_instance_t *p_libvlc;
     libvlc_media_t *p_media;
     (void)hPrevInstance;
 

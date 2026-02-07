@@ -213,15 +213,15 @@ libmkv_plugin_la_SOURCES = \
 libmkv_plugin_la_SOURCES += packetizer/dts_header.h packetizer/dts_header.c
 libmkv_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) $(CFLAGS_mkv)
 libmkv_plugin_la_LDFLAGS = $(AM_LDFLAGS) -rpath '$(demuxdir)'
-libmkv_plugin_la_LIBADD = $(LIBS_mkv) $(LIBZ) libvlc_mp4.la
+libmkv_plugin_la_LIBADD = $(LIBS_mkv) $(LIBZ) libapoi_mp4.la
 demux_LTLIBRARIES += $(LTLIBmkv)
 EXTRA_LTLIBRARIES += libmkv_plugin.la
 
-libvlc_mp4_la_SOURCES = demux/mp4/libmp4.c demux/mp4/libmp4.h
-libvlc_mp4_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/demux/mp4
-libvlc_mp4_la_LIBADD = $(LIBM) $(LIBZ)
-libvlc_mp4_la_LDFLAGS = -static
-noinst_LTLIBRARIES += libvlc_mp4.la
+libapoi_mp4_la_SOURCES = demux/mp4/libmp4.c demux/mp4/libmp4.h
+libapoi_mp4_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/demux/mp4
+libapoi_mp4_la_LIBADD = $(LIBM) $(LIBZ)
+libapoi_mp4_la_LDFLAGS = -static
+noinst_LTLIBRARIES += libapoi_mp4.la
 
 libmp4_plugin_la_SOURCES = demux/mp4/mp4.c demux/mp4/mp4.h \
                            demux/mp4/fragments.c demux/mp4/fragments.h \
@@ -238,7 +238,7 @@ libmp4_plugin_la_SOURCES = demux/mp4/mp4.c demux/mp4/mp4.h \
 			   packetizer/mpeg4systems.h \
                            packetizer/iso_color_tables.h \
                            meta_engine/ID3Genres.h
-libmp4_plugin_la_LIBADD = libvlc_mp4.la
+libmp4_plugin_la_LIBADD = libapoi_mp4.la
 libmp4_plugin_la_LDFLAGS = $(AM_LDFLAGS)
 demux_LTLIBRARIES += libmp4_plugin.la
 
@@ -308,7 +308,7 @@ if HAVE_DVBPSI
 demux_LTLIBRARIES += libts_plugin.la
 endif
 
-libvlc_adaptive_la_SOURCES = \
+libapoi_adaptive_la_SOURCES = \
     demux/adaptive/playlist/BaseAdaptationSet.cpp \
     demux/adaptive/playlist/BaseAdaptationSet.h \
     demux/adaptive/playlist/BasePeriod.cpp \
@@ -428,10 +428,10 @@ libvlc_adaptive_la_SOURCES = \
     demux/adaptive/xml/Namespaces.hpp \
     demux/adaptive/xml/Node.cpp \
     demux/adaptive/xml/Node.h
-libvlc_adaptive_la_SOURCES += \
+libapoi_adaptive_la_SOURCES += \
      meta_engine/ID3Tag.h
 # DASH specific
-libvlc_adaptive_la_SOURCES += \
+libapoi_adaptive_la_SOURCES += \
     demux/dash/mpd/AdaptationSet.cpp \
     demux/dash/mpd/AdaptationSet.h \
     demux/dash/mpd/DASHCommonAttributesElements.cpp \
@@ -459,7 +459,7 @@ libvlc_adaptive_la_SOURCES += \
     demux/dash/DASHStream.cpp \
     demux/dash/DASHStream.hpp
 # HLS specific
-libvlc_adaptive_la_SOURCES += \
+libapoi_adaptive_la_SOURCES += \
     demux/hls/playlist/M3U8.hpp \
     demux/hls/playlist/M3U8.cpp \
     demux/hls/playlist/Parser.hpp \
@@ -475,9 +475,9 @@ libvlc_adaptive_la_SOURCES += \
     demux/hls/HLSStreams.hpp \
     demux/hls/HLSStreams.cpp \
     demux/mpeg/timestamps.h
-libvlc_adaptive_la_SOURCES += meta_engine/ID3Meta.h
+libapoi_adaptive_la_SOURCES += meta_engine/ID3Meta.h
 # smooth streaming specific
-libvlc_adaptive_la_SOURCES += \
+libapoi_adaptive_la_SOURCES += \
     demux/smooth/mp4/SmoothIndexReader.cpp \
     demux/smooth/mp4/SmoothIndexReader.hpp \
     demux/smooth/playlist/CodecParameters.cpp \
@@ -498,24 +498,24 @@ libvlc_adaptive_la_SOURCES += \
     demux/smooth/SmoothManager.cpp \
     demux/smooth/SmoothStream.hpp \
     demux/smooth/SmoothStream.cpp
-libvlc_adaptive_la_SOURCES += \
+libapoi_adaptive_la_SOURCES += \
     mux/mp4/libmp4mux.c \
     mux/mp4/libmp4mux.h \
     packetizer/h264_nal.c \
     packetizer/hevc_nal.c
-libvlc_adaptive_la_CXXFLAGS = $(AM_CXXFLAGS) -I$(srcdir)/demux/adaptive
-libvlc_adaptive_la_LIBADD = $(SOCKET_LIBS) $(LIBM) libvlc_mp4.la
-libvlc_adaptive_la_LDFLAGS = -static
-libvlc_adaptive_la_LIBADD += libvlc_http.la
+libapoi_adaptive_la_CXXFLAGS = $(AM_CXXFLAGS) -I$(srcdir)/demux/adaptive
+libapoi_adaptive_la_LIBADD = $(SOCKET_LIBS) $(LIBM) libapoi_mp4.la
+libapoi_adaptive_la_LDFLAGS = -static
+libapoi_adaptive_la_LIBADD += libapoi_http.la
 if HAVE_GCRYPT
-libvlc_adaptive_la_CXXFLAGS += $(GCRYPT_CFLAGS)
-libvlc_adaptive_la_LIBADD += $(GCRYPT_LIBS)
+libapoi_adaptive_la_CXXFLAGS += $(GCRYPT_CFLAGS)
+libapoi_adaptive_la_LIBADD += $(GCRYPT_LIBS)
 endif
-noinst_LTLIBRARIES += libvlc_adaptive.la
+noinst_LTLIBRARIES += libapoi_adaptive.la
 
 libadaptive_plugin_la_SOURCES = demux/adaptive/adaptive.cpp
-libadaptive_plugin_la_CXXFLAGS = $(libvlc_adaptive_la_CXXFLAGS)
-libadaptive_plugin_la_LIBADD = libvlc_adaptive.la
+libadaptive_plugin_la_CXXFLAGS = $(libapoi_adaptive_la_CXXFLAGS)
+libadaptive_plugin_la_LIBADD = libapoi_adaptive.la
 demux_LTLIBRARIES += libadaptive_plugin.la
 
 adaptive_test_SOURCES = \
@@ -533,13 +533,13 @@ adaptive_test_SOURCES = \
     demux/adaptive/test/SegmentTracker.cpp \
     demux/adaptive/test/test.cpp \
     demux/adaptive/test/test.hpp
-adaptive_test_LDADD = libvlc_adaptive.la
+adaptive_test_LDADD = libapoi_adaptive.la
 check_PROGRAMS += adaptive_test
 TESTS += adaptive_test
 
 libytdl_plugin_la_SOURCES = demux/ytdl.c
 libytdl_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) -DEXEEXT=\"$(EXEEXT)\"
-libytdl_plugin_la_LIBADD = libvlc_json.la
+libytdl_plugin_la_LIBADD = libapoi_json.la
 if !HAVE_ANDROID
 if !HAVE_EMSCRIPTEN
 demux_LTLIBRARIES += libytdl_plugin.la
@@ -556,12 +556,12 @@ libdemux_mock_plugin_la_LIBADD = $(LIBM)
 noinst_LTLIBRARIES += libdemux_mock_plugin.la
 
 BUILT_SOURCES += demux/json/grammar.h
-libvlc_json_la_SOURCES = \
+libapoi_json_la_SOURCES = \
 	demux/json/lexicon.l \
 	demux/json/grammar.y \
 	demux/json/json.c demux/json/json.h
-libvlc_json_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/demux/json
-libvlc_json_la_LIBADD = $(LTLIBVLCCORE) ../compat/libcompat.la $(LIBM)
-libvlc_json_la_LDFLAGS = -static
-libvlc_json_la_LFLAGS = $(AM_LFLAGS) --outfile=lex.yy.c
-noinst_LTLIBRARIES += libvlc_json.la
+libapoi_json_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/demux/json
+libapoi_json_la_LIBADD = $(LTLIBAPOICORE) ../compat/libcompat.la $(LIBM)
+libapoi_json_la_LDFLAGS = -static
+libapoi_json_la_LFLAGS = $(AM_LFLAGS) --outfile=lex.yy.c
+noinst_LTLIBRARIES += libapoi_json.la

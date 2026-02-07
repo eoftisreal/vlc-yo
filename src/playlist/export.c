@@ -32,7 +32,7 @@
 #include <vlc_modules.h>
 #include <vlc_url.h>
 #include "playlist.h"
-#include "../libvlc.h"
+#include "../libapoi.h"
 
 struct vlc_playlist_view
 {

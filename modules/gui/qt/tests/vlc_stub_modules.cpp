@@ -23,7 +23,7 @@
 #define MODULE_NAME module_faker
 #undef VLC_DYNAMIC_PLUGIN
 
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 
 #include <vlc_common.h>
 #include <vlc_plugin.h>
@@ -75,7 +75,7 @@ class Compositor {};
 static int OpenIntf(vlc_object_t* p_this)
 {
     auto intfThread = reinterpret_cast<intf_thread_t*>(p_this);
-    libvlc_int_t* libvlc = vlc_object_instance( p_this );
+    libapoi_int_t* libvlc = vlc_object_instance( p_this );
 
     /* Ensure initialization of objects in qt_intf_t. */
     qt_intf_t* qt_intf = vlc_object_create<qt_intf_t>( libvlc );

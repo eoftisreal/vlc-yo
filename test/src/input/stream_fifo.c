@@ -33,9 +33,9 @@
 #include "../../../lib/libvlc_internal.h"
 #include "../../libvlc/test.h"
 
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 
-static libvlc_instance_t *vlc;
+static libapoi_instance_t *vlc;
 static vlc_object_t *parent;
 static vlc_stream_fifo_t *writer;
 static stream_t *reader;

@@ -278,7 +278,7 @@ vlc_module_begin()
     add_submodule()
         set_callback_display(OpenDisplay, 0)
 
-    /* Interface module to avoid casting libvlc_instance_t to object */
+    /* Interface module to avoid casting libapoi_instance_t to object */
     add_submodule()
         set_callback(OpenIntf)
         set_capability("interface", 0)
@@ -301,7 +301,7 @@ int main( int argc, char **argv )
         "--no-spu", "--no-osd",
     };
 
-    libvlc_instance_t *vlc = libvlc_new(ARRAY_SIZE(args), args);
+    libapoi_instance_t *vlc = libvlc_new(ARRAY_SIZE(args), args);
 
 
     libvlc_InternalAddIntf(vlc->p_libvlc_int, MODULE_STRING);

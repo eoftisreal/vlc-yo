@@ -1,5 +1,5 @@
 /*****************************************************************************
- * libvlc.c: libvlc instances creation and deletion, interfaces handling
+ * libapoi.c: libapoi instances creation and deletion, interfaces handling
  *****************************************************************************
  * Copyright (C) 1998-2008 VLC authors and VideoLAN
  *
@@ -25,7 +25,7 @@
  *****************************************************************************/
 
 /** \file
- * This file contains functions to create and destroy libvlc instances
+ * This file contains functions to create and destroy libapoi instances
  */
 
 /*****************************************************************************
@@ -37,7 +37,7 @@
 
 #include <vlc_common.h>
 #include <vlc_preparser.h>
-#include "../lib/libvlc_internal.h"
+#include "../lib/libapoi_internal.h"
 
 #include "modules/modules.h"
 #include "config/configuration.h"
@@ -65,7 +65,7 @@
 #include <vlc_tracer.h>
 #include "player/player.h"
 
-#include "libvlc.h"
+#include "libapoi.h"
 
 #include <vlc_vlm.h>
 
@@ -74,23 +74,23 @@
 /*****************************************************************************
  * Local prototypes
  *****************************************************************************/
-static void GetFilenames  ( libvlc_int_t *, unsigned, const char *const [] );
+static void GetFilenames  ( libapoi_int_t *, unsigned, const char *const [] );
 
 /**
- * Allocate a blank libvlc instance, also setting the exit handler.
+ * Allocate a blank libapoi instance, also setting the exit handler.
  * Vlc's threading system must have been initialized first
  */
-libvlc_int_t * libvlc_InternalCreate( void )
+libapoi_int_t * libapoi_InternalCreate( void )
 {
-    libvlc_int_t *p_libvlc;
-    libvlc_priv_t *priv;
+    libapoi_int_t *p_libapoi;
+    libapoi_priv_t *priv;
 
-    /* Allocate a libvlc instance object */
-    p_libvlc = (vlc_custom_create)( NULL, sizeof (*priv), "libvlc" );
-    if( p_libvlc == NULL )
+    /* Allocate a libapoi instance object */
+    p_libapoi = (vlc_custom_create)( NULL, sizeof (*priv), "libapoi" );
+    if( p_libapoi == NULL )
         return NULL;
 
-    priv = libvlc_priv (p_libvlc);
+    priv = libapoi_priv (p_libapoi);
     vlc_mutex_init(&priv->lock);
     priv->interfaces = NULL;
     priv->main_playlist = NULL;
@@ -99,12 +99,12 @@ libvlc_int_t * libvlc_InternalCreate( void )
 
     vlc_ExitInit( &priv->exit );
 
-    return p_libvlc;
+    return p_libapoi;
 }
 
-static void libvlc_AddInterfaces(libvlc_int_t *libvlc, const char *varname)
+static void libapoi_AddInterfaces(libapoi_int_t *libapoi, const char *varname)
 {
-    char *str = var_InheritString(libvlc, varname);
+    char *str = var_InheritString(libapoi, varname);
     if (str == NULL)
         return;
 
@@ -112,7 +112,7 @@ static void libvlc_AddInterfaces(libvlc_int_t *libvlc, const char *varname)
     char *intf = strtok_r(str, ":", &state);
 
     while (intf != NULL) {
-        libvlc_InternalAddIntf(libvlc, intf);
+        libapoi_InternalAddIntf(libapoi, intf);
         intf = strtok_r(NULL, ":", &state);
     }
 
@@ -120,21 +120,21 @@ static void libvlc_AddInterfaces(libvlc_int_t *libvlc, const char *varname)
 }
 
 /**
- * Initialize a libvlc instance
- * This function initializes a previously allocated libvlc instance:
+ * Initialize a libapoi instance
+ * This function initializes a previously allocated libapoi instance:
  *  - CPU detection
  *  - gettext initialization
  *  - message queue, module bank and playlist initialization
  *  - configuration and commandline parsing
  */
-int libvlc_InternalInit( libvlc_int_t *p_libvlc, int i_argc,
+int libapoi_InternalInit( libapoi_int_t *p_libapoi, int i_argc,
                          const char *ppsz_argv[] )
 {
-    libvlc_priv_t *priv = libvlc_priv (p_libvlc);
+    libapoi_priv_t *priv = libapoi_priv (p_libapoi);
     char        *psz_val;
     int          i_ret = VLC_EGENERIC;
 
-    if (unlikely(vlc_LogPreinit(p_libvlc)))
+    if (unlikely(vlc_LogPreinit(p_libapoi)))
         return VLC_ENOMEM;
 
     /* System specific initialization code */
@@ -149,9 +149,9 @@ int libvlc_InternalInit( libvlc_int_t *p_libvlc, int i_argc,
      * Perform early check for commandline arguments that affect module loading
      * or vlc_threads_setup()
      */
-    config_CmdLineEarlyScan( p_libvlc, i_argc, ppsz_argv );
+    config_CmdLineEarlyScan( p_libapoi, i_argc, ppsz_argv );
 
-    vlc_threads_setup (p_libvlc);
+    vlc_threads_setup (p_libapoi);
 
     /*
      * Load plugin data into the module bank.
@@ -159,31 +159,31 @@ int libvlc_InternalInit( libvlc_int_t *p_libvlc, int i_argc,
      * the config system in order that full commandline argument parsing and
      * saved settings handling can function properly.
      */
-    module_LoadPlugins (p_libvlc);
+    module_LoadPlugins (p_libapoi);
 
     /*
      * Fully process command line settings.
-     * Results are stored as runtime state within `p_libvlc` object variables.
+     * Results are stored as runtime state within `p_libapoi` object variables.
      */
     int vlc_optind;
-    if( config_LoadCmdLine( p_libvlc, i_argc, ppsz_argv, &vlc_optind ) )
+    if( config_LoadCmdLine( p_libapoi, i_argc, ppsz_argv, &vlc_optind ) )
         goto error;
 
     /*
      * Load saved settings into the config system, as applicable.
      */
-    if( !var_InheritBool( p_libvlc, "ignore-config" ) )
+    if( !var_InheritBool( p_libapoi, "ignore-config" ) )
     {
-        if( var_InheritBool( p_libvlc, "reset-config" ) )
-            config_SaveConfigFile( p_libvlc ); /* Save default config */
+        if( var_InheritBool( p_libapoi, "reset-config" ) )
+            config_SaveConfigFile( p_libapoi ); /* Save default config */
         else
-            config_LoadConfigFile( p_libvlc );
+            config_LoadConfigFile( p_libapoi );
     }
 
-    vlc_LogInit(p_libvlc);
+    vlc_LogInit(p_libapoi);
 
-    char *tracer_name = var_InheritString(p_libvlc, "tracer");
-    priv->tracer = vlc_tracer_Create(VLC_OBJECT(p_libvlc), tracer_name);
+    char *tracer_name = var_InheritString(p_libapoi, "tracer");
+    priv->tracer = vlc_tracer_Create(VLC_OBJECT(p_libapoi), tracer_name);
     free(tracer_name);
 
     /*
@@ -194,83 +194,83 @@ int libvlc_InternalInit( libvlc_int_t *p_libvlc, int i_argc,
     vlc_bindtextdomain (PACKAGE_NAME);
 #endif
     /*xgettext: Translate "C" to the language code: "fr", "en_GB", "nl", "ru"... */
-    msg_Dbg( p_libvlc, "translation test: code is \"%s\"", _("C") );
+    msg_Dbg( p_libapoi, "translation test: code is \"%s\"", _("C") );
 
     /*
      * Handle info requests such as for help or version text.
      */
-    if (config_PrintHelp (p_libvlc))
+    if (config_PrintHelp (p_libapoi))
     {
-        libvlc_InternalCleanup (p_libvlc);
+        libapoi_InternalCleanup (p_libapoi);
         exit(0);
     }
 
     i_ret = VLC_ENOMEM;
 
-    if( libvlc_InternalDialogInit( p_libvlc ) != VLC_SUCCESS )
+    if( libapoi_InternalDialogInit( p_libapoi ) != VLC_SUCCESS )
         goto error;
-    if( libvlc_InternalKeystoreInit( p_libvlc ) != VLC_SUCCESS )
-        msg_Warn( p_libvlc, "memory keystore init failed" );
+    if( libapoi_InternalKeystoreInit( p_libapoi ) != VLC_SUCCESS )
+        msg_Warn( p_libapoi, "memory keystore init failed" );
 
-    vlc_CPU_dump( VLC_OBJECT(p_libvlc) );
+    vlc_CPU_dump( VLC_OBJECT(p_libapoi) );
 
-    if( var_InheritBool( p_libvlc, "media-library") )
+    if( var_InheritBool( p_libapoi, "media-library") )
     {
-        priv->p_media_library = libvlc_MlCreate( p_libvlc );
+        priv->p_media_library = libapoi_MlCreate( p_libapoi );
         if ( priv->p_media_library == NULL )
-            msg_Warn( p_libvlc, "Media library initialization failed" );
+            msg_Warn( p_libapoi, "Media library initialization failed" );
     }
 
     /*
      * Initialize hotkey handling
      */
-    if( libvlc_InternalActionsInit( p_libvlc ) != VLC_SUCCESS )
+    if( libapoi_InternalActionsInit( p_libapoi ) != VLC_SUCCESS )
         goto error;
 
     /*
      * Meta data handling
      */
 
-    priv->media_source_provider = vlc_media_source_provider_New( VLC_OBJECT( p_libvlc ) );
+    priv->media_source_provider = vlc_media_source_provider_New( VLC_OBJECT( p_libapoi ) );
     if( !priv->media_source_provider )
         goto error;
 
     /* variables for signalling creation of new files */
-    var_Create( p_libvlc, "snapshot-file", VLC_VAR_STRING );
-    var_Create( p_libvlc, "record-file", VLC_VAR_STRING );
+    var_Create( p_libapoi, "snapshot-file", VLC_VAR_STRING );
+    var_Create( p_libapoi, "record-file", VLC_VAR_STRING );
 
     /* some default internal settings */
-    var_Create( p_libvlc, "window", VLC_VAR_STRING );
-    var_Create( p_libvlc, "vout-cb-type", VLC_VAR_INTEGER );
+    var_Create( p_libapoi, "window", VLC_VAR_STRING );
+    var_Create( p_libapoi, "vout-cb-type", VLC_VAR_INTEGER );
 
     /* NOTE: Because the playlist and interfaces start before this function
      * returns control to the application (DESIGN BUG!), all these variables
-     * must be created (in place of libvlc_new()) and set to VLC defaults
+     * must be created (in place of libapoi_new()) and set to VLC defaults
      * (in place of VLC main()) *here*. */
-    var_Create( p_libvlc, "user-agent", VLC_VAR_STRING );
-    var_SetString( p_libvlc, "user-agent",
-                   "VLC media player (LibVLC "VERSION")" );
-    var_Create( p_libvlc, "http-user-agent", VLC_VAR_STRING );
-    var_SetString( p_libvlc, "http-user-agent",
-                   "VLC/"PACKAGE_VERSION" LibVLC/"PACKAGE_VERSION );
-    var_Create( p_libvlc, "app-icon-name", VLC_VAR_STRING );
-    var_SetString( p_libvlc, "app-icon-name", PACKAGE_NAME );
-    var_Create( p_libvlc, "app-id", VLC_VAR_STRING );
-    var_SetString( p_libvlc, "app-id", "org.VideoLAN.VLC" );
-    var_Create( p_libvlc, "app-version", VLC_VAR_STRING );
-    var_SetString( p_libvlc, "app-version", PACKAGE_VERSION );
+    var_Create( p_libapoi, "user-agent", VLC_VAR_STRING );
+    var_SetString( p_libapoi, "user-agent",
+                   "APOI media player (LibAPOI "VERSION")" );
+    var_Create( p_libapoi, "http-user-agent", VLC_VAR_STRING );
+    var_SetString( p_libapoi, "http-user-agent",
+                   "APOI/"PACKAGE_VERSION" LibAPOI/"PACKAGE_VERSION );
+    var_Create( p_libapoi, "app-icon-name", VLC_VAR_STRING );
+    var_SetString( p_libapoi, "app-icon-name", PACKAGE_NAME );
+    var_Create( p_libapoi, "app-id", VLC_VAR_STRING );
+    var_SetString( p_libapoi, "app-id", "org.apoi.apoi" );
+    var_Create( p_libapoi, "app-version", VLC_VAR_STRING );
+    var_SetString( p_libapoi, "app-version", PACKAGE_VERSION );
 
     /* System specific configuration */
-    system_Configure( p_libvlc, i_argc - vlc_optind, ppsz_argv + vlc_optind );
+    system_Configure( p_libapoi, i_argc - vlc_optind, ppsz_argv + vlc_optind );
 
 #ifdef ENABLE_VLM
     /* Initialize VLM if vlm-conf is specified */
-    char *psz_parser = var_InheritString( p_libvlc, "vlm-conf" );
+    char *psz_parser = var_InheritString( p_libapoi, "vlm-conf" );
     if( psz_parser )
     {
-        priv->p_vlm = vlm_New( p_libvlc, psz_parser );
+        priv->p_vlm = vlm_New( p_libapoi, psz_parser );
         if( !priv->p_vlm )
-            msg_Err( p_libvlc, "VLM initialization failed" );
+            msg_Err( p_libapoi, "VLM initialization failed" );
         free( psz_parser );
     }
 #endif
@@ -278,19 +278,19 @@ int libvlc_InternalInit( libvlc_int_t *p_libvlc, int i_argc,
     /*
      * Load background interfaces
      */
-    libvlc_AddInterfaces(p_libvlc, "extraintf");
-    libvlc_AddInterfaces(p_libvlc, "control");
+    libapoi_AddInterfaces(p_libapoi, "extraintf");
+    libapoi_AddInterfaces(p_libapoi, "control");
 
 #ifdef __APPLE__
-    var_Create( p_libvlc, "drawable-view-top", VLC_VAR_INTEGER );
-    var_Create( p_libvlc, "drawable-view-left", VLC_VAR_INTEGER );
-    var_Create( p_libvlc, "drawable-view-bottom", VLC_VAR_INTEGER );
-    var_Create( p_libvlc, "drawable-view-right", VLC_VAR_INTEGER );
-    var_Create( p_libvlc, "drawable-clip-top", VLC_VAR_INTEGER );
-    var_Create( p_libvlc, "drawable-clip-left", VLC_VAR_INTEGER );
-    var_Create( p_libvlc, "drawable-clip-bottom", VLC_VAR_INTEGER );
-    var_Create( p_libvlc, "drawable-clip-right", VLC_VAR_INTEGER );
-    var_Create( p_libvlc, "drawable-nsobject", VLC_VAR_ADDRESS );
+    var_Create( p_libapoi, "drawable-view-top", VLC_VAR_INTEGER );
+    var_Create( p_libapoi, "drawable-view-left", VLC_VAR_INTEGER );
+    var_Create( p_libapoi, "drawable-view-bottom", VLC_VAR_INTEGER );
+    var_Create( p_libapoi, "drawable-view-right", VLC_VAR_INTEGER );
+    var_Create( p_libapoi, "drawable-clip-top", VLC_VAR_INTEGER );
+    var_Create( p_libapoi, "drawable-clip-left", VLC_VAR_INTEGER );
+    var_Create( p_libapoi, "drawable-clip-bottom", VLC_VAR_INTEGER );
+    var_Create( p_libapoi, "drawable-clip-right", VLC_VAR_INTEGER );
+    var_Create( p_libapoi, "drawable-nsobject", VLC_VAR_ADDRESS );
 #endif
 
     /*
@@ -298,53 +298,53 @@ int libvlc_InternalInit( libvlc_int_t *p_libvlc, int i_argc,
      * We assume that the remaining parameters are filenames
      * and their input options.
      */
-    GetFilenames( p_libvlc, i_argc - vlc_optind, ppsz_argv + vlc_optind );
+    GetFilenames( p_libapoi, i_argc - vlc_optind, ppsz_argv + vlc_optind );
 
     /*
      * Get --open argument
      */
-    psz_val = var_InheritString( p_libvlc, "open" );
+    psz_val = var_InheritString( p_libapoi, "open" );
     if ( psz_val != NULL )
     {
-        intf_InsertItem( p_libvlc, psz_val, 0, NULL, 0 );
+        intf_InsertItem( p_libapoi, psz_val, 0, NULL, 0 );
         free( psz_val );
     }
 
     /* Callbacks between interfaces */
 
     /* Create a variable for showing the right click menu */
-    var_Create(p_libvlc, "intf-popupmenu", VLC_VAR_BOOL);
+    var_Create(p_libapoi, "intf-popupmenu", VLC_VAR_BOOL);
 
     /* Create a variable for showing the fullscreen interface */
-    var_Create(p_libvlc, "intf-toggle-fscontrol", VLC_VAR_VOID);
+    var_Create(p_libapoi, "intf-toggle-fscontrol", VLC_VAR_VOID);
 
     /* Create a variable for the Boss Key */
-    var_Create(p_libvlc, "intf-boss", VLC_VAR_VOID);
+    var_Create(p_libapoi, "intf-boss", VLC_VAR_VOID);
 
     /* Create a variable for showing the main interface */
-    var_Create(p_libvlc, "intf-show", VLC_VAR_VOID);
+    var_Create(p_libapoi, "intf-show", VLC_VAR_VOID);
 
     return VLC_SUCCESS;
 
 error:
-    libvlc_InternalCleanup( p_libvlc );
+    libapoi_InternalCleanup( p_libapoi );
     return i_ret;
 }
 
 /**
- * Cleanup a libvlc instance. The instance is not completely deallocated
- * \param p_libvlc the instance to clean
+ * Cleanup a libapoi instance. The instance is not completely deallocated
+ * \param p_libapoi the instance to clean
  */
-void libvlc_InternalCleanup( libvlc_int_t *p_libvlc )
+void libapoi_InternalCleanup( libapoi_int_t *p_libapoi )
 {
-    libvlc_priv_t *priv = libvlc_priv (p_libvlc);
+    libapoi_priv_t *priv = libapoi_priv (p_libapoi);
 
     /* Ask the interfaces to stop and destroy them */
-    msg_Dbg( p_libvlc, "removing all interfaces" );
-    intf_DestroyAll( p_libvlc );
+    msg_Dbg( p_libapoi, "removing all interfaces" );
+    intf_DestroyAll( p_libapoi );
 
 #ifdef ENABLE_VLM
-    /* Destroy VLM if created in libvlc_InternalInit */
+    /* Destroy VLM if created in libapoi_InternalInit */
     if( priv->p_vlm )
     {
         vlm_Delete( priv->p_vlm );
@@ -352,12 +352,12 @@ void libvlc_InternalCleanup( libvlc_int_t *p_libvlc )
 #endif
 
 #if !defined( _WIN32 ) && !defined( __OS2__ )
-    char *pidfile = var_InheritString( p_libvlc, "pidfile" );
+    char *pidfile = var_InheritString( p_libapoi, "pidfile" );
     if( pidfile != NULL )
     {
-        msg_Dbg( p_libvlc, "removing PID file %s", pidfile );
+        msg_Dbg( p_libapoi, "removing PID file %s", pidfile );
         if( unlink( pidfile ) )
-            msg_Warn( p_libvlc, "cannot remove PID file %s: %s",
+            msg_Warn( p_libapoi, "cannot remove PID file %s: %s",
                       pidfile, vlc_strerror_c(errno) );
         free( pidfile );
     }
@@ -367,20 +367,20 @@ void libvlc_InternalCleanup( libvlc_int_t *p_libvlc )
         vlc_playlist_Delete(priv->main_playlist);
 
     if ( priv->p_media_library )
-        libvlc_MlRelease( priv->p_media_library );
+        libapoi_MlRelease( priv->p_media_library );
 
     if( priv->media_source_provider )
         vlc_media_source_provider_Delete( priv->media_source_provider );
 
-    libvlc_InternalDialogClean( p_libvlc );
-    libvlc_InternalKeystoreClean( p_libvlc );
-    libvlc_InternalActionsClean( p_libvlc );
+    libapoi_InternalDialogClean( p_libapoi );
+    libapoi_InternalKeystoreClean( p_libapoi );
+    libapoi_InternalActionsClean( p_libapoi );
 
     /* Save the configuration */
-    if( !var_InheritBool( p_libvlc, "ignore-config" ) )
-        config_AutoSaveConfigFile( p_libvlc );
+    if( !var_InheritBool( p_libapoi, "ignore-config" ) )
+        config_AutoSaveConfigFile( p_libapoi );
 
-    vlc_LogDestroy(p_libvlc->obj.logger);
+    vlc_LogDestroy(p_libapoi->obj.logger);
     if (priv->tracer != NULL)
         vlc_tracer_Destroy(priv->tracer);
     /* Free module bank. It is refcounted, so we call this each time  */
@@ -391,12 +391,12 @@ void libvlc_InternalCleanup( libvlc_int_t *p_libvlc )
 }
 
 /**
- * Destroy libvlc instance.
- * \param p_libvlc the instance to destroy
+ * Destroy libapoi instance.
+ * \param p_libapoi the instance to destroy
  */
-void libvlc_InternalDestroy( libvlc_int_t *p_libvlc )
+void libapoi_InternalDestroy( libapoi_int_t *p_libapoi )
 {
-    vlc_object_delete(p_libvlc);
+    vlc_object_delete(p_libapoi);
 }
 
 /*****************************************************************************
@@ -405,7 +405,7 @@ void libvlc_InternalDestroy( libvlc_int_t *p_libvlc )
  * Parse command line for input files as well as their associated options.
  * An option always follows its associated input and begins with a ":".
  *****************************************************************************/
-static void GetFilenames( libvlc_int_t *p_vlc, unsigned n,
+static void GetFilenames( libapoi_int_t *p_vlc, unsigned n,
                           const char *const args[] )
 {
     while( n > 0 )
@@ -487,15 +487,15 @@ PlaylistConfigureFromVariables(vlc_playlist_t *playlist, vlc_object_t *obj)
 }
 
 vlc_playlist_t *
-libvlc_GetMainPlaylist(libvlc_int_t *libvlc)
+libapoi_GetMainPlaylist(libapoi_int_t *libapoi)
 {
-    libvlc_priv_t *priv = libvlc_priv(libvlc);
+    libapoi_priv_t *priv = libapoi_priv(libapoi);
 
     vlc_mutex_lock(&priv->lock);
     vlc_playlist_t *playlist = priv->main_playlist;
     if (priv->main_playlist == NULL)
     {
-        bool auto_preparse = var_InheritBool(libvlc, "auto-preparse");
+        bool auto_preparse = var_InheritBool(libapoi, "auto-preparse");
         enum vlc_playlist_preparsing rec = VLC_PLAYLIST_PREPARSING_DISABLED;
         int max_threads = 1;
         vlc_tick_t default_timeout = 0;
@@ -504,7 +504,7 @@ libvlc_GetMainPlaylist(libvlc_int_t *libvlc)
         {
             rec = VLC_PLAYLIST_PREPARSING_COLLAPSE;
 
-            char *rec_str = var_InheritString(libvlc, "recursive");
+            char *rec_str = var_InheritString(libapoi, "recursive");
             if (rec_str != NULL)
             {
                 if (!strcasecmp(rec_str, "none"))
@@ -513,21 +513,21 @@ libvlc_GetMainPlaylist(libvlc_int_t *libvlc)
                     rec = VLC_PLAYLIST_PREPARSING_RECURSIVE;
                 free(rec_str);
             }
-            max_threads = var_InheritInteger(libvlc, "preparse-threads");
+            max_threads = var_InheritInteger(libapoi, "preparse-threads");
             if (max_threads < 1)
                 max_threads = 1;
 
             default_timeout =
-                VLC_TICK_FROM_MS(var_InheritInteger(libvlc, "preparse-timeout"));
+                VLC_TICK_FROM_MS(var_InheritInteger(libapoi, "preparse-timeout"));
             if (default_timeout < 0)
                 default_timeout = 0;
         }
 
-        playlist = priv->main_playlist = vlc_playlist_New(VLC_OBJECT(libvlc),
+        playlist = priv->main_playlist = vlc_playlist_New(VLC_OBJECT(libapoi),
                                                           rec, max_threads,
                                                           default_timeout);
         if (playlist)
-            PlaylistConfigureFromVariables(playlist, VLC_OBJECT(libvlc));
+            PlaylistConfigureFromVariables(playlist, VLC_OBJECT(libapoi));
     }
     vlc_mutex_unlock(&priv->lock);
 

@@ -260,7 +260,7 @@ int main( int argc, char **argv )
         "-vvv", "--aout=dummy", "--text-renderer=dummy",
     };
 
-    libvlc_instance_t *vlc = libvlc_new(ARRAY_SIZE(vlc_argv), vlc_argv);
+    libapoi_instance_t *vlc = libvlc_new(ARRAY_SIZE(vlc_argv), vlc_argv);
     vlc_object_t *root = &vlc->p_libvlc_int->obj;
 
     test_opengl(root, VLC_OPENGL);

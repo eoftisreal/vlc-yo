@@ -9,7 +9,7 @@
 
 static void test_equalizer (const char ** argv, int argc)
 {
-    libvlc_instance_t *vlc;
+    libapoi_instance_t *vlc;
     libvlc_media_player_t *mp;
     libvlc_equalizer_t *equalizer;
     unsigned u_presets, u_bands;

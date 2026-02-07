@@ -71,14 +71,14 @@ endif
 
 libpipewiresrc_plugin_la_SOURCES = access/pipewire.c
 libpipewiresrc_plugin_la_CFLAGS = $(AM_CFLAGS) $(PIPEWIRE_CFLAGS)
-libpipewiresrc_plugin_la_LIBADD = libvlc_pipewire.la $(PIPEWIRE_LIBS)
+libpipewiresrc_plugin_la_LIBADD = libapoi_pipewire.la $(PIPEWIRE_LIBS)
 if HAVE_PIPEWIRE
 access_LTLIBRARIES += libpipewiresrc_plugin.la
 endif
 
 libpulsesrc_plugin_la_SOURCES = access/pulse.c
 libpulsesrc_plugin_la_CFLAGS= $(AM_CFLAGS) $(PULSE_CFLAGS)
-libpulsesrc_plugin_la_LIBADD = libvlc_pulse.la $(PULSE_LIBS)
+libpulsesrc_plugin_la_LIBADD = libapoi_pulse.la $(PULSE_LIBS)
 if HAVE_PULSE
 access_LTLIBRARIES += libpulsesrc_plugin.la
 endif
@@ -247,7 +247,7 @@ libcdda_plugin_la_SOURCES = access/cdda.c access/disc_helper.h access/vcd/cdrom.
                             misc/webservices/json_helper.h misc/webservices/musicbrainz.c \
                             misc/webservices/musicbrainz.h
 libcdda_plugin_la_CFLAGS = $(AM_CFLAGS)
-libcdda_plugin_la_LIBADD = libvlc_json.la $(LIBM)
+libcdda_plugin_la_LIBADD = libapoi_json.la $(LIBM)
 libcdda_plugin_la_LDFLAGS = $(AM_LDFLAGS) -rpath '$(accessdir)'
 if HAVE_DARWIN
 libcdda_plugin_la_LIBADD += -liconv
@@ -386,14 +386,14 @@ EXTRA_LTLIBRARIES += libsmbc_plugin.la
 
 libdsm_plugin_la_SOURCES = access/dsm/access.c access/dsm/sd.c access/smb_common.h
 libdsm_plugin_la_CFLAGS = $(AM_CFLAGS) $(DSM_CFLAGS)
-libdsm_plugin_la_LIBADD = $(DSM_LIBS) libvlc_access_cache.la
+libdsm_plugin_la_LIBADD = $(DSM_LIBS) libapoi_access_cache.la
 if HAVE_DSM
 access_LTLIBRARIES += libdsm_plugin.la
 endif
 
 libsmb2_plugin_la_SOURCES = access/smb2.c
 libsmb2_plugin_la_CFLAGS = $(AM_CFLAGS) $(SMB2_CFLAGS)
-libsmb2_plugin_la_LIBADD = $(SMB2_LIBS) $(SOCKET_LIBS) libvlc_access_cache.la
+libsmb2_plugin_la_LIBADD = $(SMB2_LIBS) $(SOCKET_LIBS) libapoi_access_cache.la
 libsmb2_plugin_la_LDFLAGS = $(AM_LDFLAGS) -rpath '$(accessdir)'
 if HAVE_DSM
 libsmb2_plugin_la_CFLAGS += $(DSM_CFLAGS) -DHAVE_DSM
@@ -483,7 +483,7 @@ EXTRA_LTLIBRARIES += librist_plugin.la
 
 ### TOOLS ###
 
-libvlc_access_cache_la_SOURCES = access/cache.c access/cache.h
-libvlc_access_cache_la_LIBADD = $(LTLIBVLCCORE)
-libvlc_access_cache_la_LDFLAGS = -static
-noinst_LTLIBRARIES += libvlc_access_cache.la
+libapoi_access_cache_la_SOURCES = access/cache.c access/cache.h
+libapoi_access_cache_la_LIBADD = $(LTLIBAPOICORE)
+libapoi_access_cache_la_LDFLAGS = -static
+noinst_LTLIBRARIES += libapoi_access_cache.la

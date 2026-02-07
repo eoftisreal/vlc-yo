@@ -28,7 +28,7 @@
 #include <vlc_common.h>
 #include <vlc_objects.h>
 
-#include "../libvlc.h"
+#include "../libapoi.h"
 
 extern "C" {
     void var_DestroyAll(vlc_object_t *) { /* stub */ }

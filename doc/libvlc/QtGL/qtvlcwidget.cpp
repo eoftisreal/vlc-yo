@@ -10,7 +10,7 @@
 #include <QMutex>
 #include <cmath>
 
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 
 class VLCVideo
 {

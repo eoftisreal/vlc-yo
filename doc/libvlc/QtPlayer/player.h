@@ -13,7 +13,7 @@
 #include <QPushButton>
 #include <QSlider>
 #include <QWidget>
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 
 class Mwindow : public QMainWindow {
 
@@ -44,7 +44,7 @@ class Mwindow : public QMainWindow {
                QSlider *slider;
                QWidget *videoWidget;
 
-               libvlc_instance_t *vlcInstance;
+               libapoi_instance_t *vlcInstance;
                libvlc_media_player_t *vlcPlayer;
 
                void initUI();

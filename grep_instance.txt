@@ -1,0 +1,1 @@
+modules/gui/qt/tests/vlc_stub_modules.hpp:    libapoi_instance_t* libvlc = nullptr;

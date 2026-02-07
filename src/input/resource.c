@@ -36,7 +36,7 @@
 #include <vlc_spu.h>
 #include <vlc_aout.h>
 #include <vlc_sout.h>
-#include "../libvlc.h"
+#include "../libapoi.h"
 #include "../stream_output/stream_output.h"
 #include "../audio_output/aout_internal.h"
 #include "../video_output/vout_internal.h"

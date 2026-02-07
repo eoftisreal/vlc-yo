@@ -28,7 +28,7 @@
 #include <pthread.h>
 #include <errno.h>
 #include <time.h>
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 
 /* position at which the snapshot is taken */
 #define VLC_THUMBNAIL_POSITION (30./100.)
@@ -81,7 +81,7 @@ static void cmdline(int argc, const char **argv, const char **in,
     strcat(*out_with_ext, ".png");
 }
 
-static libvlc_instance_t *create_libvlc(void)
+static libapoi_instance_t *create_libvlc(void)
 {
     static const char* const args[] = {
         "--intf", "dummy",                  /* no interface                   */
@@ -120,7 +120,7 @@ static void callback(const libvlc_event_t *ev, void *param)
 
 #define VLC_THUMBNAIL_TIMEOUT   5 /* 5 secs */
 
-static void snapshot(libvlc_instance_t *vlc, libvlc_media_t *m,
+static void snapshot(libapoi_instance_t *vlc, libvlc_media_t *m,
                      int width, char *out_with_ext)
 {
     libvlc_event_manager_t *em = libvlc_media_event_manager(m);
@@ -167,7 +167,7 @@ int main(int argc, const char **argv)
     const char *in;
     char *out, *out_with_ext;
     int width;
-    libvlc_instance_t *libvlc;
+    libapoi_instance_t *libvlc;
     libvlc_media_t *m;
 
     /* mandatory to support UTF-8 filenames (provided the locale is well set)*/

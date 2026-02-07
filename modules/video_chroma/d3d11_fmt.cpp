@@ -46,11 +46,11 @@
 #include <vlc_picture.h>
 #include <vlc_charset.h>
 
-#include <vlc/libvlc.h>
-#include <vlc/libvlc_picture.h>
-#include <vlc/libvlc_media.h>
-#include <vlc/libvlc_renderer_discoverer.h>
-#include <vlc/libvlc_media_player.h>
+#include <apoi/libapoi.h>
+#include <apoi/libapoi_picture.h>
+#include <apoi/libapoi_media.h>
+#include <apoi/libapoi_renderer_discoverer.h>
+#include <apoi/libapoi_media_player.h>
 
 #include <initguid.h>
 #include <d3d11.h>

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * libvlc_media_discoverer.h:  libvlc external API
+ * libapoi_media_discoverer.h:  libapoi external API
  *****************************************************************************
  * Copyright (C) 1998-2009 VLC authors and VideoLAN
  *
@@ -22,53 +22,53 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef VLC_LIBVLC_MEDIA_DISCOVERER_H
-#define VLC_LIBVLC_MEDIA_DISCOVERER_H 1
+#ifndef VLC_LIBAPOI_MEDIA_DISCOVERER_H
+#define VLC_LIBAPOI_MEDIA_DISCOVERER_H 1
 
 # ifdef __cplusplus
 extern "C" {
 # endif
 
-typedef struct libvlc_media_list_t libvlc_media_list_t;
+typedef struct libapoi_media_list_t libapoi_media_list_t;
 
 /**
  * Category of a media discoverer
- * \see libvlc_media_discoverer_list_get()
+ * \see libapoi_media_discoverer_list_get()
  */
-typedef enum libvlc_media_discoverer_category_t {
+typedef enum libapoi_media_discoverer_category_t {
     /** devices, like portable music player */
-    libvlc_media_discoverer_devices,
+    libapoi_media_discoverer_devices,
     /** LAN/WAN services, like Upnp, SMB, or SAP */
-    libvlc_media_discoverer_lan,
+    libapoi_media_discoverer_lan,
     /** Podcasts */
-    libvlc_media_discoverer_podcasts,
+    libapoi_media_discoverer_podcasts,
     /** Local directories, like Video, Music or Pictures directories */
-    libvlc_media_discoverer_localdirs,
-} libvlc_media_discoverer_category_t;
+    libapoi_media_discoverer_localdirs,
+} libapoi_media_discoverer_category_t;
 
 /**
  * Media discoverer description
- * \see libvlc_media_discoverer_list_get()
+ * \see libapoi_media_discoverer_list_get()
  */
-typedef struct libvlc_media_discoverer_description_t {
+typedef struct libapoi_media_discoverer_description_t {
     char *psz_name;
     char *psz_longname;
-    libvlc_media_discoverer_category_t i_cat;
-} libvlc_media_discoverer_description_t;
+    libapoi_media_discoverer_category_t i_cat;
+} libapoi_media_discoverer_description_t;
 
-/** \defgroup libvlc_media_discoverer LibVLC media discovery
- * \ingroup libvlc
- * LibVLC media discovery finds available media via various means.
+/** \defgroup libapoi_media_discoverer LibAPOI media discovery
+ * \ingroup libapoi
+ * LibAPOI media discovery finds available media via various means.
  * This corresponds to the service discovery functionality in VLC media player.
  * Different plugins find potential medias locally (e.g. user media directory),
  * from peripherals (e.g. video capture device), on the local network
  * (e.g. SAP) or on the Internet (e.g. Internet radios).
  * @{
  * \file
- * LibVLC media discovery external API
+ * LibAPOI media discovery external API
  */
 
-typedef struct libvlc_media_discoverer_t libvlc_media_discoverer_t;
+typedef struct libapoi_media_discoverer_t libapoi_media_discoverer_t;
 
 /**
  * Create a media discoverer object by name.
@@ -76,47 +76,47 @@ typedef struct libvlc_media_discoverer_t libvlc_media_discoverer_t;
  * After this object is created, you should attach to media_list events in
  * order to be notified of new items discovered.
  *
- * You need to call libvlc_media_discoverer_start() in order to start the
+ * You need to call libapoi_media_discoverer_start() in order to start the
  * discovery.
  *
- * \see libvlc_media_discoverer_media_list
- * \see libvlc_media_discoverer_start
+ * \see libapoi_media_discoverer_media_list
+ * \see libapoi_media_discoverer_start
  *
- * \param p_inst libvlc instance
- * \param psz_name service name; use libvlc_media_discoverer_list_get() to get
+ * \param p_inst libapoi instance
+ * \param psz_name service name; use libapoi_media_discoverer_list_get() to get
  * a list of the discoverer names available in this libVLC instance
  * \return media discover object or NULL in case of error
- * \version LibVLC 3.0.0 or later
+ * \version LibAPOI 3.0.0 or later
  */
-LIBVLC_API libvlc_media_discoverer_t *
-libvlc_media_discoverer_new( libvlc_instance_t * p_inst,
+LIBAPOI_API libapoi_media_discoverer_t *
+libapoi_media_discoverer_new( libapoi_instance_t * p_inst,
                              const char * psz_name );
 
 /**
  * Start media discovery.
  *
- * To stop it, call libvlc_media_discoverer_stop() or
- * libvlc_media_discoverer_list_release() directly.
+ * To stop it, call libapoi_media_discoverer_stop() or
+ * libapoi_media_discoverer_list_release() directly.
  *
- * \see libvlc_media_discoverer_stop
+ * \see libapoi_media_discoverer_stop
  *
  * \param p_mdis media discover object
  * \return -1 in case of error, 0 otherwise
- * \version LibVLC 3.0.0 or later
+ * \version LibAPOI 3.0.0 or later
  */
-LIBVLC_API int
-libvlc_media_discoverer_start( libvlc_media_discoverer_t * p_mdis );
+LIBAPOI_API int
+libapoi_media_discoverer_start( libapoi_media_discoverer_t * p_mdis );
 
 /**
  * Stop media discovery.
  *
- * \see libvlc_media_discoverer_start
+ * \see libapoi_media_discoverer_start
  *
  * \param p_mdis media discover object
- * \version LibVLC 3.0.0 or later
+ * \version LibAPOI 3.0.0 or later
  */
-LIBVLC_API void
-libvlc_media_discoverer_stop( libvlc_media_discoverer_t * p_mdis );
+LIBAPOI_API void
+libapoi_media_discoverer_stop( libapoi_media_discoverer_t * p_mdis );
 
 /**
  * Release media discover object. If the reference count reaches 0, then
@@ -124,8 +124,8 @@ libvlc_media_discoverer_stop( libvlc_media_discoverer_t * p_mdis );
  *
  * \param p_mdis media service discover object
  */
-LIBVLC_API void
-libvlc_media_discoverer_release( libvlc_media_discoverer_t * p_mdis );
+LIBAPOI_API void
+libapoi_media_discoverer_release( libapoi_media_discoverer_t * p_mdis );
 
 /**
  * Get media service discover media list.
@@ -133,8 +133,8 @@ libvlc_media_discoverer_release( libvlc_media_discoverer_t * p_mdis );
  * \param p_mdis media service discover object
  * \return list of media items
  */
-LIBVLC_API libvlc_media_list_t *
-libvlc_media_discoverer_media_list( libvlc_media_discoverer_t * p_mdis );
+LIBAPOI_API libapoi_media_list_t *
+libapoi_media_discoverer_media_list( libapoi_media_discoverer_t * p_mdis );
 
 /**
  * Query if media service discover object is running.
@@ -144,39 +144,39 @@ libvlc_media_discoverer_media_list( libvlc_media_discoverer_t * p_mdis );
  * \retval true running
  * \retval false not running
  */
-LIBVLC_API bool
-libvlc_media_discoverer_is_running(libvlc_media_discoverer_t *p_mdis);
+LIBAPOI_API bool
+libapoi_media_discoverer_is_running(libapoi_media_discoverer_t *p_mdis);
 
 /**
  * Get media discoverer services by category
  *
- * \version LibVLC 3.0.0 and later.
+ * \version LibAPOI 3.0.0 and later.
  *
- * \param p_inst libvlc instance
+ * \param p_inst libapoi instance
  * \param i_cat category of services to fetch
  * \param ppp_services address to store an allocated array of media discoverer
- * services (must be freed with libvlc_media_discoverer_list_release() by
+ * services (must be freed with libapoi_media_discoverer_list_release() by
  * the caller) [OUT]
  *
  * \return the number of media discoverer services (0 on error)
  */
-LIBVLC_API size_t
-libvlc_media_discoverer_list_get( libvlc_instance_t *p_inst,
-                                  libvlc_media_discoverer_category_t i_cat,
-                                  libvlc_media_discoverer_description_t ***ppp_services );
+LIBAPOI_API size_t
+libapoi_media_discoverer_list_get( libapoi_instance_t *p_inst,
+                                  libapoi_media_discoverer_category_t i_cat,
+                                  libapoi_media_discoverer_description_t ***ppp_services );
 
 /**
  * Release an array of media discoverer services
  *
- * \version LibVLC 3.0.0 and later.
+ * \version LibAPOI 3.0.0 and later.
  *
- * \see libvlc_media_discoverer_list_get()
+ * \see libapoi_media_discoverer_list_get()
  *
  * \param pp_services array to release
  * \param i_count number of elements in the array
  */
-LIBVLC_API void
-libvlc_media_discoverer_list_release( libvlc_media_discoverer_description_t **pp_services,
+LIBAPOI_API void
+libapoi_media_discoverer_list_release( libapoi_media_discoverer_description_t **pp_services,
                                       size_t i_count );
 
 /**@} */
@@ -185,4 +185,4 @@ libvlc_media_discoverer_list_release( libvlc_media_discoverer_description_t **pp
 }
 # endif
 
-#endif /* <vlc/libvlc.h> */
+#endif /* <apoi/libapoi.h> */

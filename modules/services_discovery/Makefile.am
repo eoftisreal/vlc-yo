@@ -46,14 +46,14 @@ endif
 
 libpipewirelist_plugin_la_SOURCES = services_discovery/pipewire.c
 libpipewirelist_plugin_la_CFLAGS = $(AM_CFLAGS) $(PIPEWIRE_CFLAGS)
-libpipewirelist_plugin_la_LIBADD = libvlc_pipewire.la $(PIPEWIRE_LIBS)
+libpipewirelist_plugin_la_LIBADD = libapoi_pipewire.la $(PIPEWIRE_LIBS)
 if HAVE_PIPEWIRE
 sd_LTLIBRARIES += libpipewirelist_plugin.la
 endif
 
 libpulselist_plugin_la_SOURCES = services_discovery/pulse.c
 libpulselist_plugin_la_CFLAGS = $(AM_CFLAGS) $(PULSE_CFLAGS)
-libpulselist_plugin_la_LIBADD = libvlc_pulse.la $(PULSE_LIBS)
+libpulselist_plugin_la_LIBADD = libapoi_pulse.la $(PULSE_LIBS)
 if HAVE_PULSE
 sd_LTLIBRARIES += libpulselist_plugin.la
 endif

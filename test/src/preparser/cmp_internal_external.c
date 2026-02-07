@@ -260,7 +260,7 @@ int main( void )
         "-v",
         "--ignore-config",
     };
-    libvlc_instance_t *vlc = libvlc_new(ARRAY_SIZE(argv), argv);
+    libapoi_instance_t *vlc = libvlc_new(ARRAY_SIZE(argv), argv);
     assert(vlc);
 
     for (size_t i = 0; i < ARRAY_SIZE(test_params); ++i) {

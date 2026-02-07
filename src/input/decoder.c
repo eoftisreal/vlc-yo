@@ -54,7 +54,7 @@
 #include "resource.h"
 #include "decoder_prevframe.h"
 
-#include "../libvlc.h"
+#include "../libapoi.h"
 
 #include "../video_output/vout_internal.h"
 

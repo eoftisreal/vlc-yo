@@ -98,7 +98,7 @@ extern "C" {
 #endif
 
 /* The root object */
-struct libvlc_int_t
+struct libapoi_int_t
 {
     struct vlc_object_t obj;
 };
@@ -180,7 +180,7 @@ VLC_API struct vlc_tracer *vlc_object_get_tracer(vlc_object_t *obj);
     vlc_object_find_name( VLC_OBJECT(a),b)
 
 VLC_USED
-static inline libvlc_int_t *vlc_object_instance(vlc_object_t *obj)
+static inline libapoi_int_t *vlc_object_instance(vlc_object_t *obj)
 {
     vlc_object_t *parent;
 
@@ -188,7 +188,7 @@ static inline libvlc_int_t *vlc_object_instance(vlc_object_t *obj)
         parent = obj;
     while ((obj = vlc_object_parent(obj)) != NULL);
 
-    return (libvlc_int_t *)parent;
+    return (libapoi_int_t *)parent;
 }
 #define vlc_object_instance(o) vlc_object_instance(VLC_OBJECT(o))
 

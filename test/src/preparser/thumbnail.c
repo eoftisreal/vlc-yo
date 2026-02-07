@@ -115,7 +115,7 @@ static void thumbnailer_callback( vlc_preparser_req *req, int status,
     vlc_preparser_req_Release( req );
 }
 
-static void test_thumbnails( libvlc_instance_t* p_vlc, bool external )
+static void test_thumbnails( libapoi_instance_t* p_vlc, bool external )
 {
     struct test_ctx ctx;
     vlc_cond_init( &ctx.cond );
@@ -198,7 +198,7 @@ static void thumbnailer_callback_cancel( vlc_preparser_req *req, int status,
     vlc_preparser_req_Release(req);
 }
 
-static void test_cancel_thumbnail( libvlc_instance_t* p_vlc, bool external )
+static void test_cancel_thumbnail( libapoi_instance_t* p_vlc, bool external )
 {
     const struct vlc_preparser_cfg cfg = {
         .types = VLC_PREPARSER_TYPE_THUMBNAIL,
@@ -242,7 +242,7 @@ int main( void )
         "-v",
         "--ignore-config",
     };
-    libvlc_instance_t *vlc = libvlc_new(ARRAY_SIZE(argv), argv);
+    libapoi_instance_t *vlc = libvlc_new(ARRAY_SIZE(argv), argv);
     assert(vlc);
 
     fprintf(stderr, "Run with internal preparser...\n");

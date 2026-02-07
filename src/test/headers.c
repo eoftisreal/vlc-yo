@@ -31,14 +31,14 @@
 # undef LIBVLC_INTERNAL_
 #endif
 
-#include <vlc/vlc.h>
-#include <vlc/libvlc.h>
-#include <vlc/libvlc_events.h>
-#include <vlc/libvlc_media.h>
-#include <vlc/libvlc_media_discoverer.h>
-#include <vlc/libvlc_media_list.h>
-#include <vlc/libvlc_media_list_player.h>
-#include <vlc/libvlc_media_player.h>
+#include <apoi/apoi.h>
+#include <apoi/libapoi.h>
+#include <apoi/libapoi_events.h>
+#include <apoi/libapoi_media.h>
+#include <apoi/libapoi_media_discoverer.h>
+#include <apoi/libapoi_media_list.h>
+#include <apoi/libapoi_media_list_player.h>
+#include <apoi/libapoi_media_player.h>
 
 #include <stdio.h>
 

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * error.c: Error handling for libvlc
+ * error.c: Error handling for libapoi
  *****************************************************************************
  * Copyright (C) 2009 Rémi Denis-Courmont
  *
@@ -22,16 +22,16 @@
 # include "config.h"
 #endif
 
-#include "libvlc_internal.h"
+#include "libapoi_internal.h"
 
 #include <stdarg.h>
 #include <stdio.h>
 #include <assert.h>
-#include <vlc/libvlc.h>
+#include <apoi/libapoi.h>
 
 
 static const char oom[] = "Out of memory";
-/* TODO: use only one thread-specific key for whole libvlc */
+/* TODO: use only one thread-specific key for whole libapoi */
 static vlc_threadvar_t context;
 
 static char *get_error (void)
@@ -53,7 +53,7 @@ static void free_error (void)
 static vlc_mutex_t lock = VLC_STATIC_MUTEX;
 static uintptr_t refs = 0;
 
-void libvlc_threads_init (void)
+void libapoi_threads_init (void)
 {
     vlc_mutex_lock (&lock);
     if (refs++ == 0)
@@ -61,7 +61,7 @@ void libvlc_threads_init (void)
     vlc_mutex_unlock (&lock);
 }
 
-void libvlc_threads_deinit (void)
+void libapoi_threads_deinit (void)
 {
     vlc_mutex_lock (&lock);
     assert (refs > 0);
@@ -74,23 +74,23 @@ void libvlc_threads_deinit (void)
 }
 
 /**
- * Gets a human-readable error message for the last LibVLC error in the calling
+ * Gets a human-readable error message for the last LibAPOI error in the calling
  * thread. The resulting string is valid until another error occurs (at least
- * until the next LibVLC call).
+ * until the next LibAPOI call).
  *
  * @return NULL if there was no error, a nul-terminated string otherwise.
  */
-const char *libvlc_errmsg (void)
+const char *libapoi_errmsg (void)
 {
     return get_error ();
 }
 
 /**
- * Clears the LibVLC error status for the current thread. This is optional.
+ * Clears the LibAPOI error status for the current thread. This is optional.
  * By default, the error status is automatically overridden when a new error
  * occurs, and destroyed when the thread exits.
  */
-void libvlc_clearerr (void)
+void libapoi_clearerr (void)
 {
     free_error ();
     int ret = vlc_threadvar_set (context, NULL);
@@ -99,13 +99,13 @@ void libvlc_clearerr (void)
 }
 
 /**
- * Sets the LibVLC error status and message for the current thread.
+ * Sets the LibAPOI error status and message for the current thread.
  * Any previous error is overridden.
  * \param fmt the format string
  * \param ap the arguments
  * \return a nul terminated string in any case
  */
-static const char *libvlc_vprinterr (const char *fmt, va_list ap)
+static const char *libapoi_vprinterr (const char *fmt, va_list ap)
 {
     char *msg;
 
@@ -121,17 +121,17 @@ static const char *libvlc_vprinterr (const char *fmt, va_list ap)
 }
 
 /**
- * Sets the LibVLC error status and message for the current thread.
+ * Sets the LibAPOI error status and message for the current thread.
  * Any previous error is overridden.
  * @return a nul terminated string (always)
  */
-const char *libvlc_printerr (const char *fmt, ...)
+const char *libapoi_printerr (const char *fmt, ...)
 {
     va_list ap;
     const char *msg;
 
     va_start (ap, fmt);
-    msg = libvlc_vprinterr (fmt, ap);
+    msg = libapoi_vprinterr (fmt, ap);
     va_end (ap);
     return msg;
 }

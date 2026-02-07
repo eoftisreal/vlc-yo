@@ -44,7 +44,7 @@
 #include <vlc_url.h>
 #include <vlc_mime.h>
 #include <vlc_block.h>
-#include "../libvlc.h"
+#include "../libapoi.h"
 
 #include <string.h>
 #include <errno.h>

@@ -361,7 +361,7 @@ static inline void vlc_fourcc_to_char( vlc_fourcc_t fcc, char *psz_fourcc )
 
 /* Internal types */
 typedef struct vlc_object_t vlc_object_t;
-typedef struct libvlc_int_t libvlc_int_t;
+typedef struct libapoi_int_t libapoi_int_t;
 typedef struct date_t date_t;
 
 /* Playlist */

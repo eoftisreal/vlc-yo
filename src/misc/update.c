@@ -55,7 +55,7 @@
 #include <shellapi.h>
 #endif
 #include "update.h"
-#include "../libvlc.h"
+#include "../libapoi.h"
 
 /*****************************************************************************
  * Misc defines

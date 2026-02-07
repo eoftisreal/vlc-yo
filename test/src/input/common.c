@@ -43,7 +43,7 @@ void vlc_run_args_init(struct vlc_run_args *args)
     args->test_demux_controls = getenv_atoi("VLC_DEMUX_CONTROLS");
 }
 
-libvlc_instance_t *libvlc_create(const struct vlc_run_args *args)
+libapoi_instance_t *libvlc_create(const struct vlc_run_args *args)
 {
 #ifdef TOP_BUILDDIR
 # ifndef HAVE_STATIC_MODULES
@@ -67,7 +67,7 @@ libvlc_instance_t *libvlc_create(const struct vlc_run_args *args)
     else
         argv[0] = "--quiet";
 
-    libvlc_instance_t *vlc = libvlc_new(argc, argv);
+    libapoi_instance_t *vlc = libvlc_new(argc, argv);
     if (vlc == NULL)
         fprintf(stderr, "Error: cannot initialize LibVLC.\n");
 

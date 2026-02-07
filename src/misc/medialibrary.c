@@ -27,7 +27,7 @@
 #include <vlc_modules.h>
 #include <vlc_list.h>
 #include <vlc_threads.h>
-#include "../libvlc.h"
+#include "../libapoi.h"
 
 #include <assert.h>
 
@@ -99,7 +99,7 @@ static const vlc_medialibrary_callbacks_t callbacks = {
     .pf_send_event = &vlc_ml_event_send
 };
 
-vlc_medialibrary_t* libvlc_MlCreate( libvlc_int_t* p_libvlc  )
+vlc_medialibrary_t* libvlc_MlCreate( libapoi_int_t* p_libvlc  )
 {
     vlc_medialibrary_t *p_ml = vlc_custom_create( VLC_OBJECT( p_libvlc ),
                                                   sizeof( *p_ml ), "medialibrary" );

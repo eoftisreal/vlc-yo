@@ -48,7 +48,7 @@ ml_item_deleted(const struct libvlc_event_t *p_ev, void *p_data)
 }
 
 static void
-test_discoverer(libvlc_instance_t *p_vlc, const char *psz_name, bool b_wait)
+test_discoverer(libapoi_instance_t *p_vlc, const char *psz_name, bool b_wait)
 {
     test_log("creating and starting discoverer %s\n", psz_name);
 
@@ -101,7 +101,7 @@ main(int i_argc, char *ppsz_argv[])
 
     char *psz_test_name = i_argc > 1 ? ppsz_argv[1] : NULL;
 
-    libvlc_instance_t *p_vlc = libvlc_new(test_defaults_nargs,
+    libapoi_instance_t *p_vlc = libvlc_new(test_defaults_nargs,
                                           test_defaults_args);
     assert(p_vlc != NULL);
 

@@ -25,7 +25,7 @@
 # include "config.h"
 #endif
 
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 #include <vlc_common.h>
 #include <vlc_charset.h>
 
@@ -44,7 +44,7 @@
 #include "../lib/libvlc_internal.h"
 
 struct vlc_context {
-    libvlc_instance_t *vlc;
+    libapoi_instance_t *vlc;
     dispatch_queue_t intf_queue;
     vlc_sem_t wait_quit;
 
@@ -271,7 +271,7 @@ int main(int i_argc, const char *ppsz_argv[])
     });
 
     __block bool intf_started = true;
-    __block libvlc_instance_t *vlc = NULL;
+    __block libapoi_instance_t *vlc = NULL;
     int ret = 1;
     dispatch_async(intf_queue, ^{
         /* Initialize libvlc */

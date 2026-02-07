@@ -31,7 +31,7 @@
 #include <vlc_common.h>
 #include <vlc_threads.h>
 
-#include "../libvlc.h"
+#include "../libapoi.h"
 #include <stdarg.h>
 #include <stdatomic.h>
 #include <signal.h>
@@ -124,7 +124,7 @@ void *vlc_threadvar_get (vlc_threadvar_t key)
     return pthread_getspecific (key);
 }
 
-void vlc_threads_setup (libvlc_int_t *p_libvlc)
+void vlc_threads_setup (libapoi_int_t *p_libvlc)
 {
     (void) p_libvlc;
 }

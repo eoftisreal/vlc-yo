@@ -1,5 +1,5 @@
 /*****************************************************************************
- * media_player_internal.h : Definition of opaque structures for libvlc exported API
+ * media_player_internal.h : Definition of opaque structures for libapoi exported API
  * Also contains some internal utility functions
  *****************************************************************************
  * Copyright (C) 2005-2009 VLC authors and VideoLAN
@@ -21,11 +21,11 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef _LIBVLC_MEDIA_PLAYER_INTERNAL_H
-#define _LIBVLC_MEDIA_PLAYER_INTERNAL_H 1
+#ifndef _LIBAPOI_MEDIA_PLAYER_INTERNAL_H
+#define _LIBAPOI_MEDIA_PLAYER_INTERNAL_H 1
 
-#include <vlc/vlc.h>
-#include <vlc/libvlc_media.h>
+#include <apoi/apoi.h>
+#include <apoi/libapoi_media.h>
 #include <vlc_input.h>
 #include <vlc_player.h>
 #include <vlc_viewpoint.h>
@@ -33,8 +33,8 @@
 
 #include "../modules/audio_filter/equalizer_presets.h"
 
-typedef void (*libvlc_media_player_vout_detach_cb)(libvlc_media_player_t *player);
-struct libvlc_media_player_t
+typedef void (*libapoi_media_player_vout_detach_cb)(libapoi_media_player_t *player);
+struct libapoi_media_player_t
 {
     struct vlc_object_t obj;
     vlc_atomic_rc_t    rc;
@@ -44,22 +44,22 @@ struct libvlc_media_player_t
     vlc_player_aout_listener_id *aout_listener;
     vlc_cond_t wait;
 
-    struct libvlc_instance_t * p_libvlc_instance; /* Parent instance */
-    libvlc_media_t * p_md; /* current media descriptor */
-    libvlc_event_manager_t event_manager;
+    struct libapoi_instance_t * p_libapoi_instance; /* Parent instance */
+    libapoi_media_t * p_md; /* current media descriptor */
+    libapoi_event_manager_t event_manager;
 
     struct {
         vlc_player_timer_id *id;
-        libvlc_media_player_watch_time_on_update on_update;
-        libvlc_media_player_watch_time_on_paused on_paused;
-        libvlc_media_player_watch_time_on_seek on_seek;
+        libapoi_media_player_watch_time_on_update on_update;
+        libapoi_media_player_watch_time_on_paused on_paused;
+        libapoi_media_player_watch_time_on_seek on_seek;
         void *cbs_data;
         bool seeking;
     } timer;
 
     struct {
         /*
-         * Tracks the active libvlc window/output integration and the default
+         * Tracks the active libapoi window/output integration and the default
          * values to restore when switching integrations. Each setter installs
          * a detach callback that resets the variables it touched (vout, gl,
          * gles2, dec-dev, window, vmem-*, vout-cb-*). The next setter calls the
@@ -67,7 +67,7 @@ struct libvlc_media_player_t
          * can safely switch between window providers and output/video callbacks
          * without leaving stale configuration behind.
          */
-        libvlc_media_player_vout_detach_cb window_detach;
+        libapoi_media_player_vout_detach_cb window_detach;
         char *default_dec_dev;
         char *default_vout;
         char *default_gl;
@@ -78,7 +78,7 @@ struct libvlc_media_player_t
 /**
  * Internal equalizer structure.
  */
-struct libvlc_equalizer_t
+struct libapoi_equalizer_t
 {
     float f_preamp;
     float f_amp[EQZ_BANDS_MAX];

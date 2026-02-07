@@ -5,7 +5,7 @@
 #define COBJMACROS
 #include <d3d9.h>
 
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 
 #define SCREEN_WIDTH   900
 #define SCREEN_HEIGHT  900
@@ -365,7 +365,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
     WNDCLASSEX wc;
     struct render_context Context = { 0 };
     char *file_path;
-    libvlc_instance_t *p_libvlc;
+    libapoi_instance_t *p_libvlc;
     libvlc_media_t *p_media;
     (void)hPrevInstance;
 

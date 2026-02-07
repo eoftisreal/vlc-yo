@@ -26,7 +26,7 @@
 
 #include <vlc_common.h>
 
-#include "../libvlc.h"
+#include "../libapoi.h"
 #include <vlc_charset.h>
 #include "../config/configuration.h"
 

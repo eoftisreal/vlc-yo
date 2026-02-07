@@ -52,15 +52,15 @@ struct vlc_param *vlc_param_Find(const char *name);
 
 int vlc_param_SetString(struct vlc_param *param, const char *value);
 
-int  config_AutoSaveConfigFile( libvlc_int_t * );
+int  config_AutoSaveConfigFile( libapoi_int_t * );
 
 void config_Free(struct vlc_param *, size_t);
 
-void config_CmdLineEarlyScan( libvlc_int_t *, int, const char *[] );
+void config_CmdLineEarlyScan( libapoi_int_t *, int, const char *[] );
 
-int config_LoadCmdLine   ( libvlc_int_t *, int, const char *[], int * );
-int config_LoadConfigFile( libvlc_int_t * );
-bool config_PrintHelp (libvlc_int_t *);
+int config_LoadCmdLine   ( libapoi_int_t *, int, const char *[], int * );
+int config_LoadConfigFile( libapoi_int_t * );
+bool config_PrintHelp (libapoi_int_t *);
 void config_Lock(void);
 void config_Unlock(void);
 

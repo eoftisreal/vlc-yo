@@ -47,7 +47,7 @@
 #include <vlc_network.h> /* vlc_accept */
 
 #include "interrupt.h"
-#include "../libvlc.h"
+#include "../libapoi.h"
 
 static thread_local vlc_interrupt_t *vlc_interrupt_var;
 

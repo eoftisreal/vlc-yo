@@ -32,7 +32,7 @@
 #include <vlc_interrupt.h>
 #include <vlc_extensions.h>
 #include <assert.h>
-#include "../libvlc.h"
+#include "../libapoi.h"
 
 struct vlc_dialog_provider
 {
@@ -148,7 +148,7 @@ dialog_id_release(vlc_dialog_id *p_id)
 }
 
 int
-libvlc_InternalDialogInit(libvlc_int_t *p_libvlc)
+libvlc_InternalDialogInit(libapoi_int_t *p_libvlc)
 {
     assert(p_libvlc != NULL);
     vlc_dialog_provider *p_provider = malloc(sizeof(*p_provider));
@@ -239,7 +239,7 @@ dialog_clear_all_locked(vlc_dialog_provider *p_provider)
 }
 
 void
-libvlc_InternalDialogClean(libvlc_int_t *p_libvlc)
+libvlc_InternalDialogClean(libapoi_int_t *p_libvlc)
 {
     assert(p_libvlc != NULL);
     vlc_dialog_provider *p_provider = libvlc_priv(p_libvlc)->p_dialog_provider;

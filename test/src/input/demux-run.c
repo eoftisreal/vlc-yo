@@ -44,7 +44,7 @@
 #include <vlc_url.h>
 #include "../lib/libvlc_internal.h"
 
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 
 #include "demux-run.h"
 #include "decoder.h"
@@ -343,7 +343,7 @@ static int demux_process_stream(const struct vlc_run_args *args, stream_t *s)
 
 int vlc_demux_process_url(const struct vlc_run_args *args, const char *url)
 {
-    libvlc_instance_t *vlc = libvlc_create(args);
+    libapoi_instance_t *vlc = libvlc_create(args);
     if (vlc == NULL)
         return -1;
 
@@ -370,7 +370,7 @@ int vlc_demux_process_path(const struct vlc_run_args *args, const char *path)
     return ret;
 }
 
-int libvlc_demux_process_memory(libvlc_instance_t *vlc,
+int libvlc_demux_process_memory(libapoi_instance_t *vlc,
                                 const struct vlc_run_args *args,
                                 const unsigned char *buf, size_t length)
 {
@@ -385,7 +385,7 @@ int libvlc_demux_process_memory(libvlc_instance_t *vlc,
 int vlc_demux_process_memory(const struct vlc_run_args *args,
                              const unsigned char *buf, size_t length)
 {
-    libvlc_instance_t *vlc = libvlc_create(args);
+    libapoi_instance_t *vlc = libvlc_create(args);
     if (vlc == NULL)
         return -1;
 

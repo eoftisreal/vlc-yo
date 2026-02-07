@@ -176,7 +176,7 @@ struct vlm_message_t
 extern "C" {
 #endif
 
-VLC_API vlm_t * vlm_New( libvlc_int_t *, const char *path );
+VLC_API vlm_t * vlm_New( libapoi_int_t *, const char *path );
 VLC_API void vlm_Delete( vlm_t * );
 VLC_API int vlm_ExecuteCommand( vlm_t *, const char *, vlm_message_t ** );
 VLC_API int vlm_Control( vlm_t *p_vlm, int i_query, ... );

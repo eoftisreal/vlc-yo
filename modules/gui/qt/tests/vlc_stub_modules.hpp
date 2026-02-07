@@ -23,7 +23,7 @@
 # include <config.h>
 #endif
 
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 
 #include <vlc_common.h>
 #include <vlc_plugin.h>
@@ -58,7 +58,7 @@ struct VLCTestingEnv
     bool init();
 
     //should be valid after init
-    libvlc_instance_t* libvlc = nullptr;
+    libapoi_instance_t* libvlc = nullptr;
 
     //pointer to the qt interface pointer
     //no qt related objects are defined in it (no MainCtx, no Compositor ...)

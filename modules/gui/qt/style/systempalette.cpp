@@ -690,8 +690,8 @@ void SystemPalette::makeDarkPalette()
 
         setColor(CS, C::Decoration, C::Separator, C::Normal, QColor("#2C2C2C"));
 
-        setColor(CS, C::Decoration, C::Accent, C::Normal, QColor("#FF9800")); // Gold/Orange accent
-        setColor(CS, C::Fg, C::Link, C::Normal, QColor("#FF9800"));
+        setColor(CS, C::Decoration, C::Accent, C::Normal, QColor("#3498db")); // Gold/Orange accent
+        setColor(CS, C::Fg, C::Link, C::Normal, QColor("#3498db"));
     }
 
     //window banner & miniplayer

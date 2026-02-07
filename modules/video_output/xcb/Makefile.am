@@ -1,19 +1,19 @@
 ### XCB ###
-libvlc_xcb_events_la_SOURCES = \
+libapoi_xcb_events_la_SOURCES = \
 	video_output/xcb/events.c video_output/xcb/events.h
-libvlc_xcb_events_la_CFLAGS = $(AM_CFLAGS) $(XCB_CFLAGS)
-libvlc_xcb_events_la_LDFLAGS = \
+libapoi_xcb_events_la_CFLAGS = $(AM_CFLAGS) $(XCB_CFLAGS)
+libapoi_xcb_events_la_LDFLAGS = \
 	-no-undefined \
 	-export-symbols-regex ^vlc_xcb_ \
 	-version-info 0:0:0
-libvlc_xcb_events_la_LIBADD = $(XCB_LIBS) $(LTLIBVLCCORE)
+libapoi_xcb_events_la_LIBADD = $(XCB_LIBS) $(LTLIBAPOICORE)
 
 libxcb_x11_plugin_la_SOURCES = \
 	video_output/xcb/pictures.c video_output/xcb/pictures.h \
 	video_output/xcb/x11.c
 libxcb_x11_plugin_la_CFLAGS = $(AM_CFLAGS) \
 	$(XCB_CFLAGS) $(XCB_SHM_CFLAGS)
-libxcb_x11_plugin_la_LIBADD = libvlc_xcb_events.la \
+libxcb_x11_plugin_la_LIBADD = libapoi_xcb_events.la \
 	$(XCB_LIBS) $(XCB_SHM_LIBS)
 
 libxcb_render_plugin_la_SOURCES = \
@@ -21,7 +21,7 @@ libxcb_render_plugin_la_SOURCES = \
 	video_output/xcb/render.c
 libxcb_render_plugin_la_CFLAGS = $(AM_CFLAGS) \
 	$(XCB_CFLAGS) $(XCB_SHM_CFLAGS) $(XCB_RENDER_CFLAGS)
-libxcb_render_plugin_la_LIBADD = libvlc_xcb_events.la \
+libxcb_render_plugin_la_LIBADD = libapoi_xcb_events.la \
 	$(XCB_LIBS) $(XCB_SHM_LIBS) $(XCB_RENDER_LIBS) $(LIBM)
 
 libxcb_window_plugin_la_SOURCES = video_output/xcb/window.c
@@ -36,7 +36,7 @@ libxcb_window_plugin_la_LIBADD = $(XPROTO_LIBS) $(XCB_LIBS) \
 libxcb_egl_plugin_la_SOURCES = video_output/opengl/egl.c
 libxcb_egl_plugin_la_CPPFLAGS = $(AM_CPPFLAGS) -DUSE_PLATFORM_XCB=1
 libxcb_egl_plugin_la_CFLAGS = $(AM_CFLAGS) $(EGL_CFLAGS) $(XCB_CFLAGS)
-libxcb_egl_plugin_la_LIBADD = libvlc_xcb_events.la $(EGL_LIBS) $(XCB_LIBS)
+libxcb_egl_plugin_la_LIBADD = libapoi_xcb_events.la $(EGL_LIBS) $(XCB_LIBS)
 
 libvk_x11_plugin_la_SOURCES = $(VULKAN_COMMONSOURCES) \
 	video_output/vulkan/platform_xcb.c
@@ -55,7 +55,7 @@ libglx_plugin_la_CFLAGS = $(AM_CFLAGS) $(GL_CFLAGS)
 libglx_plugin_la_LIBADD = $(GL_LIBS) $(X_LIBS) $(X_PRE_LIBS) -lX11
 
 if HAVE_XCB
-pkglib_LTLIBRARIES += libvlc_xcb_events.la
+pkglib_LTLIBRARIES += libapoi_xcb_events.la
 vout_LTLIBRARIES += \
 	libxcb_x11_plugin.la \
 	libxcb_render_plugin.la \

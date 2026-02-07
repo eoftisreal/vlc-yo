@@ -10,7 +10,7 @@
 #include <locale.h>
 #include <errno.h>
 
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>
@@ -69,7 +69,7 @@ static void cmdline(int argc, char *argv[])
     }
 }
 
-static libvlc_instance_t *create_libvlc(void)
+static libapoi_instance_t *create_libvlc(void)
 {
     char verbose_flag[2] = "0";
     verbose_flag[0] = '0' + verbosity;
@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
     cmdline(argc, argv);
 
     /* starts vlc */
-    libvlc_instance_t *libvlc = create_libvlc();
+    libapoi_instance_t *libvlc = create_libvlc();
     assert(libvlc);
 
     vlc_object_t *root = &libvlc->p_libvlc_int->obj;

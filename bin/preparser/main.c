@@ -13,7 +13,7 @@
 
 #include <assert.h>
 
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 #include <vlc_common.h>
 #include <vlc_preparser.h>
 #include <vlc_preparser_ipc.h>
@@ -524,7 +524,7 @@ int main(int argc, char **argv)
         "--text-renderer=tdummy",
     };
 
-    libvlc_instance_t *vlc = libvlc_new(ARRAY_SIZE(libvlc_args), libvlc_args);
+    libapoi_instance_t *vlc = libvlc_new(ARRAY_SIZE(libvlc_args), libvlc_args);
     if (vlc == NULL) {
         return 1;
     }

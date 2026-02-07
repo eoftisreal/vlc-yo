@@ -117,7 +117,7 @@ static void test_media_player_set_media(const char** argv, int argc)
 
     test_log ("Testing set_media\n");
 
-    libvlc_instance_t *vlc = libvlc_new (argc, argv);
+    libapoi_instance_t *vlc = libvlc_new (argc, argv);
     assert (vlc != NULL);
 
     libvlc_media_t *md = libvlc_media_new_location(file);
@@ -139,7 +139,7 @@ static void test_media_player_set_media(const char** argv, int argc)
 
 static void test_media_player_play_stop(const char** argv, int argc)
 {
-    libvlc_instance_t *vlc;
+    libapoi_instance_t *vlc;
     libvlc_media_t *md;
     libvlc_media_player_t *mi;
     const char * file = test_default_sample;
@@ -166,7 +166,7 @@ static void test_media_player_play_stop(const char** argv, int argc)
 
 static void test_media_player_pause_stop(const char** argv, int argc)
 {
-    libvlc_instance_t *vlc;
+    libapoi_instance_t *vlc;
     libvlc_media_t *md;
     libvlc_media_player_t *mi;
     const char * file = test_default_sample;
@@ -297,7 +297,7 @@ static void test_media_player_tracks(const char** argv, int argc)
     new_argv[argc++] = "--codec=araw,rawvideo,subsdec,none";
 
     /* Load the mock media */
-    libvlc_instance_t *vlc = libvlc_new (argc, new_argv);
+    libapoi_instance_t *vlc = libvlc_new (argc, new_argv);
     assert (vlc != NULL);
     libvlc_media_t *md = libvlc_media_new_location(file);
     assert (md != NULL);
@@ -514,7 +514,7 @@ static void test_media_player_programs(const char** argv, int argc)
     new_argv[argc++] = "--codec=araw,rawvideo,subsdec,none";
 
     /* Load the mock media */
-    libvlc_instance_t *vlc = libvlc_new (argc, new_argv);
+    libapoi_instance_t *vlc = libvlc_new (argc, new_argv);
     assert (vlc != NULL);
     libvlc_media_t *md = libvlc_media_new_location(file);
     assert (md != NULL);
@@ -635,8 +635,8 @@ static void test_media_player_programs(const char** argv, int argc)
 static void test_media_player_multiple_instance(const char** argv, int argc)
 {
     /* When multiple libvlc instance exist */
-    libvlc_instance_t *instance1 = libvlc_new(argc, argv);
-    libvlc_instance_t *instance2 = libvlc_new(argc, argv);
+    libapoi_instance_t *instance1 = libvlc_new(argc, argv);
+    libapoi_instance_t *instance2 = libvlc_new(argc, argv);
 
     /* ...with the media and the player being on different instances */
     libvlc_media_t *media1 = libvlc_media_new_path("foo");
@@ -661,7 +661,7 @@ static void test_media_player_multiple_instance(const char** argv, int argc)
 
 static void test_media_player_video_controls(const char** argv, int argc)
 {
-    libvlc_instance_t *instance = libvlc_new(argc, argv);
+    libapoi_instance_t *instance = libvlc_new(argc, argv);
 
     /* ...with the media and the player being on different instances */
     libvlc_media_t *media1 = libvlc_media_new_path("foo");

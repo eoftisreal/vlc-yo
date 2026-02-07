@@ -234,7 +234,7 @@ struct ctx
 {
     int flags;
 
-    libvlc_instance_t *vlc;
+    libapoi_instance_t *vlc;
     vlc_player_t *player;
     vlc_player_listener_id *listener;
     struct VLC_VECTOR(input_item_t *) next_medias;
@@ -1292,7 +1292,7 @@ ctx_init(struct ctx *ctx, int flags)
         (flags & CLOCK_MASTER_MONOTONIC) ?
             "--clock-master=monotonic" : "--clock-master=auto",
     };
-    libvlc_instance_t *vlc = libvlc_new(ARRAY_SIZE(argv), argv);
+    libapoi_instance_t *vlc = libvlc_new(ARRAY_SIZE(argv), argv);
     assert(vlc);
 
 #define X(type, name) .name = player_##name,

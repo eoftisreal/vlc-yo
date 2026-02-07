@@ -1,5 +1,5 @@
 /*****************************************************************************
- * event.c: New libvlc event control API
+ * event.c: New libapoi event control API
  *****************************************************************************
  * Copyright (C) 2007-2010 VLC authors and VideoLAN
  *
@@ -28,8 +28,8 @@
 #include <assert.h>
 #include <errno.h>
 
-#include <vlc/libvlc.h>
-#include "libvlc_internal.h"
+#include <apoi/libapoi.h>
+#include "libapoi_internal.h"
 
 #include <vlc_common.h>
 
@@ -39,56 +39,56 @@
 
 /* Example usage
  *
- * struct libvlc_cool_object_t
+ * struct libapoi_cool_object_t
  * {
  *        ...
- *        libvlc_event_manager_t event_manager;
+ *        libapoi_event_manager_t event_manager;
  *        ...
  * }
  *
- * libvlc_my_cool_object_new()
+ * libapoi_my_cool_object_new()
  * {
  *        ...
- *        libvlc_event_manager_init(&p_self->event_manager, p_self)
+ *        libapoi_event_manager_init(&p_self->event_manager, p_self)
  *        ...
  * }
  *
- * libvlc_my_cool_object_release()
+ * libapoi_my_cool_object_release()
  * {
  *         ...
- *         libvlc_event_manager_release(&p_self->event_manager);
+ *         libapoi_event_manager_release(&p_self->event_manager);
  *         ...
  * }
  *
- * libvlc_my_cool_object_do_something()
+ * libapoi_my_cool_object_do_something()
  * {
  *        ...
- *        libvlc_event_t event;
- *        event.type = libvlc_MyCoolObjectDidSomething;
+ *        libapoi_event_t event;
+ *        event.type = libapoi_MyCoolObjectDidSomething;
  *        event.u.my_cool_object_did_something.what_it_did = kSomething;
- *        libvlc_event_send(&p_self->event_manager, &event);
+ *        libapoi_event_send(&p_self->event_manager, &event);
  * }
  * */
 
-typedef struct libvlc_event_listener_t
+typedef struct libapoi_event_listener_t
 {
-    libvlc_event_type_t event_type;
+    libapoi_event_type_t event_type;
     void *              p_user_data;
-    libvlc_callback_t   pf_callback;
-} libvlc_event_listener_t;
+    libapoi_callback_t   pf_callback;
+} libapoi_event_listener_t;
 
 /*
- * Internal libvlc functions
+ * Internal libapoi functions
  */
 
-void libvlc_event_manager_init(libvlc_event_manager_t *em, void *obj)
+void libapoi_event_manager_init(libapoi_event_manager_t *em, void *obj)
 {
     em->p_obj = obj;
     vlc_array_init(&em->listeners);
     vlc_mutex_init_recursive(&em->lock);
 }
 
-void libvlc_event_manager_destroy(libvlc_event_manager_t *em)
+void libapoi_event_manager_destroy(libapoi_event_manager_t *em)
 {
     for (size_t i = 0; i < vlc_array_count(&em->listeners); i++)
         free(vlc_array_item_at_index(&em->listeners, i));
@@ -97,12 +97,12 @@ void libvlc_event_manager_destroy(libvlc_event_manager_t *em)
 }
 
 /**************************************************************************
- *       libvlc_event_send (internal) :
+ *       libapoi_event_send (internal) :
  *
  * Send a callback.
  **************************************************************************/
-void libvlc_event_send( libvlc_event_manager_t * p_em,
-                        libvlc_event_t * p_event )
+void libapoi_event_send( libapoi_event_manager_t * p_em,
+                        libapoi_event_t * p_event )
 {
     /* Fill event with the sending object now */
     p_event->p_obj = p_em->p_obj;
@@ -110,7 +110,7 @@ void libvlc_event_send( libvlc_event_manager_t * p_em,
     vlc_mutex_lock(&p_em->lock);
     for (size_t i = 0; i < vlc_array_count(&p_em->listeners); i++)
     {
-        libvlc_event_listener_t *listener;
+        libapoi_event_listener_t *listener;
 
         listener = vlc_array_item_at_index(&p_em->listeners, i);
         if (listener->event_type == p_event->type)
@@ -120,18 +120,18 @@ void libvlc_event_send( libvlc_event_manager_t * p_em,
 }
 
 /*
- * Public libvlc functions
+ * Public libapoi functions
  */
 
 /**************************************************************************
- *       libvlc_event_attach (public) :
+ *       libapoi_event_attach (public) :
  *
  * Add a callback for an event.
  **************************************************************************/
-int libvlc_event_attach(libvlc_event_manager_t *em, libvlc_event_type_t type,
-                        libvlc_callback_t callback, void *opaque)
+int libapoi_event_attach(libapoi_event_manager_t *em, libapoi_event_type_t type,
+                        libapoi_callback_t callback, void *opaque)
 {
-    libvlc_event_listener_t *listener = malloc(sizeof (*listener));
+    libapoi_event_listener_t *listener = malloc(sizeof (*listener));
     if (unlikely(listener == NULL))
         return ENOMEM;
 
@@ -153,17 +153,17 @@ int libvlc_event_attach(libvlc_event_manager_t *em, libvlc_event_type_t type,
 }
 
 /**************************************************************************
- *       libvlc_event_detach (public) :
+ *       libapoi_event_detach (public) :
  *
  * Remove a callback for an event.
  **************************************************************************/
-void libvlc_event_detach(libvlc_event_manager_t *em, libvlc_event_type_t type,
-                         libvlc_callback_t callback, void *opaque)
+void libapoi_event_detach(libapoi_event_manager_t *em, libapoi_event_type_t type,
+                         libapoi_callback_t callback, void *opaque)
 {
     vlc_mutex_lock(&em->lock);
     for (size_t i = 0; i < vlc_array_count(&em->listeners); i++)
     {
-         libvlc_event_listener_t *listener;
+         libapoi_event_listener_t *listener;
 
          listener = vlc_array_item_at_index(&em->listeners, i);
 

@@ -182,19 +182,19 @@ vlc-plugin.pc: vlc-plugin.pc.in $(top_builddir)/config.status
 ##############################################################################
 
 if HAVE_WIN32
-noinst_DATA = libvlccore_win32_rc.rc
+noinst_DATA = libapoicore_win32_rc.rc
 endif
-EXTRA_DIST += libvlccore_win32_rc.rc.in
+EXTRA_DIST += libapoicore_win32_rc.rc.in
 
-libvlccore_win32_rc.rc: libvlccore_win32_rc.rc.in $(top_builddir)/config.status
+libapoicore_win32_rc.rc: libapoicore_win32_rc.rc.in $(top_builddir)/config.status
 	$(AM_V_GEN)cd "$(top_builddir)" && \
 	$(SHELL) ./config.status --file="src/$@"
 
 ###############################################################################
-# Building libvlc
+# Building libapoi
 ###############################################################################
 
-lib_LTLIBRARIES = libvlccore.la
+lib_LTLIBRARIES = libapoicore.la
 
 AM_CPPFLAGS = $(INCICONV) $(IDN_CFLAGS) \
 	-DMODULE_STRING=\"core\" \
@@ -205,7 +205,7 @@ AM_CPPFLAGS = $(INCICONV) $(IDN_CFLAGS) \
 	-DPKGDATADIR=\"$(pkgdatadir)\" \
 	-DPKGLIBDIR=\"$(pkglibdir)\" \
 	-DPKGLIBEXECDIR=\"$(pkglibexecdir)\"
-AM_CFLAGS = $(CFLAGS_libvlccore)
+AM_CFLAGS = $(CFLAGS_libapoicore)
 if HAVE_DYNAMIC_PLUGINS
 AM_CPPFLAGS += -DHAVE_DYNAMIC_PLUGINS
 if HAVE_WIN32
@@ -217,10 +217,10 @@ AM_CPPFLAGS += -DHAVE_DBUS
 AM_CFLAGS += $(DBUS_CFLAGS)
 endif
 
-libvlccore_la_SOURCES = \
-	libvlc.c \
-	libvlc.h \
-	libvlc-module.c \
+libapoicore_la_SOURCES = \
+	libapoi.c \
+	libapoi.h \
+	libapoi-module.c \
 	missing.c \
 	revision.c \
 	version.c \
@@ -439,15 +439,15 @@ libvlccore_la_SOURCES = \
 	misc/subpicture.h \
 	misc/medialibrary.c \
 	misc/viewpoint.c
-libvlccore_la_LIBADD = $(LIBS_libvlccore) \
+libapoicore_la_LIBADD = $(LIBS_libapoicore) \
 	../compat/libcompat.la \
 	$(LTLIBINTL) $(LTLIBICONV) \
 	$(IDN_LIBS) $(SOCKET_LIBS) $(LIBRT) $(LIBDL) $(LIBM)
 
-libvlccore_la_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_libvlccore)
+libapoicore_la_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_libapoicore)
 
 if HAVE_WIN32
-libvlccore_la_SOURCES += \
+libapoicore_la_SOURCES += \
 	win32/error.c \
 	win32/filesystem.c \
 	win32/netconf.c \
@@ -457,16 +457,16 @@ libvlccore_la_SOURCES += \
 	win32/thread.c \
 	win32/process.c
 if HAVE_WINSTORE
-libvlccore_la_SOURCES += posix/timer.c win32/dirs-uap.c
+libapoicore_la_SOURCES += posix/timer.c win32/dirs-uap.c
 else
-libvlccore_la_SOURCES += win32/timer.c win32/dirs.c win32/spawn.c
-libvlccore_la_LIBADD += -lwinmm -lole32 -luuid
+libapoicore_la_SOURCES += win32/timer.c win32/dirs.c win32/spawn.c
+libapoicore_la_LIBADD += -lwinmm -lole32 -luuid
 endif
-libvlccore_la_LIBADD += -lbcrypt
+libapoicore_la_LIBADD += -lbcrypt
 endif
 
 if HAVE_OS2
-libvlccore_la_SOURCES += \
+libapoicore_la_SOURCES += \
 	os2/dirs.c \
 	darwin/error.c \
 	os2/filesystem.c \
@@ -479,49 +479,49 @@ libvlccore_la_SOURCES += \
 endif
 
 if HAVE_EMSCRIPTEN
-libvlccore_la_SOURCES += \
+libapoicore_la_SOURCES += \
 	emscripten/netconf.c \
 	emscripten/thread.c
 endif
 
 if HAVE_DARWIN
-libvlccore_la_SOURCES += \
+libapoicore_la_SOURCES += \
 	darwin/error.c \
 	darwin/specific.c \
 	darwin/thread.c
-libvlccore_objc_la_SOURCES = \
+libapoicore_objc_la_SOURCES = \
 	darwin/dirs.m \
 	darwin/netconf.m
-noinst_LTLIBRARIES = libvlccore_objc.la
+noinst_LTLIBRARIES = libapoicore_objc.la
 endif
 
 if HAVE_FREEBSD
-libvlccore_la_SOURCES += \
+libapoicore_la_SOURCES += \
 	freebsd/cpu.c \
 	freebsd/thread.c
 endif
 
 if HAVE_NETBSD
-libvlccore_la_SOURCES += \
+libapoicore_la_SOURCES += \
         netbsd/thread.c
 endif
 
 if HAVE_OPENBSD
-libvlccore_la_SOURCES += \
+libapoicore_la_SOURCES += \
         openbsd/cpu.c \
         openbsd/thread.c
 endif
 
 if HAVE_LINUX
-libvlccore_la_SOURCES += \
+libapoicore_la_SOURCES += \
 	linux/cpu.c \
 	linux/dirs.c \
 	linux/thread.c
 if !HAVE_ANDROID
-libvlccore_la_SOURCES += \
+libapoicore_la_SOURCES += \
 	linux/filesystem.c
 else
-libvlccore_la_SOURCES += \
+libapoicore_la_SOURCES += \
 	android/error.c \
 	android/specific.c \
 	android/thread.c
@@ -530,31 +530,31 @@ endif
 
 if !HAVE_WIN32
 if !HAVE_OS2
-libvlccore_la_SOURCES += \
+libapoicore_la_SOURCES += \
 	posix/filesystem.c \
 	posix/plugin.c \
 	posix/rand.c \
 	posix/timer.c
 if !HAVE_LINUX
-libvlccore_la_SOURCES += posix/wait.c
+libapoicore_la_SOURCES += posix/wait.c
 endif
 if !HAVE_ANDROID
 if HAVE_QSORT_R
-libvlccore_la_SOURCES += posix/sort.c
+libapoicore_la_SOURCES += posix/sort.c
 endif
-libvlccore_la_SOURCES += \
+libapoicore_la_SOURCES += \
 	posix/thread.c
-libvlccore_la_LIBADD += $(LIBEXECINFO)
+libapoicore_la_LIBADD += $(LIBEXECINFO)
 if HAVE_OSX
-libvlccore_la_SOURCES += \
+libapoicore_la_SOURCES += \
 	posix/spawn.c \
 	posix/process.c
 endif
 if !HAVE_DARWIN
 if !HAVE_EMSCRIPTEN
-libvlccore_la_SOURCES += posix/netconf.c
+libapoicore_la_SOURCES += posix/netconf.c
 endif
-libvlccore_la_SOURCES += \
+libapoicore_la_SOURCES += \
 	posix/dirs.c \
 	posix/error.c \
 	posix/picture.c \
@@ -562,11 +562,11 @@ libvlccore_la_SOURCES += \
 	posix/specific.c \
 	posix/process.c
 if HAVE_LIBANL
-libvlccore_la_SOURCES += \
+libapoicore_la_SOURCES += \
 	linux/getaddrinfo.c
-libvlccore_la_LIBADD += -lanl
+libapoicore_la_LIBADD += -lanl
 else
-libvlccore_la_SOURCES += \
+libapoicore_la_SOURCES += \
 	posix/getaddrinfo.c
 endif
 endif
@@ -574,57 +574,57 @@ endif
 endif
 endif
 
-libvlccore_la_SOURCES += \
+libapoicore_la_SOURCES += \
 	stream_output/sap.c \
 	stream_output/stream_output.c stream_output/stream_output.h
 if ENABLE_VLM
-libvlccore_la_SOURCES += input/vlm.c input/vlm_event.c input/vlmshell.c
+libapoicore_la_SOURCES += input/vlm.c input/vlm_event.c input/vlmshell.c
 endif
 
 if UPDATE_CHECK
-libvlccore_la_SOURCES += \
+libapoicore_la_SOURCES += \
 	misc/update.h misc/update.c \
 	misc/update_crypto.c
 AM_CPPFLAGS += -DUPDATE_CHECK
 AM_CFLAGS += $(GCRYPT_CFLAGS)
-libvlccore_la_LIBADD += $(GCRYPT_LIBS)
+libapoicore_la_LIBADD += $(GCRYPT_LIBS)
 endif
 
-libvlccore_la_LDFLAGS = \
-	$(LDFLAGS_libvlccore) \
+libapoicore_la_LDFLAGS = \
+	$(LDFLAGS_libapoicore) \
 	-no-undefined \
-	-export-symbols $(srcdir)/libvlccore.sym \
+	-export-symbols $(srcdir)/libapoicore.sym \
 	-version-info 9:0:0
-libvlccore_la_SOURCES += libvlccore.sym
-EXTRA_libvlccore_la_DEPENDENCIES = libvlccore.sym
+libapoicore_la_SOURCES += libapoicore.sym
+EXTRA_libapoicore_la_DEPENDENCIES = libapoicore.sym
 
 if HAVE_WIN32
-EXTRA_libvlccore_la_DEPENDENCIES += libvlccore_win32_rc.$(OBJEXT)
-libvlccore_la_LDFLAGS += -Wl,libvlccore_win32_rc.$(OBJEXT) -avoid-version -Wc,-static
+EXTRA_libapoicore_la_DEPENDENCIES += libapoicore_win32_rc.$(OBJEXT)
+libapoicore_la_LDFLAGS += -Wl,libapoicore_win32_rc.$(OBJEXT) -avoid-version -Wc,-static
 endif
 if HAVE_OS2
-libvlccore_la_LDFLAGS += -avoid-version
+libapoicore_la_LDFLAGS += -avoid-version
 endif
 if HAVE_DBUS
-libvlccore_la_LIBADD += $(DBUS_LIBS)
+libapoicore_la_LIBADD += $(DBUS_LIBS)
 endif
 if HAVE_DARWIN
-libvlccore_objc_la_OBJCFLAGS = $(AM_OBJCFLAGS) -fobjc-arc
-libvlccore_objc_la_LDFLAGS = -static
-libvlccore_la_LIBADD += libvlccore_objc.la
-libvlccore_la_LDFLAGS +=  -Wl,-framework,Foundation -Xlinker -install_name -Xlinker @rpath/libvlccore.dylib
+libapoicore_objc_la_OBJCFLAGS = $(AM_OBJCFLAGS) -fobjc-arc
+libapoicore_objc_la_LDFLAGS = -static
+libapoicore_la_LIBADD += libapoicore_objc.la
+libapoicore_la_LDFLAGS +=  -Wl,-framework,Foundation -Xlinker -install_name -Xlinker @rpath/libapoicore.dylib
 endif
 
 # iOS and tvOS applications cannot install global shared libraries and
 # dylibs must be in frameworks so there's no need for libtool versioning.
 if HAVE_IOS
-libvlccore_la_LDFLAGS += -avoid-version
+libapoicore_la_LDFLAGS += -avoid-version
 endif
 if HAVE_TVOS
-libvlccore_la_LDFLAGS += -avoid-version
+libapoicore_la_LDFLAGS += -avoid-version
 endif
 
-libvlccore_win32_rc.$(OBJEXT): libvlccore_win32_rc.rc $(top_srcdir)/extras/package/win32/libvlccore.dll.manifest
+libapoicore_win32_rc.$(OBJEXT): libapoicore_win32_rc.rc $(top_srcdir)/extras/package/win32/libapoicore.dll.manifest
 	$(WINDRES) --include-dir $(top_srcdir)/share --include-dir $(top_srcdir)/extras/package/win32 -i $< -o $@
 
 # FourCC tables
@@ -675,12 +675,12 @@ check_PROGRAMS = \
 TESTS = $(check_PROGRAMS) check_symbols
 
 test_block_SOURCES = test/block_test.c
-test_block_LDADD = $(LDADD) $(LIBS_libvlccore)
+test_block_LDADD = $(LDADD) $(LIBS_libapoicore)
 test_dictionary_SOURCES = test/dictionary.c
 test_executor_SOURCES = test/executor.c
 test_i18n_atof_SOURCES = test/i18n_atof.c
 test_interrupt_SOURCES = test/interrupt.c
-test_interrupt_LDADD = $(LDADD) $(LIBS_libvlccore)
+test_interrupt_LDADD = $(LDADD) $(LIBS_libapoicore)
 test_jaro_winkler_SOURCES = test/jaro_winkler.c config/jaro_winkler.c
 test_list_SOURCES = test/list.c
 test_md5_SOURCES = test/md5.c
@@ -713,7 +713,7 @@ test_playlist_SOURCES = playlist/test.c \
 test_playlist_CFLAGS = -DTEST_PLAYLIST
 test_randomizer_SOURCES = playlist/randomizer.c
 test_randomizer_CFLAGS = -DTEST_RANDOMIZER
-test_media_source_LDADD = $(LDADD) $(LIBS_libvlccore)
+test_media_source_LDADD = $(LDADD) $(LIBS_libapoicore)
 test_media_source_CFLAGS = -DTEST_MEDIA_SOURCE
 test_media_source_SOURCES = media_source/test.c \
 	media_source/media_source.c \
@@ -737,7 +737,7 @@ test_input_clock_SOURCES = clock/test/input_clock.c \
 	clock/clock.c clock/clock.h
 check_PROGRAMS += test_input_clock
 
-LDADD = libvlccore.la \
+LDADD = libapoicore.la \
 	../compat/libcompat.la
 
 ###############################################################################

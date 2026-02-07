@@ -22,7 +22,7 @@
 # include "config.h"
 #endif
 
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -87,7 +87,7 @@ int main (int argc, char *argv[])
         vlc_argv[vlc_argc++] = "--"; /* end of options */
         vlc_argv[vlc_argc] = NULL;
 
-        libvlc_instance_t *vlc = libvlc_new (vlc_argc, vlc_argv);
+        libapoi_instance_t *vlc = libvlc_new (vlc_argc, vlc_argv);
         if (vlc == NULL)
             return 1;
         libvlc_release(vlc);

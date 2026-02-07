@@ -1,6 +1,6 @@
 AUTOMAKE_OPTIONS = subdir-objects
 pkgconfigdir = $(libdir)/pkgconfig
-AM_CFLAGS = $(CFLAGS_libvlc)
+AM_CFLAGS = $(CFLAGS_libapoi)
 
 SUFFIXES = .pc.in .pc .rc.in .rc
 
@@ -8,25 +8,25 @@ BUILT_SOURCES = $(nodist_pkginclude_HEADERS)
 CLEANFILES = $(BUILT_SOURCES) $(pkgconfig_DATA)
 
 pkginclude_HEADERS = \
-	../include/vlc/libvlc.h \
-	../include/vlc/libvlc_dialog.h \
-	../include/vlc/libvlc_events.h \
-	../include/vlc/libvlc_media.h \
-	../include/vlc/libvlc_media_discoverer.h \
-	../include/vlc/libvlc_media_list.h \
-	../include/vlc/libvlc_media_list_player.h \
-	../include/vlc/libvlc_media_player.h \
-	../include/vlc/libvlc_media_track.h \
-	../include/vlc/libvlc_renderer_discoverer.h \
-	../include/vlc/libvlc_picture.h \
-	../include/vlc/libvlc_version.h \
-	../include/vlc/libvlc_video.h \
+	../include/apoi/libapoi.h \
+	../include/vlc/libapoi_dialog.h \
+	../include/vlc/libapoi_events.h \
+	../include/vlc/libapoi_media.h \
+	../include/vlc/libapoi_media_discoverer.h \
+	../include/vlc/libapoi_media_list.h \
+	../include/vlc/libapoi_media_list_player.h \
+	../include/vlc/libapoi_media_player.h \
+	../include/vlc/libapoi_media_track.h \
+	../include/vlc/libapoi_renderer_discoverer.h \
+	../include/vlc/libapoi_picture.h \
+	../include/vlc/libapoi_version.h \
+	../include/vlc/libapoi_video.h \
 	../include/vlc/vlc.h
 
-lib_LTLIBRARIES = libvlc.la
+lib_LTLIBRARIES = libapoi.la
 
-libvlc_la_SOURCES = \
-	libvlc_internal.h \
+libapoi_la_SOURCES = \
+	libapoi_internal.h \
 	media_internal.h \
 	media_list_internal.h \
 	media_player_internal.h \
@@ -48,58 +48,58 @@ libvlc_la_SOURCES = \
 	media_list_player.c \
 	media_discoverer.c \
 	picture.c \
-	libvlc.pc.in \
-	libvlc.sym \
+	libapoi.pc.in \
+	libapoi.sym \
 	../src/revision.c
 EXTRA_DIST =
 
 if HAVE_WIN32
-noinst_DATA = libvlc_win32_rc.rc
+noinst_DATA = libapoi_win32_rc.rc
 endif
-EXTRA_DIST += libvlc_win32_rc.rc.in
+EXTRA_DIST += libapoi_win32_rc.rc.in
 
-libvlc_win32_rc.rc: libvlc_win32_rc.rc.in $(top_builddir)/config.status
+libapoi_win32_rc.rc: libapoi_win32_rc.rc.in $(top_builddir)/config.status
 	$(AM_V_GEN)cd "$(top_builddir)" && \
 	$(SHELL) ./config.status --file="lib/$@"
 
-libvlc_la_LIBADD = ../src/libvlccore.la ../compat/libcompat.la $(LIBM)
-libvlc_la_LDFLAGS = \
-	$(LDFLAGS_libvlc) \
+libapoi_la_LIBADD = ../src/libapoicore.la ../compat/libcompat.la $(LIBM)
+libapoi_la_LDFLAGS = \
+	$(LDFLAGS_libapoi) \
 	-no-undefined \
-	-version-number @LIBVLC_ABI_MAJOR@:@LIBVLC_ABI_MINOR@:@LIBVLC_ABI_MICRO@ \
-	-export-symbols $(srcdir)/libvlc.sym
-EXTRA_libvlc_la_DEPENDENCIES = libvlc.sym
-libvlc_la_CPPFLAGS = $(AM_CPPFLAGS)
+	-version-number @LIBAPOI_ABI_MAJOR@:@LIBAPOI_ABI_MINOR@:@LIBAPOI_ABI_MICRO@ \
+	-export-symbols $(srcdir)/libapoi.sym
+EXTRA_libapoi_la_DEPENDENCIES = libapoi.sym
+libapoi_la_CPPFLAGS = $(AM_CPPFLAGS)
 if HAVE_WIN32
-EXTRA_libvlc_la_DEPENDENCIES += libvlc_win32_rc.$(OBJEXT)
-libvlc_la_LDFLAGS += -Wl,libvlc_win32_rc.$(OBJEXT) -avoid-version -Wc,-static
+EXTRA_libapoi_la_DEPENDENCIES += libapoi_win32_rc.$(OBJEXT)
+libapoi_la_LDFLAGS += -Wl,libapoi_win32_rc.$(OBJEXT) -avoid-version -Wc,-static
 if HAVE_DYNAMIC_PLUGINS
-libvlc_la_CPPFLAGS += -DLIBVLC_DLL_EXPORT
+libapoi_la_CPPFLAGS += -DLIBAPOI_DLL_EXPORT
 endif
 endif
 if HAVE_OS2
-libvlc_la_LDFLAGS += -avoid-version
+libapoi_la_LDFLAGS += -avoid-version
 endif
 if HAVE_DARWIN
-libvlc_la_LDFLAGS += -Xlinker -install_name -Xlinker @rpath/libvlc.dylib
+libapoi_la_LDFLAGS += -Xlinker -install_name -Xlinker @rpath/libapoi.dylib
 endif
 
 # iOS and tvOS applications cannot install global shared libraries and
 # dylibs must be in frameworks so there's no need for libtool versioning.
 if HAVE_IOS
-libvlc_la_LDFLAGS += -avoid-version
+libapoi_la_LDFLAGS += -avoid-version
 endif
 if HAVE_TVOS
-libvlc_la_LDFLAGS += -avoid-version
+libapoi_la_LDFLAGS += -avoid-version
 endif
 
-pkgconfig_DATA = libvlc.pc
+pkgconfig_DATA = libapoi.pc
 
-libvlc.pc: libvlc.pc.in $(top_builddir)/config.status
+libapoi.pc: libapoi.pc.in $(top_builddir)/config.status
 	$(AM_V_GEN)cd "$(top_builddir)" && \
 	$(SHELL) ./config.status --file="lib/$@"
 
-libvlc_win32_rc.$(OBJEXT): libvlc_win32_rc.rc $(top_srcdir)/extras/package/win32/libvlc.dll.manifest
+libapoi_win32_rc.$(OBJEXT): libapoi_win32_rc.rc $(top_srcdir)/extras/package/win32/libapoi.dll.manifest
 	$(WINDRES) --include-dir $(top_srcdir)/share --include-dir $(top_srcdir)/extras/package/win32 -i $< -o $@
 
 checkheader_verbose = $(checkheader_verbose_$(V))
@@ -113,8 +113,8 @@ MOSTLYCLEANFILES = \
 
 checkheader_%_h:
 	@echo "#include <stdbool.h>" > $@.c
-	@echo "#include <vlc/libvlc.h>" >> $@.c
-	@echo "#include <vlc/$*.h>" >> $@.c
+	@echo "#include <apoi/libapoi.h>" >> $@.c
+	@echo "#include <apoi/$*.h>" >> $@.c
 	$(checkheader_verbose)$(LTCOMPILE) -c $@.c -o $@.lo
 
 check-local:

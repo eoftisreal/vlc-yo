@@ -28,7 +28,7 @@
 #include <vlc_common.h>
 #include <vlc_network.h>
 #include <vlc_fs.h>
-#include "../libvlc.h"
+#include "../libapoi.h"
 #include "../config/configuration.h"
 
 #include <string.h>
@@ -170,7 +170,7 @@ system_Init(void)
 }
 
 void
-system_Configure(libvlc_int_t *p_libvlc, int i_argc, const char *const pp_argv[])
+system_Configure(libapoi_int_t *p_libvlc, int i_argc, const char *const pp_argv[])
 {
     (void)i_argc; (void)pp_argv;
     assert(s_jvm != NULL);

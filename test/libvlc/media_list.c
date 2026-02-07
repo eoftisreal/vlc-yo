@@ -24,7 +24,7 @@
 
 static void test_media_list (const char ** argv, int argc)
 {
-    libvlc_instance_t *vlc;
+    libapoi_instance_t *vlc;
     libvlc_media_t *md, *md1, *md2, *md3, *md4;
     libvlc_media_list_t *ml;
     int ret;

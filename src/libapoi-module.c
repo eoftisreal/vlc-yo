@@ -1,5 +1,5 @@
 /*****************************************************************************
- * libvlc-module.c: Options for the core (libvlc itself) module
+ * libapoi-module.c: Options for the core (libapoi itself) module
  *****************************************************************************
  * Copyright (C) 1998-2009 VLC authors and VideoLAN
  *
@@ -37,7 +37,7 @@
 #include <vlc_cpu.h>
 #include <vlc_vout_display.h>
 #include <vlc_subpicture.h>
-#include "libvlc.h"
+#include "libapoi.h"
 #include "modules/modules.h"
 
 //#define Nothing here, this is just to prevent update-po from being stupid
@@ -2108,7 +2108,7 @@ vlc_module_begin ()
 
     set_section( N_("Performance options"), NULL )
 
-#if defined (LIBVLC_USE_PTHREAD)
+#if defined (LIBAPOI_USE_PTHREAD)
     add_obsolete_bool( "rt-priority" ) /* since 4.0.0 */
     add_obsolete_integer( "rt-offset" ) /* since 4.0.0 */
 #endif

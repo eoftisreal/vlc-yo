@@ -1,5 +1,5 @@
 /*****************************************************************************
- * core.c: Core libvlc new API functions : initialization
+ * core.c: Core libapoi new API functions : initialization
  *****************************************************************************
  * Copyright (C) 2005 VLC authors and VideoLAN
  *
@@ -24,9 +24,9 @@
 # include "config.h"
 #endif
 
-#include "libvlc_internal.h"
+#include "libapoi_internal.h"
 #include <vlc_modules.h>
-#include <vlc/vlc.h>
+#include <apoi/apoi.h>
 
 #include <vlc_preparser.h>
 #include <vlc_interface.h>
@@ -35,48 +35,48 @@
 #include <limits.h>
 #include <assert.h>
 
-static_assert(LIBVLC_VERSION_MAJOR    == PACKAGE_VERSION_MAJOR, "Major VLC version mismatch");
-static_assert(LIBVLC_VERSION_MINOR    == PACKAGE_VERSION_MINOR, "Minor VLC version mismatch");
-static_assert(LIBVLC_VERSION_REVISION == PACKAGE_VERSION_REVISION, "VLC Revision version mismatch");
-static_assert(LIBVLC_VERSION_EXTRA    == PACKAGE_VERSION_EXTRA, "VLC Extra version mismatch");
-static_assert(LIBVLC_ABI_VERSION_MAJOR == LIBVLC_ABI_MAJOR, "Major LibVLC version mismatch");
-static_assert(LIBVLC_ABI_VERSION_MINOR == LIBVLC_ABI_MINOR, "Minor LibVLC version mismatch");
-static_assert(LIBVLC_ABI_VERSION_MICRO == LIBVLC_ABI_MICRO, "Micro LibVLC version mismatch");
+static_assert(LIBAPOI_VERSION_MAJOR    == PACKAGE_VERSION_MAJOR, "Major VLC version mismatch");
+static_assert(LIBAPOI_VERSION_MINOR    == PACKAGE_VERSION_MINOR, "Minor VLC version mismatch");
+static_assert(LIBAPOI_VERSION_REVISION == PACKAGE_VERSION_REVISION, "VLC Revision version mismatch");
+static_assert(LIBAPOI_VERSION_EXTRA    == PACKAGE_VERSION_EXTRA, "VLC Extra version mismatch");
+static_assert(LIBAPOI_ABI_VERSION_MAJOR == LIBAPOI_ABI_MAJOR, "Major LibAPOI version mismatch");
+static_assert(LIBAPOI_ABI_VERSION_MINOR == LIBAPOI_ABI_MINOR, "Minor LibAPOI version mismatch");
+static_assert(LIBAPOI_ABI_VERSION_MICRO == LIBAPOI_ABI_MICRO, "Micro LibAPOI version mismatch");
 
-int libvlc_abi_version(void)
+int libapoi_abi_version(void)
 {
-    return LIBVLC_ABI_VERSION_INT;
+    return LIBAPOI_ABI_VERSION_INT;
 }
 
-libvlc_instance_t * libvlc_new( int argc, const char *const *argv )
+libapoi_instance_t * libapoi_new( int argc, const char *const *argv )
 {
-    libvlc_threads_init ();
+    libapoi_threads_init ();
 
-    libvlc_instance_t *p_new = malloc (sizeof (*p_new));
+    libapoi_instance_t *p_new = malloc (sizeof (*p_new));
     if (unlikely(p_new == NULL))
         return NULL;
 
     const char *my_argv[argc + 2];
-    my_argv[0] = "libvlc"; /* dummy arg0, skipped by getopt() et al */
+    my_argv[0] = "libapoi"; /* dummy arg0, skipped by getopt() et al */
     for( int i = 0; i < argc; i++ )
          my_argv[i + 1] = argv[i];
     my_argv[argc + 1] = NULL; /* C calling conventions require a NULL */
 
-    libvlc_int_t *p_libvlc_int = libvlc_InternalCreate();
-    if (unlikely (p_libvlc_int == NULL))
+    libapoi_int_t *p_libapoi_int = libapoi_InternalCreate();
+    if (unlikely (p_libapoi_int == NULL))
         goto error;
 
-    const int ret = libvlc_InternalInit( p_libvlc_int, argc + 1, my_argv );
+    const int ret = libapoi_InternalInit( p_libapoi_int, argc + 1, my_argv );
     if (ret != VLC_SUCCESS)
     {
-        libvlc_InternalDestroy( p_libvlc_int );
+        libapoi_InternalDestroy( p_libapoi_int );
         const char *error = (ret == VLC_EGENERIC) ? _( "Generic VLC error" )
                                                   : vlc_strerror_c( -ret );
-        libvlc_printerr( "%s", error );
+        libapoi_printerr( "%s", error );
         goto error;
     }
 
-    p_new->p_libvlc_int = p_libvlc_int;
+    p_new->p_libapoi_int = p_libapoi_int;
     vlc_atomic_rc_init( &p_new->ref_count );
     p_new->p_callback_list = NULL;
 
@@ -88,11 +88,11 @@ libvlc_instance_t * libvlc_new( int argc, const char *const *argv )
 
 error:
     free (p_new);
-    libvlc_threads_deinit ();
+    libapoi_threads_deinit ();
     return NULL;
 }
 
-libvlc_instance_t *libvlc_retain( libvlc_instance_t *p_instance )
+libapoi_instance_t *libapoi_retain( libapoi_instance_t *p_instance )
 {
     assert( p_instance != NULL );
 
@@ -100,74 +100,74 @@ libvlc_instance_t *libvlc_retain( libvlc_instance_t *p_instance )
     return p_instance;
 }
 
-void libvlc_release( libvlc_instance_t *p_instance )
+void libapoi_release( libapoi_instance_t *p_instance )
 {
     if(vlc_atomic_rc_dec( &p_instance->ref_count ))
     {
-        libvlc_Quit( p_instance->p_libvlc_int );
+        libapoi_Quit( p_instance->p_libapoi_int );
 
         if (p_instance->parser != NULL)
             vlc_preparser_Delete(p_instance->parser);
         if (p_instance->thumbnailer != NULL)
             vlc_preparser_Delete(p_instance->thumbnailer);
 
-        libvlc_InternalCleanup( p_instance->p_libvlc_int );
-        libvlc_InternalDestroy( p_instance->p_libvlc_int );
+        libapoi_InternalCleanup( p_instance->p_libapoi_int );
+        libapoi_InternalDestroy( p_instance->p_libapoi_int );
         free( p_instance );
-        libvlc_threads_deinit ();
+        libapoi_threads_deinit ();
     }
 }
 
-void libvlc_set_user_agent (libvlc_instance_t *p_i,
+void libapoi_set_user_agent (libapoi_instance_t *p_i,
                             const char *name, const char *http)
 {
-    libvlc_int_t *p_libvlc = p_i->p_libvlc_int;
+    libapoi_int_t *p_libapoi = p_i->p_libapoi_int;
     char *str;
 
-    var_SetString (p_libvlc, "user-agent", name);
+    var_SetString (p_libapoi, "user-agent", name);
     if ((http != NULL)
-     && (asprintf (&str, "%s LibVLC/"PACKAGE_VERSION, http) != -1))
+     && (asprintf (&str, "%s LibAPOI/"PACKAGE_VERSION, http) != -1))
     {
-        var_SetString (p_libvlc, "http-user-agent", str);
+        var_SetString (p_libapoi, "http-user-agent", str);
         free (str);
     }
 }
 
-void libvlc_set_app_id(libvlc_instance_t *p_i, const char *id,
+void libapoi_set_app_id(libapoi_instance_t *p_i, const char *id,
                        const char *version, const char *icon)
 {
-    libvlc_int_t *p_libvlc = p_i->p_libvlc_int;
+    libapoi_int_t *p_libapoi = p_i->p_libapoi_int;
 
-    var_SetString(p_libvlc, "app-id", id ? id : "");
-    var_SetString(p_libvlc, "app-version", version ? version : "");
-    var_SetString(p_libvlc, "app-icon-name", icon ? icon : "");
+    var_SetString(p_libapoi, "app-id", id ? id : "");
+    var_SetString(p_libapoi, "app-version", version ? version : "");
+    var_SetString(p_libapoi, "app-icon-name", icon ? icon : "");
 }
 
-const char * libvlc_get_version(void)
+const char * libapoi_get_version(void)
 {
     return VERSION_MESSAGE;
 }
 
-const char * libvlc_get_compiler(void)
+const char * libapoi_get_compiler(void)
 {
     return VLC_Compiler();
 }
 
-const char * libvlc_get_changeset(void)
+const char * libapoi_get_changeset(void)
 {
     extern const char psz_vlc_changeset[];
     return psz_vlc_changeset;
 }
 
-void libvlc_free( void *ptr )
+void libapoi_free( void *ptr )
 {
     free( ptr );
 }
 
-static libvlc_module_description_t *module_description_list_get(
-                libvlc_instance_t *p_instance, const char *capability )
+static libapoi_module_description_t *module_description_list_get(
+                libapoi_instance_t *p_instance, const char *capability )
 {
-    libvlc_module_description_t *p_list = NULL,
+    libapoi_module_description_t *p_list = NULL,
                           *p_actual = NULL,
                           *p_previous = NULL;
     size_t count;
@@ -180,11 +180,11 @@ static libvlc_module_description_t *module_description_list_get(
         if ( !module_provides( p_module, capability ) )
             continue;
 
-        p_actual = ( libvlc_module_description_t * ) malloc( sizeof( libvlc_module_description_t ) );
+        p_actual = ( libapoi_module_description_t * ) malloc( sizeof( libapoi_module_description_t ) );
         if ( p_actual == NULL )
         {
-            libvlc_printerr( "Not enough memory" );
-            libvlc_module_description_list_release( p_list );
+            libapoi_printerr( "Not enough memory" );
+            libapoi_module_description_list_release( p_list );
             module_list_free( module_list );
             return NULL;
         }
@@ -214,9 +214,9 @@ static libvlc_module_description_t *module_description_list_get(
     return p_list;
 }
 
-void libvlc_module_description_list_release( libvlc_module_description_t *p_list )
+void libapoi_module_description_list_release( libapoi_module_description_t *p_list )
 {
-    libvlc_module_description_t *p_actual, *p_before;
+    libapoi_module_description_t *p_actual, *p_before;
     p_actual = p_list;
 
     while ( p_actual )
@@ -232,22 +232,22 @@ void libvlc_module_description_list_release( libvlc_module_description_t *p_list
     }
 }
 
-libvlc_module_description_t *libvlc_audio_filter_list_get( libvlc_instance_t *p_instance )
+libapoi_module_description_t *libapoi_audio_filter_list_get( libapoi_instance_t *p_instance )
 {
     return module_description_list_get( p_instance, "audio filter" );
 }
 
-libvlc_module_description_t *libvlc_video_filter_list_get( libvlc_instance_t *p_instance )
+libapoi_module_description_t *libapoi_video_filter_list_get( libapoi_instance_t *p_instance )
 {
     return module_description_list_get( p_instance, "video filter" );
 }
 
-int64_t libvlc_clock(void)
+int64_t libapoi_clock(void)
 {
     return US_FROM_VLC_TICK(vlc_tick_now());
 }
 
-vlc_preparser_t *libvlc_get_preparser(libvlc_instance_t *instance)
+vlc_preparser_t *libapoi_get_preparser(libapoi_instance_t *instance)
 {
     vlc_mutex_lock(&instance->lazy_init_lock);
     vlc_preparser_t *parser = instance->parser;
@@ -255,13 +255,13 @@ vlc_preparser_t *libvlc_get_preparser(libvlc_instance_t *instance)
     if (parser == NULL)
     {
         /* Temporary: the 2 following variables will be configured directly
-         * with future libvlc_parser API */
-        int max_threads = var_InheritInteger(instance->p_libvlc_int, "preparse-threads");
+         * with future libapoi_parser API */
+        int max_threads = var_InheritInteger(instance->p_libapoi_int, "preparse-threads");
         if (max_threads < 1)
             max_threads = 1;
 
         vlc_tick_t default_timeout =
-            VLC_TICK_FROM_MS(var_InheritInteger(instance->p_libvlc_int, "preparse-timeout"));
+            VLC_TICK_FROM_MS(var_InheritInteger(instance->p_libapoi_int, "preparse-timeout"));
         if (default_timeout < 0)
             default_timeout = 0;
 
@@ -273,14 +273,14 @@ vlc_preparser_t *libvlc_get_preparser(libvlc_instance_t *instance)
         };
 
         parser = instance->parser =
-            vlc_preparser_New(VLC_OBJECT(instance->p_libvlc_int), &cfg);
+            vlc_preparser_New(VLC_OBJECT(instance->p_libapoi_int), &cfg);
     }
     vlc_mutex_unlock(&instance->lazy_init_lock);
 
     return parser;
 }
 
-vlc_preparser_t *libvlc_get_thumbnailer(libvlc_instance_t *instance)
+vlc_preparser_t *libapoi_get_thumbnailer(libapoi_instance_t *instance)
 {
     vlc_mutex_lock(&instance->lazy_init_lock);
     vlc_preparser_t *thumb = instance->thumbnailer;
@@ -294,11 +294,11 @@ vlc_preparser_t *libvlc_get_thumbnailer(libvlc_instance_t *instance)
         };
 
         thumb = instance->thumbnailer =
-            vlc_preparser_New(VLC_OBJECT(instance->p_libvlc_int), &cfg);
+            vlc_preparser_New(VLC_OBJECT(instance->p_libapoi_int), &cfg);
     }
     vlc_mutex_unlock(&instance->lazy_init_lock);
 
     return thumb;
 }
 
-const char vlc_module_name[] = "libvlc";
+const char vlc_module_name[] = "libapoi";

@@ -28,7 +28,7 @@
 #include <vlc_modules.h>
 #include <vlc_url.h>
 #include <vlc_interrupt.h>
-#include "../libvlc.h"
+#include "../libapoi.h"
 
 #include <assert.h>
 #include <limits.h>
@@ -132,7 +132,7 @@ vlc_keystore_release_entries(vlc_keystore_entry *p_entries, unsigned int i_count
 }
 
 int
-libvlc_InternalKeystoreInit(libvlc_int_t *p_libvlc)
+libvlc_InternalKeystoreInit(libapoi_int_t *p_libvlc)
 {
     assert(p_libvlc != NULL);
     libvlc_priv_t *p_priv = libvlc_priv(p_libvlc);
@@ -142,7 +142,7 @@ libvlc_InternalKeystoreInit(libvlc_int_t *p_libvlc)
 }
 
 void
-libvlc_InternalKeystoreClean(libvlc_int_t *p_libvlc)
+libvlc_InternalKeystoreClean(libapoi_int_t *p_libvlc)
 {
     assert(p_libvlc != NULL);
     libvlc_priv_t *p_priv = libvlc_priv(p_libvlc);
