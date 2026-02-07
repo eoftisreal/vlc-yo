@@ -28,7 +28,7 @@ libvlc_media_parse_finished_event(const libvlc_event_t *p_ev, void *p_data)
 }
 
 static inline void
-libvlc_media_parse_sync(libvlc_instance_t *vlc, libvlc_media_t *p_m,
+libvlc_media_parse_sync(libapoi_instance_t *vlc, libvlc_media_t *p_m,
                         libvlc_media_parse_flag_t parse_flag, int timeout)
 {
     vlc_sem_t sem;

@@ -257,7 +257,7 @@ error:
  * \param fast whether to optimize loading for speed or safety
  *             (fast is used when the plug-in is registered but not used)
  */
-static vlc_plugin_t *module_InitDynamic(libvlc_int_t *obj, const char *path,
+static vlc_plugin_t *module_InitDynamic(libapoi_int_t *obj, const char *path,
                                         bool fast)
 {
     void *handle = module_Open(vlc_object_logger(obj), path, fast);
@@ -298,7 +298,7 @@ typedef enum
 
 typedef struct module_bank
 {
-    libvlc_int_t *obj;
+    libapoi_int_t *obj;
     const char   *base;
     cache_mode_t  mode;
 
@@ -512,7 +512,7 @@ static void AllocatePluginDir (module_bank_t *bank, unsigned maxdepth,
  * Scans for plug-ins within a file system hierarchy.
  * \param path base directory to browse
  */
-static void AllocatePluginPath(libvlc_int_t *obj, const char *path,
+static void AllocatePluginPath(libapoi_int_t *obj, const char *path,
                                cache_mode_t mode)
 {
     module_bank_t bank =
@@ -567,7 +567,7 @@ static void AllocatePluginPath(libvlc_int_t *obj, const char *path,
  * For performance reasons, a cache is normally used so that plug-in shared
  * objects do not need to loaded and linked into the process.
  */
-static void AllocateAllPlugins (libvlc_int_t *p_this)
+static void AllocateAllPlugins (libapoi_int_t *p_this)
 {
     char *paths;
     cache_mode_t mode = 0;
@@ -800,7 +800,7 @@ void module_EndBank (bool b_plugins)
  *
  * \param obj vlc object structure
  */
-void module_LoadPlugins(libvlc_int_t *obj)
+void module_LoadPlugins(libapoi_int_t *obj)
 {
     /*vlc_mutex_assert (&modules.lock); not for static mutexes :( */
 

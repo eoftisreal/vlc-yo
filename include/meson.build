@@ -1,7 +1,7 @@
 # Install LibVLC headers
 install_headers(
     'vlc/vlc.h',
-    'vlc/libvlc.h',
+    'apoi/libapoi.h',
     'vlc/libvlc_dialog.h',
     'vlc/libvlc_events.h',
     'vlc/libvlc_media.h',

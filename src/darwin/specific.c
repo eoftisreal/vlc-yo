@@ -72,7 +72,7 @@ void system_Init(void)
 /*****************************************************************************
  * system_Configure: check for system specific configuration options.
  *****************************************************************************/
-void system_Configure( libvlc_int_t *p_this,
+void system_Configure( libapoi_int_t *p_this,
                        int i_argc, const char *const ppsz_argv[] )
 {
     (void)p_this;

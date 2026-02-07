@@ -37,7 +37,7 @@ int LLVMFuzzerInitialize(int *argc, char ***argv);
 int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size);
 
 static struct vlc_run_args args;
-static libvlc_instance_t *vlc;
+static libapoi_instance_t *vlc;
 
 int LLVMFuzzerInitialize(int *argc, char ***argv)
 {

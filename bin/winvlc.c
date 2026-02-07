@@ -201,7 +201,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
     free(lang);
 
     /* Initialize libvlc */
-    libvlc_instance_t *vlc;
+    libapoi_instance_t *vlc;
     vlc = libvlc_new (argc, (const char **)argv);
     if (vlc != NULL)
     {

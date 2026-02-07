@@ -149,7 +149,7 @@ static void test_media_player_detach_video_callbacks(const char** argv, int argc
     };
     const int test_nargs = (int)(sizeof(test_args) / sizeof(test_args[0]));
 
-    libvlc_instance_t *instance = libvlc_new(test_nargs, test_args);
+    libapoi_instance_t *instance = libvlc_new(test_nargs, test_args);
     assert(instance != NULL);
 
     libvlc_media_player_t *player = libvlc_media_player_new(instance);
@@ -193,7 +193,7 @@ static void test_media_player_detach_output_callbacks(const char** argv, int arg
     };
     const int test_nargs = (int)(sizeof(test_args) / sizeof(test_args[0]));
 
-    libvlc_instance_t *instance = libvlc_new(test_nargs, test_args);
+    libapoi_instance_t *instance = libvlc_new(test_nargs, test_args);
     assert(instance != NULL);
 
     libvlc_media_player_t *player = libvlc_media_player_new(instance);

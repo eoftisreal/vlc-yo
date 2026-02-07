@@ -8,7 +8,7 @@ BUILT_SOURCES = $(nodist_pkginclude_HEADERS)
 CLEANFILES = $(BUILT_SOURCES) $(pkgconfig_DATA)
 
 pkginclude_HEADERS = \
-	../include/vlc/libapoi.h \
+	../include/apoi/libapoi.h \
 	../include/vlc/libapoi_dialog.h \
 	../include/vlc/libapoi_events.h \
 	../include/vlc/libapoi_media.h \

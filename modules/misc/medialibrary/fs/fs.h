@@ -33,7 +33,7 @@
 
 #include "../LazyPreparser.h"
 
-struct libvlc_int_t;
+struct libapoi_int_t;
 
 namespace medialibrary {
 class IDeviceListerCb;
@@ -84,7 +84,7 @@ public:
     void
     stop() override;
 
-    libvlc_int_t *
+    libapoi_int_t *
     libvlc() const;
 
     void

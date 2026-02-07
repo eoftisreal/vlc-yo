@@ -185,4 +185,4 @@ libapoi_media_discoverer_list_release( libapoi_media_discoverer_description_t **
 }
 # endif
 
-#endif /* <vlc/libapoi.h> */
+#endif /* <apoi/libapoi.h> */

@@ -41,7 +41,7 @@ static const char *libvlc_argv[] = {
 static void
 test_list(void)
 {
-    libvlc_instance_t *vlc = libvlc_new(ARRAY_SIZE(libvlc_argv), libvlc_argv);
+    libapoi_instance_t *vlc = libvlc_new(ARRAY_SIZE(libvlc_argv), libvlc_argv);
     assert(vlc);
 
     vlc_media_source_provider_t *provider =
@@ -71,7 +71,7 @@ test_list(void)
 static void
 test_list_filtered_by_category(void)
 {
-    libvlc_instance_t *vlc = libvlc_new(ARRAY_SIZE(libvlc_argv), libvlc_argv);
+    libapoi_instance_t *vlc = libvlc_new(ARRAY_SIZE(libvlc_argv), libvlc_argv);
     assert(vlc);
 
     vlc_media_source_provider_t *provider =

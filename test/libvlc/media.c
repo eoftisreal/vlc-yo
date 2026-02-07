@@ -104,7 +104,7 @@ static void print_media(libvlc_media_t *media)
 }
 
 static libvlc_media_t *
-test_media_preparsed_ext(libvlc_instance_t *vlc, const char *path,
+test_media_preparsed_ext(libapoi_instance_t *vlc, const char *path,
                          const char *location,
                          libvlc_media_parse_flag_t parse_flags,
                          libvlc_media_parsed_status_t i_expected_status)
@@ -141,7 +141,7 @@ test_media_preparsed_ext(libvlc_instance_t *vlc, const char *path,
     return media;
 }
 
-static void test_media_preparsed(libvlc_instance_t *vlc, const char *path,
+static void test_media_preparsed(libapoi_instance_t *vlc, const char *path,
                                  const char *location,
                                  libvlc_media_parse_flag_t parse_flags,
                                  libvlc_media_parsed_status_t i_expected_status)
@@ -152,7 +152,7 @@ static void test_media_preparsed(libvlc_instance_t *vlc, const char *path,
     libvlc_media_release (media);
 }
 
-static void test_media_tracks(libvlc_instance_t *vlc)
+static void test_media_tracks(libapoi_instance_t *vlc)
 {
     const char *url =
         "mock://video_track_count=4;audio_track_count=42;"
@@ -228,7 +228,7 @@ static void input_item_preparse_cancel( vlc_preparser_req *req,
     vlc_preparser_req_Release(req);
 }
 
-static void test_input_metadata_timeout(libvlc_instance_t *vlc, int timeout,
+static void test_input_metadata_timeout(libapoi_instance_t *vlc, int timeout,
                                         int wait_and_cancel)
 {
     test_log ("test_input_metadata_timeout: timeout: %d, wait_and_cancel: %d ms\n",
@@ -345,7 +345,7 @@ static void subitem_added(const libvlc_event_t *event, void *user_data)
 #undef FILE_SEPARATOR
 }
 
-static void test_media_subitems_media(libvlc_instance_t *vlc,
+static void test_media_subitems_media(libapoi_instance_t *vlc,
                                       libvlc_media_t *media, bool play,
                                       bool b_items_expected)
 {
@@ -392,7 +392,7 @@ static void test_media_subitems_media(libvlc_instance_t *vlc,
     }
 }
 
-static void test_media_subitems(libvlc_instance_t *vlc)
+static void test_media_subitems(libapoi_instance_t *vlc)
 {
     const char *subitems_path = SRCDIR"/samples/subitems";
 
@@ -445,7 +445,7 @@ int main(int i_argc, char *ppsz_argv[])
 {
     test_init();
 
-    libvlc_instance_t *vlc = libvlc_new (test_defaults_nargs,
+    libapoi_instance_t *vlc = libvlc_new (test_defaults_nargs,
                                          test_defaults_args);
     assert (vlc != NULL);
 

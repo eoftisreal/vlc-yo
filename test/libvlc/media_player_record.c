@@ -37,7 +37,7 @@ static void test_media_player_record(const char** argv, int argc)
     new_argv[argc++] = "--codec=araw,rawvideo,subsdec,none";
 
     /* Load the mock media */
-    libvlc_instance_t *vlc = libvlc_new (argc, new_argv);
+    libapoi_instance_t *vlc = libvlc_new (argc, new_argv);
     assert (vlc != NULL);
     libvlc_media_t *md = libvlc_media_new_location(file);
     assert (md != NULL);

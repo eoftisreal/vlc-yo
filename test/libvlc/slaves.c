@@ -74,7 +74,7 @@ test_expected_slaves(libvlc_media_t *p_m,
 }
 
 static void
-test_media_has_slaves_from_parent(libvlc_instance_t *p_vlc,
+test_media_has_slaves_from_parent(libapoi_instance_t *p_vlc,
                                   const char *psz_main_media,
                                   libvlc_media_slave_t *p_expected_slaves,
                                   unsigned i_expected_slaves)
@@ -152,7 +152,7 @@ main (void)
         NULL /* "sub-autodetect-file" place holder */
     };
 
-    libvlc_instance_t *p_vlc = libvlc_new(ARRAY_SIZE(pp_args) - 1, pp_args);
+    libapoi_instance_t *p_vlc = libvlc_new(ARRAY_SIZE(pp_args) - 1, pp_args);
     assert(p_vlc != NULL);
 
     /* Fill p_expected_slaves with correct VLC mrls */

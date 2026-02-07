@@ -49,7 +49,7 @@ struct vlc_playlist
 {
     vlc_player_t *player;
     vlc_preparser_t *parser;
-    libvlc_int_t *libvlc;
+    libapoi_int_t *libvlc;
     enum vlc_playlist_media_stopped_action stopped_action;
     enum vlc_playlist_preparsing recursive;
     /* all remaining fields are protected by the lock of the player */

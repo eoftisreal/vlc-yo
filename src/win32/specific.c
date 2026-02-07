@@ -69,7 +69,7 @@ typedef struct
     char data[];
 } vlc_ipc_data_t;
 
-void system_Configure( libvlc_int_t *p_this, int i_argc, const char *const ppsz_argv[] )
+void system_Configure( libapoi_int_t *p_this, int i_argc, const char *const ppsz_argv[] )
 {
 #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
     if( var_InheritBool( p_this, "one-instance" )

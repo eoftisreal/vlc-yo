@@ -524,7 +524,7 @@ int main(int argc, char **argv)
         "--text-renderer=tdummy",
     };
 
-    libvlc_instance_t *vlc = libvlc_new(ARRAY_SIZE(libvlc_args), libvlc_args);
+    libapoi_instance_t *vlc = libvlc_new(ARRAY_SIZE(libvlc_args), libvlc_args);
     if (vlc == NULL) {
         return 1;
     }

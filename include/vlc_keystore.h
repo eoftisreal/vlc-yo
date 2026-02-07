@@ -29,11 +29,11 @@ typedef struct vlc_credential vlc_credential;
 
 /* Called from src/libvlc.c */
 int
-libvlc_InternalKeystoreInit(libvlc_int_t *p_libvlc);
+libvlc_InternalKeystoreInit(libapoi_int_t *p_libvlc);
 
 /* Called from src/libvlc.c */
 void
-libvlc_InternalKeystoreClean(libvlc_int_t *p_libvlc);
+libvlc_InternalKeystoreClean(libapoi_int_t *p_libvlc);
 
 /**
  * @defgroup keystore Keystore and credential API

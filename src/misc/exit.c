@@ -37,7 +37,7 @@ void vlc_ExitInit( vlc_exit_t *exit )
 /**
  * Registers a callback for the LibVLC exit event.
  */
-void libvlc_SetExitHandler( libvlc_int_t *p_libvlc, void (*handler) (void *),
+void libvlc_SetExitHandler( libapoi_int_t *p_libvlc, void (*handler) (void *),
                             void *opaque )
 {
     vlc_exit_t *exit = &libvlc_priv( p_libvlc )->exit;
@@ -52,7 +52,7 @@ void libvlc_SetExitHandler( libvlc_int_t *p_libvlc, void (*handler) (void *),
  * Posts an exit signal to LibVLC instance.
  * This function should only be called on behalf of the user.
  */
-void libvlc_Quit( libvlc_int_t *p_libvlc )
+void libvlc_Quit( libapoi_int_t *p_libvlc )
 {
     vlc_exit_t *exit = &libvlc_priv( p_libvlc )->exit;
 

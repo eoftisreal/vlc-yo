@@ -26,7 +26,7 @@
 
 static void test_core (const char ** argv, int argc)
 {
-    libvlc_instance_t *vlc;
+    libapoi_instance_t *vlc;
 
     test_log ("Testing core\n");
 
@@ -55,7 +55,7 @@ static void test_moduledescriptionlist (libvlc_module_description_t *list)
 
 static void test_audiovideofilterlists (const char ** argv, int argc)
 {
-    libvlc_instance_t *vlc;
+    libapoi_instance_t *vlc;
 
     test_log ("Testing libvlc_(audio|video)_filter_list_get()\n");
 
@@ -70,7 +70,7 @@ static void test_audiovideofilterlists (const char ** argv, int argc)
 
 static void test_audio_output (void)
 {
-    libvlc_instance_t *vlc = libvlc_new (0, NULL);
+    libapoi_instance_t *vlc = libvlc_new (0, NULL);
     assert (vlc != NULL);
 
     libvlc_audio_output_t *mods = libvlc_audio_output_list_get (vlc);

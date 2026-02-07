@@ -232,7 +232,7 @@ MainCtx::MainCtx(qt_intf_t *_p_intf)
     /************
      * Callbacks
      ************/
-    libvlc_int_t* libvlc = vlc_object_instance(p_intf);
+    libapoi_int_t* libvlc = vlc_object_instance(p_intf);
     var_AddCallback( libvlc, "intf-toggle-fscontrol", IntfShowCB, p_intf );
     var_AddCallback( libvlc, "intf-boss", IntfBossCB, p_intf );
     var_AddCallback( libvlc, "intf-show", IntfRaiseMainCB, p_intf );
@@ -329,7 +329,7 @@ MainCtx::~MainCtx()
         getSettings()->remove( "filedialog-path" );
 
     /* Unregister callbacks */
-    libvlc_int_t* libvlc = vlc_object_instance(p_intf);
+    libapoi_int_t* libvlc = vlc_object_instance(p_intf);
     var_DelCallback( libvlc, "intf-boss", IntfBossCB, p_intf );
     var_DelCallback( libvlc, "intf-show", IntfRaiseMainCB, p_intf );
     var_DelCallback( libvlc, "intf-toggle-fscontrol", IntfShowCB, p_intf );

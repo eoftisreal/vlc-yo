@@ -10,7 +10,7 @@
 
 struct vlc_context
 {
-    libvlc_instance_t     *p_libvlc;
+    libapoi_instance_t     *p_libvlc;
     libvlc_media_player_t *p_mediaplayer;
 };
 

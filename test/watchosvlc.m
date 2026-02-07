@@ -62,7 +62,7 @@
 
 @interface AppDelegate : NSObject <WKApplicationDelegate> {
     @public
-    libvlc_instance_t *_libvlc;
+    libapoi_instance_t *_libvlc;
 }
 @end
 

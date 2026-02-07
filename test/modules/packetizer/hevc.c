@@ -118,7 +118,7 @@ int main(void)
 {
     test_init();
 
-    libvlc_instance_t *vlc = libvlc_new(0, NULL);
+    libapoi_instance_t *vlc = libvlc_new(0, NULL);
     if(!vlc)
         return 1;
 

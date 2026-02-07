@@ -143,7 +143,7 @@ MessagesDialog::MessagesDialog( qt_intf_t *_p_intf)
         MessagesDialog::MsgCallback,
         NULL
     };
-    libvlc_int_t *vlc = vlc_object_instance(p_intf);
+    libapoi_int_t *vlc = vlc_object_instance(p_intf);
 
     vlc_LogSet( vlc, &log_ops, this );
 

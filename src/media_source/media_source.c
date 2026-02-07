@@ -202,7 +202,7 @@ vlc_media_source_provider_Find(vlc_media_source_provider_t *provider,
 }
 
 vlc_media_source_provider_t *
-vlc_media_source_provider_Get(libvlc_int_t *libvlc)
+vlc_media_source_provider_Get(libapoi_int_t *libvlc)
 {
     return libvlc_priv(libvlc)->media_source_provider;
 }

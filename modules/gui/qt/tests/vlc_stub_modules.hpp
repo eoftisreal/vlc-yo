@@ -58,7 +58,7 @@ struct VLCTestingEnv
     bool init();
 
     //should be valid after init
-    libvlc_instance_t* libvlc = nullptr;
+    libapoi_instance_t* libvlc = nullptr;
 
     //pointer to the qt interface pointer
     //no qt related objects are defined in it (no MainCtx, no Compositor ...)

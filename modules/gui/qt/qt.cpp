@@ -664,7 +664,7 @@ static void CloseInternal( qt_intf_t *p_intf )
 static int OpenIntfCommon( vlc_object_t *p_this, bool dialogProvider )
 {
     auto intfThread = reinterpret_cast<intf_thread_t*>(p_this);
-    libvlc_int_t *libvlc = vlc_object_instance( p_this );
+    libapoi_int_t *libvlc = vlc_object_instance( p_this );
 
     /* Ensure initialization of objects in qt_intf_t. */
     auto p_intf = vlc_object_create<qt_intf_t>( libvlc );
@@ -1123,7 +1123,7 @@ static void *Thread( void *obj )
         }
 
         /* FIXME: Temporary, while waiting for a proper window provider API */
-        libvlc_int_t *libvlc = vlc_object_instance( p_intf );
+        libapoi_int_t *libvlc = vlc_object_instance( p_intf );
         if( known_type )
             var_SetString( libvlc, "window", "qt,any" );
     }

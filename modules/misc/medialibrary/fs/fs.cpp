@@ -134,7 +134,7 @@ SDFileSystemFactory::stop()
     m_callbacks = nullptr;
 }
 
-libvlc_int_t *
+libapoi_int_t *
 SDFileSystemFactory::libvlc() const
 {
     return vlc_object_instance(m_parent);

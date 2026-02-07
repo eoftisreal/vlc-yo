@@ -38,7 +38,7 @@ main(void)
 {
     test_init();
 
-    libvlc_instance_t *dummy = libvlc_new(0, NULL);
+    libapoi_instance_t *dummy = libvlc_new(0, NULL);
     assert(dummy != NULL);
 
     test_delete_while_playback(VLC_OBJECT(dummy->p_libvlc_int), true);

@@ -288,7 +288,7 @@ main(int i_argc, char *ppsz_argv[])
 
     test_init();
 
-    libvlc_instance_t *p_libvlc = libvlc_new(0, NULL);
+    libapoi_instance_t *p_libvlc = libvlc_new(0, NULL);
     assert(p_libvlc != NULL);
 
     printf("testing dialog callbacks\n");

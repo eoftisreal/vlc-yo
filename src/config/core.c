@@ -529,7 +529,7 @@ void config_ResetAll(void)
 }
 
 
-int config_AutoSaveConfigFile( libvlc_int_t *p_this )
+int config_AutoSaveConfigFile( libapoi_int_t *p_this )
 {
     assert( p_this );
 

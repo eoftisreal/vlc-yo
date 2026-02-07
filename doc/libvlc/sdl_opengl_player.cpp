@@ -210,7 +210,7 @@ public:
 
 private:
     //VLC objects
-    libvlc_instance_t*  m_vlc = nullptr;
+    libapoi_instance_t*  m_vlc = nullptr;
     libvlc_media_player_t* m_mp = nullptr;
     libvlc_media_t* m_media = nullptr;
 

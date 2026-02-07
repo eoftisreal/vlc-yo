@@ -1,0 +1,81 @@
+include/vlc_media_library.h:vlc_medialibrary_t* libvlc_MlCreate( libvlc_int_t* p_libvlc );
+include/vlc_vlm.h:VLC_API vlm_t * vlm_New( libvlc_int_t *, const char *path );
+include/vlc_interface.h:VLC_API int intf_Create( libvlc_int_t *, const char * );
+include/vlc_interface.h:VLC_API void libvlc_Quit( libvlc_int_t * );
+include/vlc_interface.h:VLC_API void vlc_LogSet(libvlc_int_t *, const struct vlc_logger_operations *,
+include/vlc_dialog.h:libvlc_InternalDialogInit(libvlc_int_t *p_libvlc);
+include/vlc_dialog.h:libvlc_InternalDialogClean(libvlc_int_t *p_libvlc);
+include/vlc_media_source.h:vlc_media_source_provider_Get(libvlc_int_t *);
+include/vlc_actions.h:libvlc_InternalActionsInit(libvlc_int_t *p_libvlc);
+include/vlc_actions.h:libvlc_InternalActionsClean(libvlc_int_t *p_libvlc);
+include/vlc_keystore.h:libvlc_InternalKeystoreInit(libvlc_int_t *p_libvlc);
+include/vlc_keystore.h:libvlc_InternalKeystoreClean(libvlc_int_t *p_libvlc);
+include/vlc_configuration.h:VLC_API int config_SaveConfigFile( libvlc_int_t * );
+src/win32/specific.c:void system_Configure( libvlc_int_t *p_this, int i_argc, const char *const ppsz_argv[] )
+src/win32/thread.c:static void SelectClockSource(libvlc_int_t *obj)
+src/win32/thread.c:void vlc_threads_setup(libvlc_int_t *vlc)
+src/media_source/media_source.c:vlc_media_source_provider_Get(libvlc_int_t *libvlc)
+src/playlist/playlist.h:    libvlc_int_t *libvlc;
+src/config/configuration.h:int  config_AutoSaveConfigFile( libvlc_int_t * );
+src/config/configuration.h:void config_CmdLineEarlyScan( libvlc_int_t *, int, const char *[] );
+src/config/configuration.h:int config_LoadCmdLine   ( libvlc_int_t *, int, const char *[], int * );
+src/config/configuration.h:int config_LoadConfigFile( libvlc_int_t * );
+src/config/configuration.h:bool config_PrintHelp (libvlc_int_t *);
+src/config/core.c:int config_AutoSaveConfigFile( libvlc_int_t *p_this )
+src/config/help.c:static void Help (libvlc_int_t *, const char *);
+src/config/help.c:static void Usage (libvlc_int_t *, const char *);
+src/config/help.c:static void ListModules (libvlc_int_t *, bool);
+src/config/help.c:bool config_PrintHelp (libvlc_int_t *obj)
+src/config/help.c:static void Help (libvlc_int_t *p_this, char const *psz_help_name)
+src/config/help.c:static void Usage (libvlc_int_t *p_this, char const *psz_search)
+src/config/help.c:static void ListModules (libvlc_int_t *p_this, bool b_verbose)
+src/config/file.c:static char *config_GetConfigFile( libvlc_int_t *obj )
+src/config/file.c:static FILE *config_OpenConfigFile( libvlc_int_t *p_obj )
+src/config/file.c:int config_LoadConfigFile( libvlc_int_t *p_this )
+src/config/file.c:static int config_CreateDir( libvlc_int_t *p_this, char *psz_dirname )
+src/config/file.c:static int config_PrepareDir (libvlc_int_t *obj)
+src/config/file.c:int (config_SaveConfigFile) (libvlc_int_t *p_this)
+src/config/cmdline.c:void config_CmdLineEarlyScan( libvlc_int_t *p_this, int argc, const char *argv[] )
+src/config/cmdline.c:int config_LoadCmdLine( libvlc_int_t *p_this, int i_argc,
+src/interface/dialog.c:libvlc_InternalDialogInit(libvlc_int_t *p_libvlc)
+src/interface/dialog.c:libvlc_InternalDialogClean(libvlc_int_t *p_libvlc)
+src/interface/interface.c:int intf_Create( libvlc_int_t *libvlc, const char *chain )
+src/interface/interface.c:int intf_InsertItem(libvlc_int_t *libvlc, const char *mrl, unsigned optc,
+src/interface/interface.c:void libvlc_InternalPlay(libvlc_int_t *libvlc)
+src/interface/interface.c:static void libvlc_AutoRun(libvlc_int_t *libvlc)
+src/interface/interface.c:        void (*func)(libvlc_int_t *) = vlc_module_map(log, mods[i]);
+src/interface/interface.c:int libvlc_InternalAddIntf(libvlc_int_t *libvlc, const char *name)
+src/interface/interface.c:void intf_DestroyAll(libvlc_int_t *libvlc)
+src/input/vlm.c:vlm_t *vlm_New( libvlc_int_t *libvlc, const char *psz_vlmconf )
+src/missing.c:vlm_t *vlm_New (libvlc_int_t *obj, const char *file)
+src/os2/specific.c:    libvlc_int_t *libvlc = arg;
+src/os2/specific.c:void system_Configure( libvlc_int_t *p_this, int i_argc, const char *const ppsz_argv[] )
+src/os2/thread.c:void vlc_threads_setup (libvlc_int_t *p_libvlc)
+src/misc/actions.c:int libvlc_InternalActionsInit (libvlc_int_t *libvlc)
+src/misc/actions.c:void libvlc_InternalActionsClean (libvlc_int_t *libvlc)
+src/misc/objects.c:    libvlc_int_t *vlc = vlc_object_instance(obj);
+src/misc/keystore.c:libvlc_InternalKeystoreInit(libvlc_int_t *p_libvlc)
+src/misc/keystore.c:libvlc_InternalKeystoreClean(libvlc_int_t *p_libvlc)
+src/misc/exit.c:void libvlc_SetExitHandler( libvlc_int_t *p_libvlc, void (*handler) (void *),
+src/misc/exit.c:void libvlc_Quit( libvlc_int_t *p_libvlc )
+src/misc/update.h:    libvlc_int_t *p_libvlc;
+src/misc/messages.c:void vlc_LogInit(libvlc_int_t *vlc)
+src/misc/messages.c:int vlc_LogPreinit(libvlc_int_t *vlc)
+src/misc/messages.c:void vlc_LogSet(libvlc_int_t *vlc, const struct vlc_logger_operations *ops,
+src/misc/medialibrary.c:vlc_medialibrary_t* libvlc_MlCreate( libvlc_int_t* p_libvlc  )
+src/posix/specific.c:static void system_ConfigureDbus(libvlc_int_t *vlc, int argc,
+src/posix/specific.c:void system_Configure(libvlc_int_t *libvlc,
+src/posix/thread.c:void vlc_threads_setup (libvlc_int_t *p_libvlc)
+src/darwin/specific.c:void system_Configure( libvlc_int_t *p_this,
+src/android/specific.c:system_Configure(libvlc_int_t *p_libvlc, int i_argc, const char *const pp_argv[])
+src/android/thread.c:void vlc_threads_setup (libvlc_int_t *p_libvlc)
+src/modules/modules.h:void module_LoadPlugins(libvlc_int_t *);
+src/modules/modules.h:vlc_plugin_t *vlc_cache_load(libvlc_int_t *, const char *, block_t **);
+src/modules/modules.h:void CacheSave(libvlc_int_t *, const char *, vlc_plugin_t *const *, size_t);
+src/modules/bank.c:static vlc_plugin_t *module_InitDynamic(libvlc_int_t *obj, const char *path,
+src/modules/bank.c:    libvlc_int_t *obj;
+src/modules/bank.c:static void AllocatePluginPath(libvlc_int_t *obj, const char *path,
+src/modules/bank.c:static void AllocateAllPlugins (libvlc_int_t *p_this)
+src/modules/bank.c:void module_LoadPlugins(libvlc_int_t *obj)
+src/modules/cache.c:vlc_plugin_t *vlc_cache_load(libvlc_int_t *p_this, const char *dir,
+src/modules/cache.c:void CacheSave(libvlc_int_t *p_this, const char *dir,

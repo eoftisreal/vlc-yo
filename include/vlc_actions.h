@@ -27,11 +27,11 @@
 
 /* Called from src/libvlc.c */
 int
-libvlc_InternalActionsInit(libvlc_int_t *p_libvlc);
+libvlc_InternalActionsInit(libapoi_int_t *p_libvlc);
 
 /* Called from src/libvlc.c */
 void
-libvlc_InternalActionsClean(libvlc_int_t *p_libvlc);
+libvlc_InternalActionsClean(libapoi_int_t *p_libvlc);
 
 /**
  * \file

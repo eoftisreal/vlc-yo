@@ -228,7 +228,7 @@ static int get_formats(enum vlc_thumbnailer_format *out_format,
     vlc_assert_unreachable();
 }
 
-static int run_test(libvlc_instance_t *vlc, bool external)
+static int run_test(libapoi_instance_t *vlc, bool external)
 {
     size_t test_count = ARRAY_SIZE(test_entries);
     struct vlc_thumbnailer_output entries[test_count];
@@ -355,7 +355,7 @@ int main(int argc, const char *argv[])
     argc--;
     argv++;
 
-    libvlc_instance_t *vlc = libvlc_new(argc, argv);
+    libapoi_instance_t *vlc = libvlc_new(argc, argv);
     assert(vlc);
 
     int ret = 0;

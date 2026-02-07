@@ -125,7 +125,7 @@ static const char *const alpn_bad[] = { "baz", NULL };
 
 int main(void)
 {
-    libvlc_instance_t *vlc;
+    libapoi_instance_t *vlc;
     vlc_object_t *obj;
     vlc_thread_t th;
     void *p;

@@ -322,7 +322,7 @@ int main(int argc, const char *argv[])
         vlc_fourcc_t to_fourcc = 0;
         if (f[4] == '-' && strlen(f) >= 9)
             to_fourcc = VLC_FOURCC(f[5], f[6], f[7], f[8]);
-        libvlc_instance_t *vlc = libvlc_new(0, NULL);
+        libapoi_instance_t *vlc = libvlc_new(0, NULL);
         assert(vlc != NULL);
 
         size_t count;
@@ -344,7 +344,7 @@ int main(int argc, const char *argv[])
     };
     int libvlc_argc = ARRAY_SIZE(libvlc_argv);
 
-    libvlc_instance_t *vlc = libvlc_new(libvlc_argc, libvlc_argv);
+    libapoi_instance_t *vlc = libvlc_new(libvlc_argc, libvlc_argv);
     assert(vlc != NULL);
 
     size_t scenario_count = ARRAY_SIZE(scenario_array);

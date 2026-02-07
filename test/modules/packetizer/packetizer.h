@@ -32,7 +32,7 @@ enum
 
 struct params_s
 {
-    libvlc_instance_t *vlc;
+    libapoi_instance_t *vlc;
     vlc_object_t *obj;
     vlc_fourcc_t codec;
     unsigned i_rate_num;
@@ -67,7 +67,7 @@ static void delete_packetizer(decoder_t *p_pack)
     vlc_object_delete(p_pack);
 }
 
-static decoder_t *create_packetizer(libvlc_instance_t *vlc,
+static decoder_t *create_packetizer(libapoi_instance_t *vlc,
                                     unsigned num, unsigned den,
                                     vlc_fourcc_t codec)
 {

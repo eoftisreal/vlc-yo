@@ -166,7 +166,7 @@ static int ShowController(vlc_object_t * __unused p_this,
     VLCMain *mainInstance = VLCMain.sharedInstance;
     _playQueueController = [mainInstance playQueueController];
 
-    libvlc_int_t *libvlc = vlc_object_instance(getIntf());
+    libapoi_int_t *libvlc = vlc_object_instance(getIntf());
     var_AddCallback(libvlc, "intf-toggle-fscontrol", ShowFullscreenController, (__bridge void *)self);
     var_AddCallback(libvlc, "intf-show", ShowController, (__bridge void *)self);
 
@@ -208,7 +208,7 @@ static int ShowController(vlc_object_t * __unused p_this,
 - (void)dealloc
 {
     [NSNotificationCenter.defaultCenter removeObserver:self];
-    libvlc_int_t *libvlc = vlc_object_instance(getIntf());
+    libapoi_int_t *libvlc = vlc_object_instance(getIntf());
     var_DelCallback(libvlc, "intf-toggle-fscontrol", ShowFullscreenController, (__bridge void *)self);
     var_DelCallback(libvlc, "intf-show", ShowController, (__bridge void *)self);
 }

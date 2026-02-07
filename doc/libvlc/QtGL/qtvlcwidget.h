@@ -42,7 +42,7 @@ private:
     std::unique_ptr<class VLCVideo> mVLC;
 
     void stop();
-    struct libvlc_instance_t*  m_vlc = nullptr;
+    struct libapoi_instance_t*  m_vlc = nullptr;
     struct libvlc_media_player_t* m_mp = nullptr;
     struct libvlc_media_t* m_media = nullptr;
 

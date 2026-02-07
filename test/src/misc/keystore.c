@@ -324,10 +324,10 @@ test(vlc_object_t *p_obj, unsigned int i_id, const struct testcase *p_test)
     vlc_dialog_provider_set_callbacks(p_obj, NULL, NULL);
 }
 
-static libvlc_instance_t *
+static libapoi_instance_t *
 create_libvlc(int i_vlc_argc, const char *const *ppsz_vlc_argv)
 {
-    libvlc_instance_t *p_libvlc = libvlc_new(i_vlc_argc, ppsz_vlc_argv);
+    libapoi_instance_t *p_libvlc = libvlc_new(i_vlc_argc, ppsz_vlc_argv);
     assert(p_libvlc != NULL);
 
     int i_ret;
@@ -357,7 +357,7 @@ main(void)
     ppsz_vlc_argv[2] = "--keystore-file";
     ppsz_vlc_argv[3] = psz_tmp_path;
 
-    libvlc_instance_t *p_libvlc = create_libvlc(i_vlc_argc, ppsz_vlc_argv);
+    libapoi_instance_t *p_libvlc = create_libvlc(i_vlc_argc, ppsz_vlc_argv);
 
     for (unsigned int i = 0; i < ARRAY_SIZE(testcases); ++i)
     {

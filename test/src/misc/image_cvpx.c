@@ -113,7 +113,7 @@ int main()
         "--no-auto-preparse",
     };
 
-    libvlc_instance_t *vlc = libvlc_new(ARRAY_SIZE(args), args);
+    libapoi_instance_t *vlc = libvlc_new(ARRAY_SIZE(args), args);
 
     libvlc_InternalAddIntf(vlc->p_libvlc_int, MODULE_STRING);
     libvlc_InternalPlay(vlc->p_libvlc_int);

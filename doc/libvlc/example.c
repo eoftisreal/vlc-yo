@@ -10,7 +10,7 @@
 int main(int argc, char* argv[])
 {
     (void) argc; (void) argv;
-    libvlc_instance_t * inst;
+    libapoi_instance_t * inst;
     libvlc_media_player_t *mp;
     libvlc_media_t *m;
 

@@ -605,7 +605,7 @@ void (vlc_tick_sleep)(vlc_tick_t delay)
     vlc_tick_wait (vlc_tick_now () + delay);
 }
 
-static void SelectClockSource(libvlc_int_t *obj)
+static void SelectClockSource(libapoi_int_t *obj)
 {
     // speed comparison / granularity / counts during sleep
     // multimedia:102000 /    5 ms / no
@@ -663,7 +663,7 @@ unsigned vlc_GetCPUCount (void)
 
 /*** Initialization ***/
 
-void vlc_threads_setup(libvlc_int_t *vlc)
+void vlc_threads_setup(libapoi_int_t *vlc)
 {
     SelectClockSource(vlc);
 

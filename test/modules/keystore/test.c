@@ -129,7 +129,7 @@ test_module(const char *psz_module, bool b_test_all, bool b_persistent,
     printf("\n== Testing %s keystore module ==\n\n", psz_module);
 
     printf("creating libvlc\n");
-    libvlc_instance_t *p_libvlc = libvlc_new(argc, argv);
+    libapoi_instance_t *p_libvlc = libvlc_new(argc, argv);
     assert(p_libvlc != NULL);
 
     vlc_interrupt_t *ctx = vlc_interrupt_create();
@@ -308,7 +308,7 @@ main(int i_argc, char *ppsz_argv[])
         alarm(3);
 
     /* Create a dummy libvlc to initialize module bank, needed by module_exists */
-    libvlc_instance_t *p_libvlc = libvlc_new(0, NULL);
+    libapoi_instance_t *p_libvlc = libvlc_new(0, NULL);
     assert(p_libvlc != NULL);
 
     for (unsigned int i = 0; i < ARRAY_SIZE(keystore_args); ++i)

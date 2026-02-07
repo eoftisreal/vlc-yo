@@ -82,7 +82,7 @@ static int vlclua_push_vlc_object(lua_State *L, void *p_obj,
 
 static int vlclua_get_libvlc( lua_State *L )
 {
-    libvlc_int_t *p_libvlc = vlc_object_instance(vlclua_get_this( L ));
+    libapoi_int_t *p_libvlc = vlc_object_instance(vlclua_get_this( L ));
     vlclua_push_vlc_object(L, p_libvlc, NULL);
     return 1;
 }

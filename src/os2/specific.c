@@ -63,7 +63,7 @@ static void add_to_playlist(vlc_playlist_t *playlist, const char *uri,
 
 static void IPCHelperThread( void *arg )
 {
-    libvlc_int_t *libvlc = arg;
+    libapoi_int_t *libvlc = arg;
 
     ULONG  ulCmd;
     int    i_argc;
@@ -145,7 +145,7 @@ void system_Init( void )
         setmode( fileno( stdin ), O_BINARY ); /* Needed for pipes */
 }
 
-void system_Configure( libvlc_int_t *p_this, int i_argc, const char *const ppsz_argv[] )
+void system_Configure( libapoi_int_t *p_this, int i_argc, const char *const ppsz_argv[] )
 {
     if( var_InheritBool( p_this, "high-priority" ) )
     {

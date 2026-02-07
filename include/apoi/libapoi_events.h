@@ -24,10 +24,10 @@
 #ifndef LIBAPOI_EVENTS_H
 #define LIBAPOI_EVENTS_H 1
 
-# include <vlc/libapoi.h>
-# include <vlc/libapoi_picture.h>
-# include <vlc/libapoi_media_track.h>
-# include <vlc/libapoi_media.h>
+# include <apoi/libapoi.h>
+# include <apoi/libapoi_picture.h>
+# include <apoi/libapoi_media_track.h>
+# include <apoi/libapoi_media.h>
 
 /**
  * \file

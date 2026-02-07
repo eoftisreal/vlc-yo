@@ -38,7 +38,7 @@
 #define NOPURI(n) INPUT_ITEM_URI_NOP "/" NOPFIL(n)
 
 static int runtest(const char *run,
-                   libvlc_instance_t *vlc,
+                   libapoi_instance_t *vlc,
                    const char *data, size_t datasz,
                    int(*checkfunc)(const char *, const input_item_node_t *))
 {
@@ -208,7 +208,7 @@ int main(void)
 {
     test_init();
 
-    libvlc_instance_t *vlc = libvlc_new(0, NULL);
+    libapoi_instance_t *vlc = libvlc_new(0, NULL);
     if(!vlc)
         return 1;
 

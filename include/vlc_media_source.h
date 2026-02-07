@@ -279,7 +279,7 @@ typedef struct vlc_media_source_provider_t vlc_media_source_provider_t;
  * Return the media source provider associated to the libvlc instance.
  */
 VLC_API vlc_media_source_provider_t *
-vlc_media_source_provider_Get(libvlc_int_t *);
+vlc_media_source_provider_Get(libapoi_int_t *);
 
 /**
  * Return the media source identified by psz_name.

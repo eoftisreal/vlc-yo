@@ -36,7 +36,7 @@ void system_Init (void)
 {
 }
 
-static void system_ConfigureDbus(libvlc_int_t *vlc, int argc,
+static void system_ConfigureDbus(libapoi_int_t *vlc, int argc,
                                  const char *const argv[])
 {
 /* FIXME: could be replaced by using Unix sockets */
@@ -154,7 +154,7 @@ static void system_ConfigureDbus(libvlc_int_t *vlc, int argc,
 #endif // HAVE_DBUS
 }
 
-void system_Configure(libvlc_int_t *libvlc,
+void system_Configure(libapoi_int_t *libvlc,
                       int argc, const char *const argv[])
 {
     system_ConfigureDbus(libvlc, argc, argv);

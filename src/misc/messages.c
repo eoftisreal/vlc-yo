@@ -418,7 +418,7 @@ static struct vlc_logger *vlc_LogModuleCreate(vlc_object_t *parent)
  * Initializes the messages logging subsystem and drain the early messages to
  * the configured log.
  */
-void vlc_LogInit(libvlc_int_t *vlc)
+void vlc_LogInit(libapoi_int_t *vlc)
 {
     struct vlc_logger *logger = vlc_LogModuleCreate(VLC_OBJECT(vlc));
     if (logger == NULL)
@@ -436,7 +436,7 @@ void vlc_LogInit(libvlc_int_t *vlc)
  *
  * \return 0 on success, -1 on error.
  */
-int vlc_LogPreinit(libvlc_int_t *vlc)
+int vlc_LogPreinit(libapoi_int_t *vlc)
 {
     vlc_logger_t *logger = vlc_LogSwitchCreate();
     if (unlikely(logger == NULL))
@@ -546,7 +546,7 @@ vlc_LogExternalCreate(const struct vlc_logger_operations *ops, void *opaque)
  * \param ops message callback, or NULL to clear
  * \param opaque data pointer for the message callback
  */
-void vlc_LogSet(libvlc_int_t *vlc, const struct vlc_logger_operations *ops,
+void vlc_LogSet(libapoi_int_t *vlc, const struct vlc_logger_operations *ops,
                 void *opaque)
 {
     struct vlc_logger *logger;

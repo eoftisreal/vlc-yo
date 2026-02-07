@@ -157,7 +157,7 @@ static struct imem_root *imem_root_New(void)
     return imem;
 }
 
-static void test_media_callback(libvlc_instance_t *vlc)
+static void test_media_callback(libapoi_instance_t *vlc)
 {
     struct imem_root *imem = imem_root_New();
 
@@ -201,7 +201,7 @@ static void test_media_callback(libvlc_instance_t *vlc)
     free(imem);
 }
 
-static void test_media_callback_interrupt(libvlc_instance_t *vlc)
+static void test_media_callback_interrupt(libapoi_instance_t *vlc)
 {
     struct imem_root *imem = imem_root_New();
 
@@ -273,7 +273,7 @@ int main( int argc, char **argv )
         "--demux="MODULE_STRING,
     };
 
-    libvlc_instance_t *vlc = libvlc_new(ARRAY_SIZE(vlc_argv), vlc_argv);
+    libapoi_instance_t *vlc = libvlc_new(ARRAY_SIZE(vlc_argv), vlc_argv);
     assert(vlc != NULL);
 
     test_media_callback(vlc);

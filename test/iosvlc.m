@@ -42,7 +42,7 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     @public
-    libvlc_instance_t *_libvlc;
+    libapoi_instance_t *_libvlc;
     UIWindow *window;
     UIView *subview;
 

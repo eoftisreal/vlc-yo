@@ -375,7 +375,7 @@ static void test_clock_slave_only(
 }
 int main(void)
 {
-    libvlc_instance_t *libvlc = libvlc_new(0, NULL);
+    libapoi_instance_t *libvlc = libvlc_new(0, NULL);
     assert(libvlc != NULL);
 
     libvlc_int_t *vlc = libvlc->p_libvlc_int;

@@ -56,7 +56,7 @@ static inline void getMediaSourcesForCategory(NSMutableArray <VLCMediaSource *> 
 
 + (NSArray <VLCMediaSource *> *)listOfMediaSourcesForCategory:(enum services_discovery_category_e)category
 {
-    libvlc_int_t *p_libvlcInstance = vlc_object_instance(getIntf());
+    libapoi_int_t *p_libvlcInstance = vlc_object_instance(getIntf());
     vlc_preparser_t *p_preparser = getNetworkPreparser();
     vlc_media_source_provider_t *p_sourceProvider = vlc_media_source_provider_Get(p_libvlcInstance);
 
@@ -73,7 +73,7 @@ static inline void getMediaSourcesForCategory(NSMutableArray <VLCMediaSource *> 
 
 + (NSArray<VLCMediaSource *> *)listOfLocalMediaSources
 {
-    libvlc_int_t *p_libvlcInstance = vlc_object_instance(getIntf());
+    libapoi_int_t *p_libvlcInstance = vlc_object_instance(getIntf());
     vlc_preparser_t *p_preparser = getNetworkPreparser();
     NSMutableArray<VLCMediaSource *> * const mutableArray = [[NSMutableArray alloc] initWithCapacity:32]; // A sane default
 

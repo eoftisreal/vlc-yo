@@ -523,7 +523,7 @@ static void init_action (vlc_object_t *obj, void **map,
 /**
  * Initializes the key map from configuration.
  */
-int libvlc_InternalActionsInit (libvlc_int_t *libvlc)
+int libvlc_InternalActionsInit (libapoi_int_t *libvlc)
 {
     assert(libvlc != NULL);
 
@@ -580,7 +580,7 @@ int libvlc_InternalActionsInit (libvlc_int_t *libvlc)
 /**
  * Destroys the key map.
  */
-void libvlc_InternalActionsClean (libvlc_int_t *libvlc)
+void libvlc_InternalActionsClean (libapoi_int_t *libvlc)
 {
     assert(libvlc != NULL);
 

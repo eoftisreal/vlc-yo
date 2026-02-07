@@ -358,7 +358,7 @@ void vlc_atomic_notify_all(void *addr)
 
 
 /*** Threads ***/
-void vlc_threads_setup (libvlc_int_t *p_libvlc)
+void vlc_threads_setup (libapoi_int_t *p_libvlc)
 {
     (void) p_libvlc;
 }

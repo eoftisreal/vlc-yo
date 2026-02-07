@@ -671,7 +671,7 @@ static int BossCallback(vlc_object_t *p_this,
 
         _playbackRate = 1.0;
 
-        libvlc_int_t *libvlc = vlc_object_instance(getIntf());
+        libapoi_int_t *libvlc = vlc_object_instance(getIntf());
         var_AddCallback(libvlc, "intf-boss", BossCallback, (__bridge void *)self);
     }
 
@@ -704,7 +704,7 @@ static int BossCallback(vlc_object_t *p_this,
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification
 {
-    libvlc_int_t *libvlc = vlc_object_instance(getIntf());
+    libapoi_int_t *libvlc = vlc_object_instance(getIntf());
     var_DelCallback(libvlc, "intf-boss", BossCallback, (__bridge void *)self);
 
     [self onPlaybackHasTruelyEnded:nil];
