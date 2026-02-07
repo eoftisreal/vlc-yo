@@ -56,7 +56,7 @@ VLC_WEAK GdkPixbuf *gtk_icon_theme_load_icon(GtkIconTheme *,
 static int  Open    ( vlc_object_t * );
 static void Close   ( vlc_object_t * );
 
-#define APPLICATION_NAME "VLC media player"
+#define APPLICATION_NAME "Apoi media player"
 
 #define TIMEOUT_TEXT N_("Timeout (ms)")
 #define TIMEOUT_LONGTEXT N_("How long the notification will be displayed.")

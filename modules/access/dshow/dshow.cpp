@@ -550,7 +550,7 @@ static int CommonOpen( vlc_object_t *p_this, access_sys_t *p_sys,
     {
         msg_Err( p_this, "FATAL: could not open ANY device" ) ;
         vlc_dialog_display_error( p_this,  _("Capture failed"),
-                        _("VLC cannot open ANY capture device. "
+                        _("Apoi cannot open ANY capture device. "
                           "Check the error log for details.") );
         return VLC_EGENERIC ;
     }

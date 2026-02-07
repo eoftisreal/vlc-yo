@@ -843,7 +843,7 @@ static int OpenEncoder( vlc_object_t *p_this )
 
     /* Add a comment */
     vorbis_comment_init( &p_sys->vc);
-    vorbis_comment_add_tag( &p_sys->vc, "ENCODER", "VLC media player");
+    vorbis_comment_add_tag( &p_sys->vc, "ENCODER", "Apoi media player");
 
     /* Set up the analysis state and auxiliary encoding storage */
     vorbis_analysis_init( &p_sys->vd, &p_sys->vi );

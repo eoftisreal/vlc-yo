@@ -407,7 +407,7 @@ int opus_write_header(uint8_t **p_extra, size_t *i_extra, OpusHeader *header, co
     if (!comments)
         return 1;
     if (comment_add(&comments, &comments_length, "ENCODER=",
-                    "VLC media player"))
+                    "Apoi media player"))
     {
         free(comments);
         return 1;

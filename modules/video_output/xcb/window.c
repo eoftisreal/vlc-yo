@@ -1,6 +1,6 @@
 /**
  * @file window.c
- * @brief X C Bindings window provider module for VLC media player
+ * @brief X C Bindings window provider module for Apoi media player
  */
 /*****************************************************************************
  * Copyright © 2009 Rémi Denis-Courmont
@@ -909,17 +909,17 @@ static int OpenCommon(vlc_window_t *wnd, char *display, xcb_connection_t *conn,
     /* ICCCM */
     /* No cut&paste nor drag&drop, only Window Manager communication. */
     set_ascii_prop(conn, window, XA_WM_NAME,
-    /* xgettext: This is a plain ASCII spelling of "VLC media player"
+    /* xgettext: This is a plain ASCII spelling of "Apoi media player"
        for the ICCCM window name. This must be pure ASCII.
        The limitation is partially with ICCCM and partially with VLC.
        For Latin script languages, you may need to strip accents.
        For other scripts, you will need to transliterate into Latin. */
-                   vlc_pgettext("ASCII", "VLC media player"));
+                   vlc_pgettext("ASCII", "Apoi media player"));
 
     set_ascii_prop(conn, window, XA_WM_ICON_NAME,
-    /* xgettext: This is a plain ASCII spelling of "VLC"
+    /* xgettext: This is a plain ASCII spelling of "Apoi"
        for the ICCCM window name. This must be pure ASCII. */
-                   vlc_pgettext("ASCII", "VLC"));
+                   vlc_pgettext("ASCII", "Apoi"));
 
     set_wm_hints(conn, window);
     xcb_change_property(conn, XCB_PROP_MODE_REPLACE, window, XA_WM_CLASS,
@@ -956,7 +956,7 @@ static int OpenCommon(vlc_window_t *wnd, char *display, xcb_connection_t *conn,
         free(title);
     }
     else
-        set_string(conn, window, utf8, net_wm_name, _("VLC media player"));
+        set_string(conn, window, utf8, net_wm_name, _("Apoi media player"));
 
     xcb_atom_t net_wm_icon_name = get_atom(conn, net_wm_icon_name_ck);
     set_string(conn, window, utf8, net_wm_icon_name, _("VLC"));
